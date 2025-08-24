@@ -1,0 +1,8 @@
+###
+DELETE {{URL}}/enrollments/3
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###

@@ -2,9 +2,48 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
-    //
+    use HasFactory;
+    protected $fillable = [
+        'title',
+        'description',
+        'price',
+        'thumbnail',
+        'instructor_id',
+        'level',
+        'status',
+        'duration',
+        'category_id',
+    ];
+
+    public function instructor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function categories():belongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

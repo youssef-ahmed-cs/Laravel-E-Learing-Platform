@@ -1,0 +1,4 @@
+GET {{URL}}/enrollments/1/students
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+Content-Type: application/json

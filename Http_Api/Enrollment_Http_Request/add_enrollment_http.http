@@ -1,0 +1,14 @@
+###
+POST {{URL}}/enrollments
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "user_id": 1,
+    "course_id": 1,
+    "enrolled_at":"2025-08-25 16:29:05",
+    "completed_at": "2025-08-25 16:29:05",
+    "progress_percentage": 30
+}
+###

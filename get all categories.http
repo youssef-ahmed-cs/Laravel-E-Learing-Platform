@@ -1,0 +1,7 @@
+### GET request to get all categories
+GET {{URL}}/categories
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+### App\Models\Course::create(['title'=>'c++','description'=>'fundmantails of c++','instructor_id'
+

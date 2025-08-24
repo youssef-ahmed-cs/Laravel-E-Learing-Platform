@@ -1,0 +1,11 @@
+### GET request to example server
+PATCH {{URL}}/categories/1
+accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+    "name": "Updated Category Name",
+    "description": "Updated description for the category."
+}
+###

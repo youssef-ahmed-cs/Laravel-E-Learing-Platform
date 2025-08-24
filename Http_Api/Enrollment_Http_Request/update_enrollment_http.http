@@ -1,0 +1,8 @@
+PATCH {{URL}}/enrollments/1
+Accept: application/json
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+    "user_id": 3
+}

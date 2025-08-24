@@ -20,15 +20,12 @@ return new class extends Migration {
             $table->enum("status", ['draft', 'published', 'archived'])->default('draft');
             $table->integer('duration')->default(0);
 
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('instructor_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('courses');

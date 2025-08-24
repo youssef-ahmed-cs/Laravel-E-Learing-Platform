@@ -1,0 +1,8 @@
+###
+GET {{URL}}/enrollments/1/courses
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+
+###
