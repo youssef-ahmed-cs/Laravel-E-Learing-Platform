@@ -5,6 +5,7 @@ use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,17 +27,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('enrollments',EnrollmentController::class);
+    Route::apiResource('enrollments', EnrollmentController::class);
     Route::apiResource('reviews', ReviewController::class);
+    Route::apiResource('lessons', LessonController::class);
 
     Route::get('/categories/{category}/courses', [CategoryController::class, 'getCourses']);
     Route::get('/courses/{course}/category', [CourseController::class, 'getCategories']);
 
-    Route::get('enrollments/{enrollment}/courses',[EnrollmentController::class,'getCourses']);
-    Route::get('enrollments/{enrollment}/students',[EnrollmentController::class,'getStudents']);
+    Route::get('enrollments/{enrollment}/courses', [EnrollmentController::class, 'getCourses']);
+    Route::get('enrollments/{enrollment}/students', [EnrollmentController::class, 'getStudents']);
 
     Route::get('/reviews/summary', [ReviewController::class, 'getReviewsSummary']);
-    Route::get('/reviews/{review}/students', [ReviewController::class,'getReviewStudents']);
-    Route::get('/reviews/{review}/courses', [ReviewController::class,'getReviewCourses']);
+    Route::get('/reviews/{review}/students', [ReviewController::class, 'getReviewStudents']);
+    Route::get('/reviews/{review}/courses', [ReviewController::class, 'getReviewCourses']);
+    Route::get('/lessons/{id}/courses', [LessonController::class, 'getCourses']);
+    Route::get('/courses/{id}/lessons', [CourseController::class, 'getLessons']);
 });
 

@@ -1,0 +1,17 @@
+### POST Request to create
+POST {{URL}}/lessons
+Authorization: Bearer 1|UjZBtjaK7e6IZSoHVEYzyYx1H2o5fGWKIO5bm8ucb0ba5401
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "{{title}}",
+    "content": "{{content}}",
+    "is_free": "{{is_free}}",
+    "duration": "{{duration}}",
+    "video_url": "{{video_url}}",
+    "course_id": "{{course_id}}",
+    "order": {{order}}
+}
+
+###

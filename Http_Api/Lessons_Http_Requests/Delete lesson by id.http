@@ -1,0 +1,7 @@
+### GET request to example server
+DELETE {{URL}}/lessons/9
+Authorization: Bearer 1|UjZBtjaK7e6IZSoHVEYzyYx1H2o5fGWKIO5bm8ucb0ba5401
+Accept: application/json
+Content-Type: application/json
+
+###

@@ -1,14 +1,13 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CoursesManagment\StoreCourseRequest;
 use App\Http\Requests\CoursesManagment\UpdateCourseRequest;
-use App\Http\Requests\UsersManagment\UpdateUserRequest;
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Http\Resources\CourseResource;
+use App\Models\User;
 
 class CourseController extends Controller
 {
@@ -64,4 +63,15 @@ class CourseController extends Controller
         ]);
     }
 
+    public function getLessons(Course $course)
+    {
+        $this->authorize('view', $course);
+        $courses = $course->lessons()->get(['id', 'title', 'description','status', 'level', 'duration', 'instructor_id']);
+        return response()->json([
+            'lesson' => $course->title,
+            'courses' => $courses
+        ]);
+    }
+
 }
+
