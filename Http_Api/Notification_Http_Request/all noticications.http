@@ -1,0 +1,7 @@
+### GET request to example server
+GET {{URL}}/notifications
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 2|Pp0WMszDZLyEPeP7nIY0FmeoEgdS0LEqSlTmqOcs3c5b88cb
+
+###

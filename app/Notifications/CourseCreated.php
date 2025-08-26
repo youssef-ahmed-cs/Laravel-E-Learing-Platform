@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Notifications\Notification;
+
+class CourseCreated extends Notification
+{
+    private $course;
+
+    public function __construct($course)
+    {
+        $this->course = $course;
+    }
+
+    public function via($notifiable): array
+    {
+        return ['database'];
+    }
+
+    public function toArray($notifiable): array
+    {
+        return [
+            'message' => 'A new course has been created: ' . $this->course->title,
+            'course_id' => $this->course->id,
+            'course_title' => $this->course->title,
+            'course_description' => $this->course->description,
+        ];
+    }
+}

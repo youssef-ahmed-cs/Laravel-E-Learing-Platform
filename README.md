@@ -17,7 +17,7 @@ Laravel Storm is a comprehensive e-learning platform built with Laravel 12, desi
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
-- **Multi-role Authentication**: Students, Instructors, and Administrators
+- **Multirole Authentication**: Students, Instructors, and Administrators
 - **JWT Token-based API Authentication** using Laravel Sanctum
 - **Secure Registration & Login** with email verification
 - **Token Refresh** for extended sessions
@@ -100,7 +100,7 @@ GET /api/reviews/{review}/courses
 - PHP 8.2 or higher
 - Composer
 - Node.js & NPM
-- MySQL/PostgreSQL/SQLite database
+- MySQL/PostgresSQL/SQLite database
 
 ### Installation
 
@@ -304,7 +304,7 @@ FILESYSTEM_DISK=local
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License—see the [LICENSE](LICENSE) file for details.
 
 ## 🤝 Support
 

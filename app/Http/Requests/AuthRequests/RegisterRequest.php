@@ -20,7 +20,8 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|string|in:student,admin,instructor',
             'username' => 'required|string|max:255|unique:users',
-            
+            'bio' =>  'nullable|string',
+            'phone' => 'nullable|string',
         ];
     }
 }

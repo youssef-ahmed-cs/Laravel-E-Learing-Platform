@@ -6,6 +6,8 @@ use App\Http\Requests\ReviewManagement\StoreReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\User;
+use App\Notifications\NewReview;
+use Illuminate\Support\Facades\Notification;
 
 class ReviewController extends Controller
 {
@@ -36,6 +38,10 @@ class ReviewController extends Controller
     {
         $this->authorize('create', $review);
         $review = Review::create($request->validated());
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin)
+            $admin->notify(new NewReview($review));
+
         return new ReviewResource($review);
     }
 

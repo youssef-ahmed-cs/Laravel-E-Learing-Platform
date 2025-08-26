@@ -1,0 +1,10 @@
+### GET request to login new user
+POST {{URL}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "youssef.ahmed.fci@outlook.com",
+    "password": "44611697"
+}
+###

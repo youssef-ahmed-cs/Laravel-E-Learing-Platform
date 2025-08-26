@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reviews/{review}/courses', [ReviewController::class, 'getReviewCourses']);
     Route::get('/lessons/{id}/courses', [LessonController::class, 'getCourses']);
     Route::get('/courses/{id}/lessons', [CourseController::class, 'getLessons']);
+
+    #routes for notification
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 });
 

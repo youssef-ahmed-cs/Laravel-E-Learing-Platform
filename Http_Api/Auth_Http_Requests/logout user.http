@@ -1,0 +1,6 @@
+### GET request to example server
+POST {{URL}}/logout
+Authorization: Bearer 1|hpiL5i7odhIjl1BX1JXDncDkJxBKcdti7ALEtzMg9c59e930
+Accept: application/json
+Content-Type: application/json
+###

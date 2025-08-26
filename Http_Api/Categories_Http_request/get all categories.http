@@ -1,0 +1,6 @@
+### GET request get all categories
+GET {{URL}}/categories
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+###
