@@ -2,23 +2,23 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
+use App\Models\Enrollment;
 use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use App\Policies\UserPolicy;
-
+use App\Models\Review;
+use App\Policies\ReviewPolicy;
+use App\Policies\CoursePolicy;
+use App\Policies\EnrollmentPolicy;
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         //
@@ -26,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
 
     protected $policies = [
         User::class => UserPolicy::class,
+        Course::class => CoursePolicy::class,
+        Review::class => ReviewPolicy::class,
+        Enrollment::class => EnrollmentPolicy::class,
     ];
 }

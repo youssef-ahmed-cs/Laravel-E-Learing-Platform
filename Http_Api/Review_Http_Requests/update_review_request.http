@@ -1,0 +1,12 @@
+### GET request for retrieving all reviews
+PATCH http://127.0.0.1:8000/api/reviews/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 1|5a4RVQnq2ZYI7FogodFuB3eeXKyjGzEnmpPqqkL669d01d3d
+
+{
+    "user_id": 9,
+    "course_id": 8,
+    "rating": 4,
+    "comment": "Updated review comment."
+}
