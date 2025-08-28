@@ -1,0 +1,16 @@
+### POST request to create a new user
+POST {{url}}/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "admin12@gmail.com",
+    "password": "44611697",
+    "password_confirmation": "44611697",
+    "name": "admin12",
+    "username": "admin12",
+    "role": "admin",
+    "phone": "35351555",
+    "bio": "I am an admin user."
+}
+###

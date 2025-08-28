@@ -2,6 +2,6 @@
 GET {{URL}}/notifications
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 2|Pp0WMszDZLyEPeP7nIY0FmeoEgdS0LEqSlTmqOcs3c5b88cb
+Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
 
 ###

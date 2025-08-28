@@ -8,11 +8,12 @@ use App\Models\Course;
 use App\Http\Resources\CourseResource;
 use App\Models\User;
 use App\Notifications\CourseCreated;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $this->authorize('viewAny', Course::class);
         $courses = Course::with('categories')->paginate(10);
@@ -22,20 +23,20 @@ class CourseController extends Controller
         ]);
     }
 
-    public function show(Course $course)
+    public function show(Course $course): CourseResource
     {
         $this->authorize('view', $course);
 
         return new CourseResource($course);
     }
 
-    public function store(StoreCourseRequest $request)
+    public function store(StoreCourseRequest $request): JsonResponse
     {
         $this->authorize('create', Course::class);
         $course = Course::create($request->validated());
-        $studentsAndInstructors = User::whereIn('role', ['student', 'instructor'])->get();
+        $users = User::all();
 
-        Notification::send($studentsAndInstructors, new CourseCreated($course));
+        Notification::send($users, new CourseCreated($course));
 
         return response()->json([
             'message' => 'Course created successfully',

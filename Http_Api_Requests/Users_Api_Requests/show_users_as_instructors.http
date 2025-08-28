@@ -1,0 +1,6 @@
+### GET request to get all instructors
+GET {{url}}/users/instructors
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+###

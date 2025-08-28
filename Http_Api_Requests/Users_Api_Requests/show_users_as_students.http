@@ -1,0 +1,6 @@
+### GET request to get all students
+GET {{url}}/users
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+###

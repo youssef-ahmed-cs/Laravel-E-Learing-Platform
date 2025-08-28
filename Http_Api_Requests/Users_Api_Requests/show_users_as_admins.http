@@ -1,0 +1,6 @@
+### GET request to get all admins
+GET {{url}}/users/admins
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+###

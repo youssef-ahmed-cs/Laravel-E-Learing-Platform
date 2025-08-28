@@ -1,17 +1,16 @@
-<?php
-
-namespace App\Http\Controllers\auth;
+<?php namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequests\LoginRequest;
 use App\Http\Requests\AuthRequests\RegisterRequest;
-// use auth
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $request->validated();
         $credentials = $request->only('email', 'password');
@@ -29,7 +28,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
         $request->validated();
         if ($user = User::create($request->validated())) {
@@ -43,22 +42,25 @@ class AuthController extends Controller
         return response()->json(['message' => 'User registration failed'], 500);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        auth()->user()->tokens()->delete();
+        $request->user()->tokens()->delete(); #delete token for current user
+        $username = auth()->user()->username ?? 'username not found!';
         return response()->json([
-            'message' => 'Logged out successfully'
+            'message' => "$username Logged out successfully"
         ]);
     }
 
-    public function user(Request $request)
+    public function user(): JsonResponse
     {
         return response()->json([
-            'user' => auth()->user()
+            'user' => Auth::user()
         ]);
     }
+    #Auth()::user() ==> return current authenticated user using facade declaration
+    #auth()->user() ==> return current authenticated user using helper function declaration
 
-    public function refreshToken()
+    public function refreshToken(): JsonResponse
     {
         $user = auth()->user();
         $user->tokens()->delete();

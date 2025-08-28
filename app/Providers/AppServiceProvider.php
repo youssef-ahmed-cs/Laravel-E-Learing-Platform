@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Observers\TestObserve;
 use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use App\Policies\UserPolicy;
@@ -21,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        //User::observe(new TestObserve);
     }
 
     protected array $policies = [

@@ -86,27 +86,27 @@ class UserController extends Controller
     public function destroy(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
-        $user->delete();
+        $user->where('role', 'student')->delete();
         return response()->json([
-            'message' => 'User deleted successfully',
+            'message' => 'Student deleted successfully',
             'user' => new UserResource($user)
         ]);
     }
 
-    public function deleteInstructor(User $user): \Illuminate\Http\JsonResponse
+    public function deleteInstructor(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
-        $user->delete();
+        $user->where('role','instructor')->delete();
         return response()->json([
             'message' => 'Instructor deleted successfully',
             'user' => new UserResource($user)
         ]);
     }
 
-    public function destroyAdmin(User $user): \Illuminate\Http\JsonResponse
+    public function destroyAdmin(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
-        $user->delete();
+        $user->where('role','admin')->delete();
         return response()->json([
             'message' => 'Instructor deleted successfully',
             'user' => new UserResource($user)

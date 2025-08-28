@@ -2,11 +2,13 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
 class CourseCreated extends Notification
 {
-    private $course;
+    use Queueable;
+    public $course;
 
     public function __construct($course)
     {
@@ -18,7 +20,7 @@ class CourseCreated extends Notification
         return ['database'];
     }
 
-    public function toArray($notifiable): array
+    public function toArray(object $notifiable): array
     {
         return [
             'message' => 'A new course has been created: ' . $this->course->title,

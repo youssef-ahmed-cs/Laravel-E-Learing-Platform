@@ -2,7 +2,7 @@
 POST {{URL}}/courses
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 9|PlnPGpnnhFkWC9pVWPtGwKwW8Cttb3UT2eguCX7ad775a816
+Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
 
 {
     "title": "C++",

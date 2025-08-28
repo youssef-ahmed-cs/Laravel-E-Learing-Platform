@@ -21,7 +21,7 @@ class RegisterRequest extends FormRequest
             'role' => 'required|string|in:student,admin,instructor',
             'username' => 'required|string|max:255|unique:users',
             'bio' =>  'nullable|string',
-            'phone' => 'nullable|string',
+            'phone' => 'nullable|numeric',
         ];
     }
 }

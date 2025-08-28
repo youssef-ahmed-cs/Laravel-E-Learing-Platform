@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $user = auth()->user();
         $notifications = $user->notifications()
@@ -16,21 +17,7 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function reviewNotifications()
-    {
-        $user = auth()->user();
-        $reviewNotifications = $user->notifications()
-            ->where('type', 'App\\Notifications\\NewReview')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return response()->json([
-            'success' => true,
-            'notifications' => $reviewNotifications->items(),
-        ]);
-    }
-
-    public function markAsRead($id)
+    public function markAsRead($id): JsonResponse
     {
         $user = auth()->user();
         $notification = $user->notifications()->find($id);
