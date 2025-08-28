@@ -1,18 +1,15 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryManagement\StoreCategoryRequest;
 use App\Http\Requests\CategoryMenegemnt\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\CourseResource;
 use App\Models\Category;
-use App\Models\Course;
-use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
-    public function index(){
+    public function index(): JsonResponse
+    {
         $this->authorize('viewAny', Category::class);
         $categories = Category::with('courses')->pluck('name', 'id');
         return response()->json([
@@ -20,13 +17,15 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show($id){
+    public function show($id): CategoryResource
+    {
         $category = Category::with('courses')->findOrFail($id);
         $this->authorize('view', $category);
         return new CategoryResource($category);
     }
 
-    public function store(StoreCategoryRequest $request){
+    public function store(StoreCategoryRequest $request): JsonResponse
+    {
         $this->authorize('create', Category::class);
         $category = Category::create($request->validated());
         return response()->json([
@@ -35,7 +34,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(UpdateCategoryRequest $request, $id): JsonResponse
     {
         $category = Category::findOrFail($id);
         $this->authorize('update', $category);
@@ -47,7 +46,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         $this->authorize('delete', $category);
         $category->delete();
@@ -56,7 +55,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function getCourses(Category $category)
+    public function getCourses(Category $category): JsonResponse
     {
         $this->authorize('view', $category);
         $courses = $category->courses()->get(['id', 'title', 'description','status', 'level', 'duration', 'instructor_id']);

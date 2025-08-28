@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -34,24 +35,19 @@ class User extends Authenticatable
         ];
     }
 
-    public function courses()
+    public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'instructor_id');
     }
 
-    public function enrollments()
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
-    }
-
-    public function lessonProgress()
-    {
-        return $this->hasMany(Lesson_progress::class);
     }
 
 }

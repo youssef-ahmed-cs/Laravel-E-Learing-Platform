@@ -49,3 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 });
 
+Route::fallback(static function () {
+    return response()->json(['message' => 'Resource not found.'], 404);
+});

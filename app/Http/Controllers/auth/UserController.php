@@ -7,6 +7,7 @@ use App\Http\Requests\UsersManagment\StoreUserRequest;
 use App\Http\Requests\UsersManagment\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $request->validated();
         $user = User::create($request->validated());
@@ -57,21 +58,21 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function showInstructor(User $user)
+    public function showInstructor(User $user): UserResource
     {
         $this->authorize('view', $user);
         $instructor = $user->where('role', 'instructor')->first();
         return new UserResource($instructor);
     }
 
-    public function showAdmin(User $user)
+    public function showAdmin(User $user): UserResource
     {
         $this->authorize('viewAdmins', $user);
         $admin = $user->where('role', 'admin')->first();
         return new UserResource($admin);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\JsonResponse
     {
         $this->authorize('update', $user);
         $user->update($request->validated());
@@ -82,7 +83,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
         $user->delete();
@@ -92,7 +93,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function deleteInstructor(User $user)
+    public function deleteInstructor(User $user): \Illuminate\Http\JsonResponse
     {
         $this->authorize('delete', $user);
         $user->delete();
@@ -102,7 +103,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroyAdmin(User $user)
+    public function destroyAdmin(User $user): \Illuminate\Http\JsonResponse
     {
         $this->authorize('delete', $user);
         $user->delete();

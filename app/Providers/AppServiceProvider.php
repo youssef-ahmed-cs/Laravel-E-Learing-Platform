@@ -24,10 +24,10 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    protected $policies = [
+    protected array $policies = [
         User::class => UserPolicy::class,
         Course::class => CoursePolicy::class,
         Review::class => ReviewPolicy::class,
-        Enrollment::class => EnrollmentPolicy::class,
+        Enrollment::class => EnrollmentPolicy::class
     ];
 }
