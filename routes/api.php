@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\auth\UserController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EnrollmentController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\{CourseController,
+    EnrollmentController,
+    LessonController,
+    NotificationController,
+    ReviewController,
+    auth\UserController
+};
+
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
