@@ -2,11 +2,11 @@
 POST {{URL}}/courses
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
+Authorization: Bearer 15|6hFsLL5oFgXkHxuKI2B7GXvyFNC5y7W7uPtL7Wwq483c53f3
 
 {
     "title": "C++",
-    "description": "cpp lang low level",
+    "description": "cpp lang low level dsdf sdfsd fsdfs df sdf sdf sfa fd D F DFAS DF DSF SAD F SDF ASD F SDF ASD F FD ADSF SDF FD SA F SDF AF DAS RWT ET TH FGH FA WEE QWEQWEQWE Q WQW  R TGDFGRE T DG T Y  AFSAF DFRT   W ER E R",
     "instructor_id": 3,
     "level": "beginner",
     "price": 89.65,

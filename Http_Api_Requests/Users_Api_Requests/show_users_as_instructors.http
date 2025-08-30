@@ -2,5 +2,5 @@
 GET {{url}}/users/instructors
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{auth_token}}
+Authorization: Bearer 18|hYu7GJmDLg0RdOlQ003AfZ4Ios97h742NCNX7jzLa8e21ea5
 ###

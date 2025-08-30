@@ -1,7 +1,7 @@
-### GET request to example server
+### GET request to fetch all notifications related to the authenticated user
 GET {{URL}}/notifications
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
+Authorization: Bearer 15|6hFsLL5oFgXkHxuKI2B7GXvyFNC5y7W7uPtL7Wwq483c53f3
 
 ###

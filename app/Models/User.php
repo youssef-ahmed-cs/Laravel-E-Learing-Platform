@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -21,11 +23,13 @@ class User extends Authenticatable
         'avatar',
         'phone',
         'username',
+        'login_count'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'login_count'
     ];
 
     protected static function boot(): void
@@ -37,7 +41,7 @@ class User extends Authenticatable
 //            $user->bio = $user->bio ?? 'This user prefers to keep an air of mystery about them.';
 //            $user->save();
 //        });
-
+//
 //        static ::creating(static function (User $user) {
 //            $user->email = strtolower($user->email);
 //            $user->username = strtolower($user->username);
@@ -51,6 +55,11 @@ class User extends Authenticatable
             $user->bio = $user->bio ?? 'This user prefers to keep an air of mystery about them.';
             #$user->save();
         });
+//        static ::updated(static function (User $user) {
+//            $user->email = strtolower($user->email);
+//            $user->bio = Str::limit($user->bio,30);
+//            $user->save();
+//        });
     }
 
     protected function casts(): array
@@ -74,6 +83,11 @@ class User extends Authenticatable
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
 }
