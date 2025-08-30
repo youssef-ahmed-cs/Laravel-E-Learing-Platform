@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CoursesManagment\StoreCourseRequest;
-use App\Http\Requests\CoursesManagment\UpdateCourseRequest;
-use App\Models\Course;
+use App\Http\Requests\CoursesManagment\{StoreCourseRequest, UpdateCourseRequest};
 use App\Http\Resources\CourseResource;
-use App\Models\User;
+use App\Models\{User, Course};
 use App\Notifications\CourseCreated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
@@ -44,7 +42,7 @@ class CourseController extends Controller
         ]);
     }
 
-    public function update(UpdateCourseRequest $request, Course $course)
+    public function update(UpdateCourseRequest $request, Course $course): CourseResource
     {
         $this->authorize('update', $course);
         $course->update($request->validated());
@@ -52,7 +50,7 @@ class CourseController extends Controller
         return new CourseResource($course);
     }
 
-    public function destroy(Course $course)
+    public function destroy(Course $course): JsonResponse
     {
         $this->authorize('delete', $course);
         $course->delete();
@@ -64,7 +62,7 @@ class CourseController extends Controller
         ], 204);
     }
 
-    public function getCategories(Course $course)
+    public function getCategories(Course $course): JsonResponse
     {
         $this->authorize('view', $course);
         $categories = $course->categories()->pluck('name', 'id');
@@ -74,7 +72,7 @@ class CourseController extends Controller
         ]);
     }
 
-    public function getLessons(Course $course)
+    public function getLessons(Course $course): JsonResponse
     {
         $this->authorize('view', $course);
         $lessons = $course->lessons()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);

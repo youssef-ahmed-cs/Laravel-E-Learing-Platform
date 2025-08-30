@@ -1,5 +1,6 @@
-### GET request for retrieving all reviews
-GET http://127.0.0.1:8000/api/reviews
+### GET request to
+GET {{url}}/reviews/summary
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer 1|6tfXQoJM1pnbQGG647MhzUQD3lTNnDwVcXrohd3vca35396b
+###

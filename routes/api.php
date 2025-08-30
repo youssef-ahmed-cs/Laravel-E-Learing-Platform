@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\{CourseController,
+use App\Http\Controllers\{CategoryController,
+    CourseController,
     EnrollmentController,
     LessonController,
     NotificationController,
@@ -9,7 +11,6 @@ use App\Http\Controllers\{CourseController,
     auth\UserController
 };
 
-use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -30,7 +31,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('enrollments', EnrollmentController::class);
+
+    // Move specific routes BEFORE the resource route
+    Route::get('/reviews/summary', [ReviewController::class, 'getReviewsSummary']);
+    Route::get('/reviews/{review}/students', [ReviewController::class, 'getReviewStudents']);
+    Route::get('/reviews/{review}/courses', [ReviewController::class, 'getReviewCourses']);
     Route::apiResource('reviews', ReviewController::class);
+
     Route::apiResource('lessons', LessonController::class);
 
     Route::get('/categories/{category}/courses', [CategoryController::class, 'getCourses']);
@@ -39,9 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('enrollments/{enrollment}/courses', [EnrollmentController::class, 'getCourses']);
     Route::get('enrollments/{enrollment}/students', [EnrollmentController::class, 'getStudents']);
 
-    Route::get('/reviews/summary', [ReviewController::class, 'getReviewsSummary']);
-    Route::get('/reviews/{review}/students', [ReviewController::class, 'getReviewStudents']);
-    Route::get('/reviews/{review}/courses', [ReviewController::class, 'getReviewCourses']);
     Route::get('/lessons/{id}/courses', [LessonController::class, 'getCourses']);
     Route::get('/courses/{id}/lessons', [CourseController::class, 'getLessons']);
 

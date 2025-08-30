@@ -2,5 +2,5 @@
 GET {{URL}}/user
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 5|BFEX9TmKbPhfsLZDbEDKonTaX0l4bcJt76lYPUew1e0d29ce
+Authorization: Bearer 8|Yll32kVZpve5d1PceJ0jzsy73E6CRTe87eIs2cE5053f4599
 ###

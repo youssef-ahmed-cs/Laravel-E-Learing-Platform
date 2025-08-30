@@ -7,6 +7,7 @@ use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\User;
 use App\Notifications\NewReview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
 
 class ReviewController extends Controller
@@ -34,14 +35,12 @@ class ReviewController extends Controller
         return new ReviewResource($review);
     }
 
-    public function store(StoreReviewRequest $request, Review $review)
+    public function store(StoreReviewRequest $request, Review $review): ReviewResource
     {
         $this->authorize('create', $review);
         $review = Review::create($request->validated());
         $admins = User::where('role', 'admin')->get();
-        foreach ($admins as $admin)
-            $admin->notify(new NewReview($review));
-
+        Notification::send($admins, new NewReview($review));
         return new ReviewResource($review);
     }
 
@@ -52,30 +51,29 @@ class ReviewController extends Controller
         return new ReviewResource($review);
     }
 
-    public function getReviewsSummary()
+    public function getReviewsSummary(): JsonResponse
     {
         $this->authorize('viewAny', Review::class);
-        $reviews = Review::with(['user', 'course'])->latest()->get();
 
         $summary = [
-            'total_reviews' => $reviews->count(),
-            'average_rating' => $reviews->avg('rating'),
+            'total_reviews' => Review::count(),
+            'average_rating' => round(Review::avg('rating') ?: 0, 2),
         ];
-
         return response()->json($summary);
     }
 
-    public function getReviewStudents(Review $review)
+
+    public function getReviewStudents(Review $review): JsonResponse
     {
         $this->authorize('view', $review);
         $students = $review->user->get();
         return response()->json($students);
     }
 
-    public function getReviewCourses(Review $review)
+    public function getReviewCourses(Review $review): JsonResponse
     {
         $this->authorize('view', $review);
-        $courses = $review->course->get();
+        $courses = $review->course()->get();
         return response()->json($courses);
     }
 }

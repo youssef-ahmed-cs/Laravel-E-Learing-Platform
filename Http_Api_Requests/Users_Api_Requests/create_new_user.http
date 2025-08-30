@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "admin12@gmail.com",
+    "email": "stu1@gmail.com",
     "password": "44611697",
     "password_confirmation": "44611697",
-    "name": "admin12",
-    "username": "admin12",
-    "role": "admin",
-    "phone": "35351555",
-    "bio": "I am an admin user."
+    "name": "stu user1",
+    "username": "student1",
+    "role": "student",
+    "phone": "3535159579",
+    "bio": "I am an stu1 user."
 }
 ###

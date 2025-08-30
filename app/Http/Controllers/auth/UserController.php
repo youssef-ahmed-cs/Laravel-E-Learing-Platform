@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UsersManagment\StoreUserRequest;
-use App\Http\Requests\UsersManagment\UpdateUserRequest;
+use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -21,6 +20,12 @@ class UserController extends Controller
             ], 404);
         }
         return UserResource::collection($users);
+    }
+
+    public function show(User $user): UserResource{
+        $this->authorize('view', $user);
+        $user = $user->where('role', 'student')->first();
+        return new UserResource($user);
     }
 
     public function store(StoreUserRequest $request): JsonResponse

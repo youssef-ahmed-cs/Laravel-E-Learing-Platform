@@ -1,0 +1,7 @@
+### GET request to get student by id
+GET {{url}}/users/224
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer 8|Yll32kVZpve5d1PceJ0jzsy73E6CRTe87eIs2cE5053f4599
+###
+#8|Yll32kVZpve5d1PceJ0jzsy73E6CRTe87eIs2cE5053f4599

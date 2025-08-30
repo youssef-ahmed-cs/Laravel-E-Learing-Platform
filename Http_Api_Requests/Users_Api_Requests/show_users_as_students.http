@@ -2,5 +2,5 @@
 GET {{url}}/users
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{auth_token}}
+Authorization: Bearer 2|cChAHWV6LC3lCGY66ZmcPL2TSzlns6PuHNk8ovHSb45ed4c2
 ###

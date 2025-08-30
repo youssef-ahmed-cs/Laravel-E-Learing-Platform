@@ -24,7 +24,6 @@ class AuthController extends Controller
                 'token' => $token
             ]);
         }
-
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 

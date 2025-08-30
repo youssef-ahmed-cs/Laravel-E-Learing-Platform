@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Observers\CourseObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
+#[ObservedBy([CourseObserver::class])]
 class Course extends Model
 {
-    use HasFactory , Notifiable;
+    use HasFactory, Notifiable;
+
     protected $fillable = [
         'title',
         'description',
@@ -43,7 +47,7 @@ class Course extends Model
         return $this->hasMany(Enrollment::class);
     }
 
-    public function categories():belongsTo
+    public function categories(): belongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
