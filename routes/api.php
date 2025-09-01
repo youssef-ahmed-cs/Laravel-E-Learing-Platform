@@ -1,8 +1,8 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\{CategoryController,
+use App\Http\Controllers\{
+    CategoryController,
     CourseController,
     EnrollmentController,
     LessonController,
@@ -11,21 +11,24 @@ use App\Http\Controllers\{CategoryController,
     auth\UserController
 };
 
-
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::prefix('v1')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
-    #
+
     Route::get('/users/instructors', [UserController::class, 'instructors']);
     Route::get('/users/admins', [UserController::class, 'admins']);
     Route::get('/users/admin/{id}', [UserController::class, 'showAdmin']);
     Route::get('/users/instructor/{instructor}', [UserController::class, 'showInstructor']);
     Route::delete('/users/admin/{id}', [UserController::class, 'destroyAdmin']);
     Route::delete('/users/instructor/{id}', [UserController::class, 'deleteInstructor']);
+    Route::get('/users/search/{name}', [UserController::class, 'search']);
 
     Route::apiResource('users', UserController::class);
     Route::apiResource('courses', CourseController::class);
@@ -48,11 +51,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/lessons/{id}/courses', [LessonController::class, 'getCourses']);
     Route::get('/courses/{id}/lessons', [CourseController::class, 'getLessons']);
 
-    #routes for notification
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 });
 
-Route::fallback(static function () {
-    return response()->json(['message' => 'Resource not found.'], 404);
-});
+//Route::fallback(static function () {
+//    return response()->json(['message' => 'Resource not found.'], 404);
+//});
+
+//Route::any('any', static function () {
+//    return response()->json(['message' => 'try it'], 200);
+//});
+//
+//Route::match(['get', 'post'], 'match', static function () {
+//    return response()->json(['message' => 'try it match'], 200);
+//});
+
+Route::redirect('link', 'https://hyperskill.org/study-plan', 301);

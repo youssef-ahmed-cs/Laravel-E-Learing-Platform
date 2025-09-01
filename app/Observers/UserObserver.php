@@ -3,22 +3,26 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class UserObserver
 {
     public function creating(User $user): void
     {
-        $user->password = bcrypt($user->password);
         $user->bio = Str::limit($user->bio, 50);
         $user->email_verified_at = $user->email_verified_at ?? now();
+        $user->phone = "+20{$user->phone}";
     }
 
     public function updated(User $user): void
     {
         $user->bio = Str::limit($user->bio, 50);
-        $user->email_verified_at = $user->email_verified_at ?? now();
-        $user->save();
+        if ($user->isDirty('login_count')) {
+            Log::info("User login: {$user->email} - Count: {$user->login_count}");
+        }
     }
 
     /**
@@ -26,7 +30,11 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-
+        Log::warning("User deleted", [
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'deleted_at' => now()->format('Y-m-d H:i:s')
+        ]);
     }
 
     /**

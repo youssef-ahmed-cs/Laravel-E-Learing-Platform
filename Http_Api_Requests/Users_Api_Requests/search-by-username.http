@@ -1,0 +1,8 @@
+### GET request to search user by username
+@username = stu2003
+GET {{url}}/users/search/{{username}}
+Content-Type: application/json
+Authorization: Bearer 21|0bjCVgcGrNXJl5i7uyl9FZ4IkgrGTWrUX29LPXwJbcfc61ec
+Accept: application/json
+
+###

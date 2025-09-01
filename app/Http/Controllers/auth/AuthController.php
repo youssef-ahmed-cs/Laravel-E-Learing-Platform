@@ -15,8 +15,8 @@ class AuthController extends Controller
         $request->validated();
         $credentials = $request->only('email', 'password');
 
-        if (auth()->attempt($credentials)) {
-            $user = auth()->user();
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
             $user->increment('login_count');
 
@@ -46,8 +46,8 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->tokens()->delete(); #delete token for current user
-        $username = auth()->user()->username ?? 'username not found!';
+        Auth::user()->tokens()->delete(); #delete token for current user
+        $username = Auth::user()->username ?? 'username not found!';
         return response()->json([
             'message' => "$username Logged out successfully"
         ]);
@@ -64,7 +64,7 @@ class AuthController extends Controller
 
     public function refreshToken(): JsonResponse
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
 

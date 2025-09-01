@@ -1,15 +1,15 @@
-### GET request to example server
-POST {{URL}}/register
+### GET request to register new user
+POST {{URL}}/v1/register
 Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "admin9687@outlook.com",
+    "email": "youssef419386@fci.bu.edu.eg",
     "password": "44611697",
     "password_confirmation": "44611697",
-    "name": "Youssef",
-    "username": "admin9687",
+    "name": "Youssef Mohsen",
+    "username": "youssef419386",
     "role": "admin",
-    "phone": "01020781897"
+    "phone": "01557951673"
 }
 ###

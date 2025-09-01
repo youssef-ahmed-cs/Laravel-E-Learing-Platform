@@ -1,6 +1,6 @@
 ### GET request to get all students
-GET {{url}}/users/226
+DELETE {{url}}/users/235
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{auth_token}}
+Authorization: Bearer 21|0bjCVgcGrNXJl5i7uyl9FZ4IkgrGTWrUX29LPXwJbcfc61ec
 ###

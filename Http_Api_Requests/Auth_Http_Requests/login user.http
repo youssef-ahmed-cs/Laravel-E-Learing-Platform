@@ -1,10 +1,10 @@
 ### GET request to login new user
-POST {{URL}}/login
+POST {{URL}}/v1/login
 Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "hammes.domenico@example.com",
+    "email": "youssef419386@fci.bu.edu.eg",
     "password": "44611697"
 }
 ###
