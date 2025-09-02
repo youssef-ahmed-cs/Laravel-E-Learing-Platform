@@ -12,9 +12,7 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
+
     protected static ?string $password; #?string => null | string
 
     /**
@@ -31,7 +29,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'username' => fake()->userName(),
-            'role' => 'instructor', // Default role
+            'role' => 'student', // Default role
             'bio' => fake()->paragraph(),
             'phone' => fake()->unique()->phoneNumber(),
             'avatar' => 'https://i.pravatar.cc/300?u=' . fake()->unique()->email(),

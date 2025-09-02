@@ -2,4 +2,4 @@
 GET {{URL}}/courses
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 9|PlnPGpnnhFkWC9pVWPtGwKwW8Cttb3UT2eguCX7ad775a816
+Authorization: Bearer 1|YjY6SsMcrw5VyQx4BXQTFrMIrqdPkKotC0iXDeFt41e7b678

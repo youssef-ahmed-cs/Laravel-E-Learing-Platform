@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function getCourses(Category $category): JsonResponse
     {
         $this->authorize('view', $category);
-        $courses = $category->courses()->get(['id', 'title', 'description','status', 'level', 'duration', 'instructor_id']);
+        $courses = $category->courses()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);
         return response()->json([
             'category' => $category->name,
             'courses' => $courses

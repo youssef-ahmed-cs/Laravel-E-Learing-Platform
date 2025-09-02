@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    // List images (basic, minimal)
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return JsonResource::collection(Image::latest()->paginate(15));
     }
 
-    // Show single image
-    public function show(Image $image)
+    public function show(Image $image): JsonResource
     {
         return new JsonResource($image->load('imageable'));
     }
 
     // Store image record (minimal). Accepts either an uploaded file or a path string and imageable info
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
             'file' => ['nullable', 'file', 'image'],

@@ -1,15 +1,15 @@
 ### POST request to create a new user
-POST {{url}}/register
+POST {{url}}/v1/register
 Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "std9@gmail.com",
+    "email": "qdmin@gmail.com",
     "password": "44611697",
     "password_confirmation": "44611697",
     "name": "sd9 user1",
-    "username": "suser1",
-    "role": "instructor",
+    "username": "admin",
+    "role": "admin",
     "phone": "35351957994",
     "bio": "I am an stu1 user.sd sdf adf adf  asdf asd fd af f qwr eq we ew qr wre er q er e"
 }

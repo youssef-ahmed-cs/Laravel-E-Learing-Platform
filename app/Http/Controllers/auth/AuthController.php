@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequests\LoginRequest;
 use App\Http\Requests\AuthRequests\RegisterRequest;
+use App\Http\Resources\AuthResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class AuthController extends Controller
     public function user(): JsonResponse
     {
         return response()->json([
-            'user' => Auth::user()
+            'user' => new AuthResource(Auth::user())
         ]);
     }
     #Auth()::user() ==> return current authenticated user using facade declaration
