@@ -5,6 +5,7 @@ use App\Http\Requests\EnrollmenttManagement\StoreEnrollmentRequest;
 use App\Http\Requests\EnrollmenttManagement\UpdateEnrollmentRequest;
 use App\Http\Resources\EnrollmentResource;
 use App\Models\Enrollment;
+use Illuminate\Http\JsonResponse;
 
 class EnrollmentController extends Controller
 {
@@ -15,13 +16,13 @@ class EnrollmentController extends Controller
         return EnrollmentResource::collection($enrollments);
     }
 
-    public function show(Enrollment $enrollment)
+    public function show(Enrollment $enrollment): EnrollmentResource
     {
         $this->authorize('view', $enrollment);
         return new EnrollmentResource($enrollment);
     }
 
-    public function store(StoreEnrollmentRequest $request)
+    public function store(StoreEnrollmentRequest $request): JsonResponse
     {
         $this->authorize('create', Enrollment::class);
         $request->validated();
@@ -32,7 +33,7 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function update(UpdateEnrollmentRequest $request, Enrollment $enrollment)
+    public function update(UpdateEnrollmentRequest $request, Enrollment $enrollment): JsonResponse
     {
         $this->authorize('update', $enrollment);
         $enrollment->update($request->validated());
@@ -42,7 +43,7 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function destroy(Enrollment $enrollment)
+    public function destroy(Enrollment $enrollment): JsonResponse
     {
         $this->authorize('delete', $enrollment);
         $enrollment->delete();
@@ -52,7 +53,7 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function getCourses($id)
+    public function getCourses($id): JsonResponse
     {
         $enrollment = Enrollment::findOrFail($id);
         $this->authorize('view', $enrollment);
@@ -62,7 +63,7 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function getStudents($id)
+    public function getStudents($id): JsonResponse
     {
         $enrollment = Enrollment::findOrFail($id);
         $this->authorize('view', $enrollment);

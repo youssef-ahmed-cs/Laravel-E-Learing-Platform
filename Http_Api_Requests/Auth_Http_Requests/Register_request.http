@@ -1,15 +1,15 @@
 ### GET request to register new user
-POST {{URL}}/v1/register
+POST {{url}}/v1/register
 Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "youssef419386@fci.bu.edu.eg",
+    "email": "87@qaliobia2.moe.edu.eg",
     "password": "44611697",
     "password_confirmation": "44611697",
-    "name": "Youssef Mohsen",
-    "username": "youssef419386",
+    "name": "Youssef A Mohsen",
+    "username": "444338042",
     "role": "admin",
-    "phone": "01557951673"
+    "phone": "15353575648"
 }
 ###

@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens , softDeletes;
     protected $fillable = [
         'name',
         'email',
@@ -30,16 +31,6 @@ class User extends Authenticatable
         'login_count'
     ];
 
-//    protected static function boot(): void
-//    {
-//        parent::boot();
-//        static::saving(static function (User $user) {
-//            $user->email = strtolower($user->email);
-//            $user->username = strtolower($user->username);
-//            $user->bio = $user->bio ?? 'This user prefers to keep an air of mystery about them.';
-//            #$user->save();
-//        });
-//    }
 
     protected function casts(): array
     {
@@ -71,3 +62,4 @@ class User extends Authenticatable
     }
 
 }
+//PS D:\Laravel_Storm> php artisan make:migration add_column_deleted_at_to_users_table
