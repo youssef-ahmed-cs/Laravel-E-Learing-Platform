@@ -30,16 +30,6 @@ class User extends Authenticatable
         'login_count'
     ];
 
-//    protected static function boot(): void
-//    {
-//        parent::boot();
-//        static::saving(static function (User $user) {
-//            $user->email = strtolower($user->email);
-//            $user->username = strtolower($user->username);
-//            $user->bio = $user->bio ?? 'This user prefers to keep an air of mystery about them.';
-//            #$user->save();
-//        });
-//    }
 
     protected function casts(): array
     {

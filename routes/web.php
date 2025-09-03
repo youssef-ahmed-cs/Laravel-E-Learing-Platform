@@ -14,3 +14,5 @@ Route::get('/user/name', static function (Request $request) {
 Route::get('/user/redirect', static function () {
     return to_route('home');
 });
+
+Route::view('/layout', 'layout')->name('layout');

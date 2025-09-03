@@ -5,8 +5,10 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserResource;
+use App\Mail\WelcomeEmailMail;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -33,7 +35,7 @@ class UserController extends Controller
     {
         $request->validated();
         $user = User::create($request->validated());
-
+        Mail::to($user['email'])->send(new WelcomeEmailMail($user->name));
         return response()->json([
             'message' => 'User created successfully',
             'user' => new UserResource($user)
