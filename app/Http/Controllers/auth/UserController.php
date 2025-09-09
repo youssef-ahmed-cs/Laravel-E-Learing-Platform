@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserCollection;
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserResource;
 use App\Mail\WelcomeEmailMail;
@@ -18,14 +15,13 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        try {
-            $users = User::where('role', 'student')->paginate(10);
-        } catch (\Exception $e) {
+        $users = User::where('role', 'student')->paginate(10);
+        if (!$users) {
             return response()->json([
-                'message' => $e->getMessage(),
+                'message' => 'No users found',
             ], 404);
         }
-        return new UserCollection($users);
+        return UserResource::collection($users);
     }
 
     public function show(User $user): UserResource
@@ -39,7 +35,7 @@ class UserController extends Controller
     {
         $request->validated();
         $user = User::create($request->validated());
-        //Mail::to($user['email'])->send(new WelcomeEmailMail($user->name));
+        Mail::to($user['email'])->send(new WelcomeEmailMail($user->name));
         return response()->json([
             'message' => 'User created successfully',
             'user' => new UserResource($user)
@@ -94,21 +90,19 @@ class UserController extends Controller
             'user' => new UserResource($user)
         ]);
     }
-
     public function destroy(User $user): JsonResponse
     {
-        try {
-            $this->authorize('delete', $user);
-            $user->delete();
+        $this->authorize('delete', $user);
+        if ($user->role !== 'student') {
             return response()->json([
-                'message' => 'Student deleted successfully',
-                'Name' => (string)$user->name
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
+                'message' => 'User is not a student'
             ], 400);
         }
+        $user->delete();
+        return response()->json([
+            'message' => 'Student deleted successfully',
+            'Name' => (string)$user->name
+        ]);
     }
 
 
@@ -135,17 +129,15 @@ class UserController extends Controller
     public function search($name)
     {
         $this->authorize('viewAny', User::class);
-        try{
-            $users = User::where('username', 'like', '%' . $name . '%')
-                ->get();
-        }
-        catch (ModelNotFoundException $e){
+        $users = User::where('username', 'like', '%' . $name . '%')
+            ->get();
+
+        if ($users->isEmpty()) {
             return response()->json([
-                'message' => $e->getMessage(),
-                'line' => $e->getLine()
+                'message' => 'No users found',
             ], 404);
         }
-        return new UserCollection($users);
 
+        return UserResource::collection($users);
     }
 }
