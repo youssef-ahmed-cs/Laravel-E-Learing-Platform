@@ -22,7 +22,8 @@ class User extends Authenticatable
         'avatar',
         'phone',
         'username',
-        'login_count'
+        'login_count',
+        'deleted_at'
     ];
 
     protected $hidden = [

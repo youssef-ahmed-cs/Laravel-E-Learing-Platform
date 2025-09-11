@@ -15,6 +15,8 @@ class CourseObserver
 
     public function created(Course $course): void
     {
+        $course->price = "$course->price $";
+        $course->save();
     }
 
     public function updating(Course $course): void
