@@ -2,10 +2,6 @@
 GET http://127.0.0.1:8000/api/user
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer 14|5ITqhcWdlEhyoZBTuLl1dxtGDqBixO5mAub2TzNvfeeaa3bb
+Authorization: Bearer 13|XmylAfKVxrnPLaDZgCRZ9PlOPeEltVD8Rv2ZaDRH2d1c2ac9
 ###
-#header = return more info about api don't responce data not contains body data
-#to show header of api you can use HEAD method.
 
-#body = return data where responsed from api
-#body from GET method:

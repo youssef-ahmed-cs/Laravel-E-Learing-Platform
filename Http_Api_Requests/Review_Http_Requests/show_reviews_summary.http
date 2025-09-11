@@ -2,5 +2,5 @@
 GET {{url}}/reviews/summary
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 1|6tfXQoJM1pnbQGG647MhzUQD3lTNnDwVcXrohd3vca35396b
+Authorization: Bearer 10|I2jRxIuzzC4Y1gT0QXKA9vU7bqwH76woATsLkqChd8c3c57a
 ###

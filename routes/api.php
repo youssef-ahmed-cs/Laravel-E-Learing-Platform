@@ -80,3 +80,5 @@ Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-d
 //    Route::get('/notifications', 'index');
 //    Route::post('/notifications/{id}/read', 'markAsRead');
 //});
+//Route::get('reviews/summary', [ReviewController::class, 'getReviewsSummary'])
+//    ->middleware('can:is_Admin');

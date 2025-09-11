@@ -10,21 +10,17 @@ use App\Policies\CoursePolicy;
 use App\Policies\EnrollmentPolicy;
 use App\Policies\ReviewPolicy;
 use App\Policies\UserPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
+
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         Gate::define('is_Admin', static function (User $user) {

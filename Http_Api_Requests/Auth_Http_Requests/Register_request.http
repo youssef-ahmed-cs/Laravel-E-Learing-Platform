@@ -4,12 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "87@qaliobia2.moe.edu.eg",
-    "password": "44611697",
-    "password_confirmation": "44611697",
+    "email": "vovo120@gamil.com",
+    "password": "44611697Q",
+    "password_confirmation": "44611697Q",
     "name": "Youssef A Mohsen",
-    "username": "444338042",
+    "username": "Novo012",
     "role": "admin",
-    "phone": "15353575648"
+    "phone": "010250151770",
+    "bio": "Hello, I'm Youssef A Mohsen"
 }
 ###

@@ -8,18 +8,19 @@ use App\Models\Review;
 use App\Models\User;
 use App\Notifications\NewReview;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Notification;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Review::class);
         $reviews = Review::with(['user', 'course'])->latest()->paginate(10);
         return ReviewResource::collection($reviews);
     }
 
-    public function destroy(Review $review, User $user)
+    public function destroy(Review $review, User $user): JsonResponse
     {
         $this->authorize('delete', $review);
         $review->delete();
@@ -29,7 +30,7 @@ class ReviewController extends Controller
         ]);
     }
 
-    public function show(Review $review)
+    public function show(Review $review): ReviewResource
     {
         $this->authorize('view', $review);
         return new ReviewResource($review);
@@ -44,7 +45,7 @@ class ReviewController extends Controller
         return new ReviewResource($review);
     }
 
-    public function update(StoreReviewRequest $request, Review $review)
+    public function update(StoreReviewRequest $request, Review $review): ReviewResource
     {
         $this->authorize('update', $review);
         $review->update($request->validated());
@@ -53,8 +54,8 @@ class ReviewController extends Controller
 
     public function getReviewsSummary(): JsonResponse
     {
-        $this->authorize('viewAny', Review::class);
-
+        //$this->authorize('viewAny', Review::class);
+        $this->authorize('is_Admin');
         $summary = [
             'total_reviews' => Review::count(),
             'average_rating' => round(Review::avg('rating') ?: 0, 2),
