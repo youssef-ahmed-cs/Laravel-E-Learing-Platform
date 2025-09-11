@@ -27,7 +27,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('is_Admin', static function (User $user) {
+            return $user->role === 'admin';
+        });
+
+        Gate::define('is_instructor', static function (User $user) {
+            return $user->role === 'instructor';
+        });
+
+        Gate::define('is_student', static function (User $user) {
+            return $user->role === 'student';
+        });
     }
 
     protected array $policies = [
