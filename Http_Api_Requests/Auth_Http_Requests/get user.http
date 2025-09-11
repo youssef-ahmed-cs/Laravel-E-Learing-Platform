@@ -1,5 +1,5 @@
-### GET request to example server
-HEAD http://127.0.0.1:8000/api/user
+### GET request to get authenticated user
+GET http://127.0.0.1:8000/api/user
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer 14|5ITqhcWdlEhyoZBTuLl1dxtGDqBixO5mAub2TzNvfeeaa3bb
