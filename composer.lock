@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec5d549a1d28af96882fb94cd56afdcf",
+    "content-hash": "abeea286bac05dc0547cdab97a6f7704",
     "packages": [
         {
             "name": "brick/math",
@@ -6214,6 +6214,97 @@
                 }
             ],
             "time": "2025-08-08T12:00:00+00:00"
+        },
+        {
+            "name": "grazulex/laravel-devtoolbox",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grazulex/laravel-devtoolbox.git",
+                "reference": "d5f14572362a95f434f7aeba49ac843e4ea9e920"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grazulex/laravel-devtoolbox/zipball/d5f14572362a95f434f7aeba49ac843e4ea9e920",
+                "reference": "d5f14572362a95f434f7aeba49ac843e4ea9e920",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11.0|^12.0",
+                "nesbot/carbon": "^3.10",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^4.2",
+                "larastan/larastan": "^3.4",
+                "laravel/pint": "^1.22",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.8",
+                "pestphp/pest-plugin-laravel": "^3.2",
+                "rector/rector": "^2.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "Required for command `php artisan dev:generate-migration` to generate migrations from models"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Grazulex\\LaravelDevtoolbox\\LaravelDevtoolboxServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Grazulex\\LaravelDevtoolbox\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Marc Strauven",
+                    "email": "jms@grazulex.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Swiss-army artisan CLI for Laravel — Scan, inspect, debug, and explore every aspect of your Laravel application from the command line.",
+            "homepage": "https://github.com/grazulex/laravel-devtoolbox",
+            "keywords": [
+                "Devtools",
+                "artisan",
+                "cli",
+                "debug",
+                "inspector",
+                "laravel",
+                "pest",
+                "php8",
+                "scanner"
+            ],
+            "support": {
+                "docs": "https://github.com/Grazulex/laravel-devtoolbox/wiki",
+                "forum": "https://github.com/Grazulex/laravel-devtoolbox/discussions",
+                "issues": "https://github.com/Grazulex/laravel-devtoolbox/issues",
+                "source": "https://github.com/Grazulex/laravel-devtoolbox",
+                "wiki": "https://github.com/Grazulex/laravel-devtoolbox/wiki"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/Grazulex",
+                    "type": "buy_me_a_coffee"
+                },
+                {
+                    "url": "https://paypal.me/strauven",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Grazulex",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-09-03T12:19:02+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",

@@ -1,15 +1,16 @@
 ### GET request to register new user
-POST {{URL}}/v1/register
+POST {{url}}/v1/register
 Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "jow544445@gmail.com",
-    "password": "44611697",
-    "password_confirmation": "44611697",
+    "email": "vovo120fg0@gamil.com",
+    "password": "44611697Qo",
+    "password_confirmation": "44611697Qo",
     "name": "Youssef A Mohsen",
-    "username": "jow544445",
-    "role": "student",
-    "phone": "015354354564"
+    "username": "vovo120fg0",
+    "role": "admin",
+    "phone": "010750851770",
+    "bio": "Hello, I'm Youssef A Mohsen from Egypt."
 }
 ###

@@ -8,7 +8,8 @@ use Illuminate\Notifications\Notification;
 class CourseCreated extends Notification
 {
     use Queueable;
-    public $course;
+
+    public object $course;
 
     public function __construct($course)
     {

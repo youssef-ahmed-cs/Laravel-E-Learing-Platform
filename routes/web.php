@@ -16,3 +16,14 @@ Route::get('/user/redirect', static function () {
 });
 
 Route::view('/layout', 'layout')->name('layout');
+
+Route::any('/data', static function () {
+    return response()->json([
+        'lang' => 'PHP'
+    ]);
+});
+Route::any('/data-app', static function () {
+    return response()->json([
+        'lang' => 'PHP'
+    ]);
+});

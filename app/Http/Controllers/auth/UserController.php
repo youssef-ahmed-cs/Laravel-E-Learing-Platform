@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserResource;
 use App\Mail\WelcomeEmailMail;
@@ -21,14 +23,20 @@ class UserController extends Controller
                 'message' => 'No users found',
             ], 404);
         }
-        return UserResource::collection($users);
+        return new UserCollection($users);
     }
 
-    public function show(User $user): UserResource
+    public function show(User $user)
     {
         $this->authorize('view', $user);
-        $user = $user->where('role', 'student')->first();
-        return new UserResource($user);
+        try {
+            $user = $user->where('role', 'student')->first();
+            return new UserResource($user);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'Error' => $e->getMessage()
+            ]);
+        }
     }
 
     public function store(StoreUserRequest $request): JsonResponse
@@ -63,7 +71,7 @@ class UserController extends Controller
                 'message' => 'No admins found',
             ], 404);
         }
-        return UserResource::collection($users);
+        return new UserCollection($users);
     }
 
     public function showInstructor(User $user): UserResource
@@ -90,6 +98,7 @@ class UserController extends Controller
             'user' => new UserResource($user)
         ]);
     }
+
     public function destroy(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
@@ -138,6 +147,6 @@ class UserController extends Controller
             ], 404);
         }
 
-        return UserResource::collection($users);
+        return new UserCollection($users);
     }
 }

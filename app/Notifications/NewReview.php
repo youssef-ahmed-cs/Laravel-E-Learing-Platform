@@ -11,9 +11,6 @@ class NewReview extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
     protected $review;
     public function __construct($review)
     {

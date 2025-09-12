@@ -1,28 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\{
+    auth\AuthController,
+    auth\UserController,
     CategoryController,
     CourseController,
     EnrollmentController,
     LessonController,
     NotificationController,
-    ReviewController,
-    auth\UserController
+    ReviewController
 };
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
         Route::post('/refresh-token', 'refreshToken');
+        Route::post('update-password', 'updatePassword');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -33,46 +33,53 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/users/admin/{id}', 'destroyAdmin');
         Route::delete('/users/instructor/{id}', 'deleteInstructor');
         Route::get('/users/search/{name}', 'search');
-        Route::apiResource('users', UserController::class);
-
     });
+    Route::apiResource('users', UserController::class);
 
     Route::controller(CourseController::class)->group(function () {
         Route::get('/courses/{course}/category', 'getCategories');
         Route::get('/courses/{id}/lessons', 'getLessons');
-        Route::apiResource('courses', CourseController::class);
     });
+    Route::apiResource('courses', CourseController::class);
 
     Route::controller(EnrollmentController::class)->group(function () {
         Route::get('enrollments/{enrollment}/courses', 'getCourses');
         Route::get('enrollments/{enrollment}/students', 'getStudents');
-        Route::apiResource('enrollments', EnrollmentController::class);
     });
+    Route::apiResource('enrollments', EnrollmentController::class);
 
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories/{category}/courses', 'getCourses');
-        Route::apiResource('categories', CategoryController::class);
     });
+    Route::apiResource('categories', CategoryController::class);
 
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/reviews/{review}/students', 'getReviewStudents');
         Route::get('/reviews/{review}/courses', 'getReviewCourses');
         Route::get('/reviews/summary', 'getReviewsSummary');
-        Route::apiResource('reviews', ReviewController::class);
     });
+    Route::apiResource('reviews', ReviewController::class);
 
     Route::controller(LessonController::class)->group(function () {
         Route::get('/lessons/{lesson}/courses', 'getCourses');
         Route::get('/lessons/{lesson}/reviews', 'getReviews');
         Route::get('/lessons/{lesson}/students', 'getStudents');
         Route::get('/lessons/{lesson}/enrollments', 'getEnrollments');
-        Route::apiResource('lessons', LessonController::class);
-
     });
+    Route::apiResource('lessons', LessonController::class);
 
     Route::controller(NotificationController::class)->group(function () {
-        Route::get('/notifications', [NotificationController::class, 'index']);
-        Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+        Route::get('/notifications', 'index');
+        Route::post('/notifications/{id}/read', 'markAsRead');
     });
 });
 
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
+Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+
+//Route::controller(NotificationController::class)->group(function () {
+//    Route::get('/notifications', 'index');
+//    Route::post('/notifications/{id}/read', 'markAsRead');
+//});
+//Route::get('reviews/summary', [ReviewController::class, 'getReviewsSummary'])
+//    ->middleware('can:is_Admin');
