@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
         Route::post('/refresh-token', 'refreshToken');
+        Route::post('update-password', 'updatePassword');
     });
 
     Route::controller(UserController::class)->group(function () {
