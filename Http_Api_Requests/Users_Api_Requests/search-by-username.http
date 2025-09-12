@@ -1,7 +1,7 @@
 ### GET request to search user by username
-GET {{url}}/users/search/wglover
+GET {{url}}/users/search/yousse
 Content-Type: application/json
-Authorization: Bearer 16|cL44vEDdpfB5law29TzonegIvCivZblbwSKwHzCvc1bcba14
+Authorization: Bearer 25|Qr372QbeeLug4iEJ1JjeTrRNxtgzpEKlGKRcR3IMe156d772
 Accept: application/json
 
 ###

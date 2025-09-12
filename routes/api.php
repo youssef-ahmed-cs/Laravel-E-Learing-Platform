@@ -17,7 +17,7 @@ Route::prefix('v1')->middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
@@ -76,4 +76,3 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
 //Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
-

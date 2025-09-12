@@ -1,6 +1,6 @@
 ### GET request to example server
-POST {{URL}}/refresh-token
-Authorization: Bearer 6|VmQ0PTBvSxm4H0rEKN2PbPWkXQ1lZhsoqES45q18e3a071ec
+POST {{url}}/refresh-token
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3NjY4NTI5LCJleHAiOjE3NTc2NzIxMjksIm5iZiI6MTc1NzY2ODUyOSwianRpIjoiV2J4RkhNTGl5Z0dzZVQ5ZyIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoiYWRtaW4ifQ.eCbuTLq8AzM5AeNZtN3eoI5SA4zx2hD4K_zMUQoh8TE
 Accept: application/json
 Content-Type: application/json
 ###

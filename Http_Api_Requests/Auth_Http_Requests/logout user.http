@@ -1,6 +1,5 @@
-### GET request to example server
-POST {{URL}}/logout
-Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
+### POST request to example server
+POST {{url}}/logout
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3JlZnJlc2gtdG9rZW4iLCJpYXQiOjE3NTc2Njg1MjksImV4cCI6MTc1NzY3MjU2OSwibmJmIjoxNzU3NjY4OTY5LCJqdGkiOiJJODdjN01odlRHdjdXY2lWIiwic3ViIjoiMzIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyIsInJvbGUiOiJhZG1pbiJ9.9mhs4NlLnhNY7gm9g5KXntugvsNW7OdwATI1jNXHj4k
 Accept: application/json
 Content-Type: application/json
-###

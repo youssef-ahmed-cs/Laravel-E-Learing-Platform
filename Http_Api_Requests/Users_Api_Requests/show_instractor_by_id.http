@@ -1,6 +1,6 @@
 ### GET request to get instructor by id
-GET {{url}}/users/instructor/1
+GET {{url}}/users/instructor/311
 Accept: application/json
 Content-Type: application/json
-Authorization: {{auth_token}}
+Authorization: Bearer 26|L8OBgUFf4azT0OwQm7KrHxUpOAMvZPsRohhX8Ita94ad4caa
 ###

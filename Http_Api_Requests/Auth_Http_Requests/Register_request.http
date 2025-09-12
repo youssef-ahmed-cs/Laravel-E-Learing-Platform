@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "YoussefAhmed@gamil.com",
+    "email": "YoussefAhmed78@gamil.com",
     "password": "44611697Qoii",
     "password_confirmation": "44611697Qoii",
     "name": "Youssef A Mohsen",
-    "username": "YoussefAhmedFci",
+    "username": "YoussefAhmedFci78",
     "role": "admin",
-    "phone": "010750851870",
+    "phone": "0107508791870",
     "bio": "Hello, I'm Youssef A Mohsen from Egypt."
 }
 ###
