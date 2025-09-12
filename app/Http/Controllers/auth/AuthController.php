@@ -37,10 +37,16 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $request->validated();
-        if ($user = User::create($request->validated())) {
+        $data = $request->validated();
+        $user = Auth::user();
+        if ($request->hasFile('avatar')) {
+            $avatarName = $user->id . '_' . $user->name . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
+            $data['avatar'] = $avatarPath;
+        }
+
+        if ($user = User::create($data)) {
             $token = $user->createToken('auth_token')->plainTextToken;
-            //Mail::to($user['email'])->send(new WelcomeEmailMail($user->name));
             return response()->json([
                 'message' => 'User registered successfully',
                 'user' => $user,
@@ -49,6 +55,7 @@ class AuthController extends Controller
         }
         return response()->json(['message' => 'User registration failed'], 500);
     }
+
 
     public function logout(Request $request): JsonResponse
     {
@@ -83,7 +90,7 @@ class AuthController extends Controller
         $request->validated();
         $user = Auth::user();
 
-        if (!\Hash::check($request->current_password, $user->password)) {
+        if (!Hash::check($request->current_password, $user->password)) {
             return response()->json(['message' => 'Current password is incorrect'], 400);
         }
         $user->update([

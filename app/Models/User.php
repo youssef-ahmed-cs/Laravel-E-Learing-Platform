@@ -63,4 +63,3 @@ class User extends Authenticatable
     }
 
 }
-//PS D:\Laravel_Storm> php artisan make:migration add_column_deleted_at_to_users_table

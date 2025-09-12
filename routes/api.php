@@ -74,12 +74,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
-Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+//Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
+//Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
 
-//Route::controller(NotificationController::class)->group(function () {
-//    Route::get('/notifications', 'index');
-//    Route::post('/notifications/{id}/read', 'markAsRead');
-//});
-//Route::get('reviews/summary', [ReviewController::class, 'getReviewsSummary'])
-//    ->middleware('can:is_Admin');
