@@ -76,3 +76,4 @@ Route::middleware('auth:api')->group(function () {
 
 //Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
 //Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+Route::get('/collection',[UserController::class,'collections']);

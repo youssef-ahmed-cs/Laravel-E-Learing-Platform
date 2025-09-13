@@ -1,5 +1,5 @@
 ### GET request to example server
-GET http://127.0.0.1:8000/http://127.0.0.1:8000
+GET http://127.0.0.1:8000/api/collection
 Accept: application/json
 Content-Type: application/json
 ###

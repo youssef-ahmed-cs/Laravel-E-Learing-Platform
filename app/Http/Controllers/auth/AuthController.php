@@ -50,9 +50,7 @@ class AuthController extends Controller
         }
 
         if ($request->hasFile('avatar')) {
-            $request->validate([
-                'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+            $request->validated();
             $avatarName = $user->id . '_' . $user->name . '.' . $request->file('avatar')->getClientOriginalExtension();
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
