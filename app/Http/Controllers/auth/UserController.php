@@ -141,4 +141,13 @@ class UserController extends Controller
 
         return UserResource::collection($users);
     }
+
+    public function collections(): array
+    {
+        $users = collect([
+            ['name' => 'Alice'],
+            ['name' => 'Bob']
+        ]);
+        return $users->firstWhere('name', 'Alice');
+    }
 }
