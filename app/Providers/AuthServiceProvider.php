@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\Profile;
 use App\Models\Review;
 use App\Models\User;
 use App\Policies\CoursePolicy;
 use App\Policies\EnrollmentPolicy;
+use App\Policies\ProfilePolicy;
 use App\Policies\ReviewPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -40,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Course::class => CoursePolicy::class,
         Review::class => ReviewPolicy::class,
-        Enrollment::class => EnrollmentPolicy::class
+        Enrollment::class => EnrollmentPolicy::class,
+        Profile::class => ProfilePolicy::class,
     ];
 }

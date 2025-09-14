@@ -17,7 +17,7 @@ class AuthResource extends JsonResource
             'Bio' => $this->bio,
             'Phone' => $this->phone,
             'Username' => $this->username,
-            'Photo' => $this->avatar,
+            'Photo' => $this->whenNotNull($this->avatar),
             'Created At' => $this->created_at,
             'Additional Info' => $this->profile ? [
                 'Age' => $this->profile->age,

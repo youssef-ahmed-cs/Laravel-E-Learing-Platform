@@ -13,7 +13,7 @@ use App\Http\Controllers\{auth\AuthController,
 };
 
 
-Route::prefix('v1')->middleware('guest')->group(function () {
+Route::prefix('v1')->middleware(['guest','throttle:60,1'])->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
 });

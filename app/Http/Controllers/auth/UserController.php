@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function index(): UserCollection
+    public function index(): JsonResponse
     {
         $this->authorize('viewAny', User::class);
         $users = User::where('role', 'student')->paginate(10);
-        return new UserCollection($users);
+        return response()->json([
+                'data' => new UserCollection($users)
+            ],200);
     }
 
     public function show(User $user)
@@ -161,8 +163,8 @@ class UserController extends Controller
 
     public function collections(): array
     {
-        $collection = collect(['name','age']);
-        $collection->combine(['ahmed',24]);
+        $collection = collect(['name', 'age']);
+        $collection->combine(['ahmed', 24]);
         return $collection->all();
     }
 
