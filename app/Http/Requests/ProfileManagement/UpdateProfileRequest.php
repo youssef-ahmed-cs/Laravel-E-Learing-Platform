@@ -11,7 +11,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,6 @@ class UpdateProfileRequest extends FormRequest
             'age' => ['sometimes', 'integer'],
             'address' => ['sometimes'],
             'bio' => ['sometimes', 'string', 'max:1000', 'min:10'],
-            'user_id' => ['sometimes', 'exists:users,id', 'unique:profiles,user_id,' . $this->route('profile')],
         ];
     }
 }

@@ -12,7 +12,7 @@ class ProfilePolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'admin' || $user->role === 'instructor';
     }
 
     public function view(User $user, Profile $profile): bool
@@ -27,11 +27,18 @@ class ProfilePolicy
 
     public function update(User $user, Profile $profile): bool
     {
-        return $user->id === $profile->user_id || $user->role === 'admin';
+        return $user->id === $profile->user_id
+            || $user->role === 'admin'
+            || $user->role === 'instructor';
     }
 
     public function delete(User $user, Profile $profile): bool
     {
         return $user->id === $profile->user_id || $user->role === 'admin';
+    }
+
+    public function restore(User $user, Profile $profile): bool
+    {
+        return $user->role === 'admin' || $user->id === $profile->user_id;
     }
 }

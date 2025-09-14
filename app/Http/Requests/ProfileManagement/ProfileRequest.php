@@ -12,7 +12,7 @@ class ProfileRequest extends FormRequest
             'age' => ['required', 'integer'],
             'address' => ['required'],
             'bio' => ['required', 'string', 'max:1000' , 'min:10'],
-            'user_id' => ['required', 'exists:users,id', 'unique:profiles,user_id,' . $this->route('profile')],
+            'user_id' => ['required', 'exists:users,id', 'unique:profiles,user_id' ],
         ];
     }
 

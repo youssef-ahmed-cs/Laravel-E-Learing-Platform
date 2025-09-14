@@ -26,7 +26,7 @@ class ProfileController extends Controller
         ], 201);
     }
 
-    public function show(Profile $profile)
+    public function show(Profile $profile): ProfileResource
     {
         $this->authorize('view', $profile);
         return new ProfileResource($profile);
@@ -44,18 +44,42 @@ class ProfileController extends Controller
         return new ProfileResource($user->profile);
     }
 
-    public function update(UpdateProfileRequest $request, Profile $profile): ProfileResource
+    public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
     {
         $this->authorize('update', $profile);
         $profile->update($request->validated());
-        return new ProfileResource($profile);
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'data' => new ProfileResource($profile),
+        ]);
     }
 
     public function destroy(Profile $profile): JsonResponse
     {
         $this->authorize('delete', $profile);
         $profile->delete();
-
-        return response()->json(['message' => 'Profile deleted successfully']);
+        $name = $profile->user?->name;
+        return response()->json(['message' => "Profile related $name deleted successfully"]);
     }
+
+
+    public function restore(int $id): JsonResponse
+    {
+        $profile = Profile::onlyTrashed()->find($id);
+
+        if (!$profile) {
+            return response()->json(['message' => 'Profile not found or not trashed.'], 404);
+        }
+
+        $this->authorize('restore', $profile);
+
+        $profile->restore();
+
+        return response()->json([
+            'message' => 'Profile restored successfully',
+            'data' => new ProfileResource($profile),
+        ], 200);
+    }
+
+
 }

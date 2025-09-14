@@ -11,6 +11,7 @@ use App\Http\Controllers\{auth\AuthController,
     ProfileController,
     ReviewController};
 
+
 Route::prefix('v1')->middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -38,6 +39,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profiles/user/{user}', 'showByUser');
+        Route::get('/profiles/{id}/restore', 'restore');
     });
     Route::apiResource('profiles', ProfileController::class);
 
