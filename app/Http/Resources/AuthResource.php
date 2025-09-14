@@ -19,7 +19,11 @@ class AuthResource extends JsonResource
             'Username' => $this->username,
             'Photo' => $this->avatar,
             'Created At' => $this->created_at,
-
+            'Additional Info' => $this->profile ? [
+                'Age' => $this->profile->age,
+                'Address' => $this->profile->address,
+                'Bio' => $this->profile->bio,
+            ] : null,
         ];
     }
 }

@@ -13,6 +13,7 @@ class UserObserver
         $user->bio = Str::limit($user->bio, 50);
         $user->email_verified_at = $user->email_verified_at ?? now();
         $user->phone = "+20{$user->phone}";
+        $user->avatar = $user->avatar ?? 'avatars/default.png';
     }
 
     public function updated(User $user): void
@@ -23,9 +24,6 @@ class UserObserver
         }
     }
 
-    /**
-     * Handle the User "deleted" event.
-     */
     public function deleted(User $user): void
     {
         Log::warning("User deleted", [

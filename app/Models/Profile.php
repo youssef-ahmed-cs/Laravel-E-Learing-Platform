@@ -10,13 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Profile extends Model
 {
     use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'age',
         'address',
         'bio',
         'user_id'
     ];
+
 
     public function user(): BelongsTo
     {

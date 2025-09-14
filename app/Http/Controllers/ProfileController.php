@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Requests\ProfileManagement\{ProfileRequest, UpdateProfileRequest};
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
@@ -9,10 +10,10 @@ use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Profile::class);
-        return ProfileResource::collection(Profile::with('user')->paginate(5));
+        return ProfileResource::collection(Profile::load('user')->paginate(5));
     }
 
     public function store(ProfileRequest $request): JsonResponse
