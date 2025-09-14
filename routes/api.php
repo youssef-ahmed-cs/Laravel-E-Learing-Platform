@@ -1,16 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    auth\AuthController,
+use App\Http\Controllers\{auth\AuthController,
     auth\UserController,
     CategoryController,
     CourseController,
     EnrollmentController,
     LessonController,
     NotificationController,
-    ReviewController
-};
+    ProfileController,
+    ReviewController};
 
 Route::prefix('v1')->middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -27,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/instructors', 'instructors');
+        Route::get('/users/profile/{id}', 'showProfile');
         Route::get('/users/admins', 'admins');
         Route::get('/users/admin/{id}', 'showAdmin');
         Route::get('/users/instructor/{instructor}', 'showInstructor');
@@ -35,6 +35,11 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/users/search/{name}', 'search');
     });
     Route::apiResource('users', UserController::class);
+
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profiles/user/{user}', 'showByUser');
+    });
+    Route::apiResource('profiles', ProfileController::class);
 
     Route::controller(CourseController::class)->group(function () {
         Route::get('/courses/{course}/category', 'getCategories');
@@ -74,6 +79,6 @@ Route::middleware('auth:api')->group(function () {
     });
 });
 
-//Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
-//Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
-Route::get('/collection',[UserController::class,'collections']);
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
+Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+Route::get('/collection', [UserController::class, 'collections']);

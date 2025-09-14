@@ -1,4 +1,4 @@
-### GET request to example server
+### POST request to update user password
 POST {{url}}/update-password
 Accept: application/json
 Content-Type: application/json

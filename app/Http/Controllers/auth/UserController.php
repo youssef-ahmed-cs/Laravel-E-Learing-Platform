@@ -121,6 +121,17 @@ class UserController extends Controller
 
     }
 
+    public function showProfile(User $user): JsonResponse
+    {
+        $this->authorize('view', $user);
+        if ($user->profile) {
+            return response()->json([
+                'profile' => $user->profile
+            ]);
+        }
+        return response()->json(['message' => 'Profile not found'], 404);
+    }
+
     public function destroyAdmin(User $user): JsonResponse
     {
         $this->authorize('delete', $user);
@@ -148,15 +159,10 @@ class UserController extends Controller
         return new UserCollection($users);
     }
 
-    public function collections(): Collection
+    public function collections(): array
     {
-        $collection = collect([
-            ['name' => 'youssef', 'amount' => 1000],
-            ['name' => 'ali', 'amount' => 14000],
-            'lang' => 'goLang', 'amount' => 13000
-        ]);
-        $collection->pull('amount');
-        return $collection;
-
+        $collection = collect(['name','age']);
+        $collection->combine(['ahmed',24]);
+        return $collection->all();
     }
 }
