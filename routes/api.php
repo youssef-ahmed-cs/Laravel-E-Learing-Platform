@@ -9,7 +9,8 @@ use App\Http\Controllers\{auth\AuthController,
     LessonController,
     NotificationController,
     ProfileController,
-    ReviewController};
+    ReviewController
+};
 
 
 Route::prefix('v1')->middleware('guest')->group(function () {
@@ -34,6 +35,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/users/admin/{id}', 'destroyAdmin');
         Route::delete('/users/instructor/{id}', 'deleteInstructor');
         Route::get('/users/search/{name}', 'search');
+        Route::get('/users/{id}/restore', 'restore');
     });
     Route::apiResource('users', UserController::class);
 

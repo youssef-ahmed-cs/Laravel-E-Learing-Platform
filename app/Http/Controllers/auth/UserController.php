@@ -165,4 +165,22 @@ class UserController extends Controller
         $collection->combine(['ahmed',24]);
         return $collection->all();
     }
+
+    public function restore(int $id): JsonResponse
+    {
+        $user = User::onlyTrashed()->find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'user not found or not trashed.'], 404);
+        }
+
+        $this->authorize('restore', $user);
+
+        $user->restore();
+
+        return response()->json([
+            'message' => 'Profile restored successfully',
+            'data' => new UserResource($user),
+        ], 200);
+    }
 }

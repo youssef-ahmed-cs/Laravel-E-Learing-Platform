@@ -46,4 +46,9 @@ class UserPolicy
     {
         return $user->role === 'admin';
     }
+
+    public function restore(User $user): bool
+    {
+        return $user->role === 'admin';
+    }
 }
