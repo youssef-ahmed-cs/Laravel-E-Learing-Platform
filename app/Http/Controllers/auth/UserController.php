@@ -163,9 +163,7 @@ class UserController extends Controller
 
     public function collections(): array
     {
-        $collection = collect(['name', 'age']);
-        $collection->combine(['ahmed', 24]);
-        return $collection->all();
+        return collect(['name', 'age'])->all();
     }
 
     public function restore(int $id): JsonResponse

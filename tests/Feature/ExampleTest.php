@@ -16,10 +16,10 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_index(): void
+    public function test_collection_index(): void
     {
-        $this->withoutMiddleware();
-        $response = $this->get('/api/users');
+        $response = $this->get('/api/collection');
         $response->assertStatus(200);
     }
+
 }
