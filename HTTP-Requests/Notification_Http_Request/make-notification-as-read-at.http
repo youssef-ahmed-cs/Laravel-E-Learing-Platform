@@ -1,17 +1,6 @@
-### POST request to create new coures
-POST {{url}}/courses
+### POST request to mark a specific notification as read
+POST {{url}}/notifications/6fefdea1-93ba-4d58-911a-0ed6861780a3/read
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3OTEyOTM4LCJleHAiOjE3NTc5MTY1MzgsIm5iZiI6MTc1NzkxMjkzOCwianRpIjoiOFR1MTdOSDRLNU5aSEMzMCIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Bp3CWLSxj8tJh9g0yWkKUtu9zDxPL4rNisne3YoZqkw
-
-{
-    "title": "SQLite",
-    "description": "Learn SQLite from scratch to advanced",
-    "instructor_id": 9,
-    "level": "beginner",
-    "price": 100.0,
-    "category_id": 2,
-    "duration": 120,
-    "status":"archived"
-}
 ###

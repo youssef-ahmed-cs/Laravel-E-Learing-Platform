@@ -1,11 +1,7 @@
 const pi = 3.14159;
+const e = 2.71828;
 
-function add(a, b) {
-    return a + b;
+function show() {
+    retuen `PI: ${pi}, e: ${e}`;
 }
-
-function multiply(a, b) {
-    return a * b;
-}
-
-console.log(add(5,6));
+console.log(show());

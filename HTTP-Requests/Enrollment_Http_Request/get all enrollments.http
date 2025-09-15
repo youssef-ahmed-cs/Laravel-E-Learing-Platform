@@ -1,6 +1,6 @@
 ### GET request to get all enrollments
-GET {{URL}}/enrollments
+GET {{url}}/enrollments
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{TOKEN}}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3OTE4NzcyLCJleHAiOjE3NTc5MjIzNzIsIm5iZiI6MTc1NzkxODc3MiwianRpIjoiUnAwSXVUQkRDdk9qV1VhViIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.v5sOISF8xER6al53ApucqwBD7qo3ZqpOCEEe0osheos
 ###

@@ -1,4 +1,5 @@
 <?php #Tinker
 use App\Models\{Enrollment, User, Course , Profile};
 
-return User::cursorPaginate(100)->items();
+$user = User::find(250);
+$user->load('enrollments');

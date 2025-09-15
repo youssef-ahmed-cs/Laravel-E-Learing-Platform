@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "ttoo@gmail.com",
-    "password": "44611697",
-    "password_confirmation": "44611697",
-    "name": "Ali",
-    "username": "tooStD",
-    "role": "student",
-    "phone": "353518057994",
-    "bio": "I am an stu1 user.sd sdf adf adf  asdf asd fd af f qwr eq we ew qr wre er q er e"
+    "email": "ttooi@gmail.com",
+    "password": "44611697tYt-",
+    "password_confirmation": "44611697tYt-",
+    "name": "ttooi",
+    "username": "ttooi",
+    "role": "instructor",
+    "phone": "353578057994",
+    "bio": "I am a new instructor here to teach amazing courses!"
 }
 ###

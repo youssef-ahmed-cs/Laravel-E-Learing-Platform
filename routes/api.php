@@ -12,8 +12,7 @@ use App\Http\Controllers\{auth\AuthController,
     ReviewController
 };
 
-
-Route::prefix('v1')->middleware(['guest','throttle:60,1'])->group(function () {
+Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
 });
@@ -28,12 +27,13 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/instructors', 'instructors');
-        Route::get('/users/profile/{id}', 'showProfile');
+        Route::get('/users/{id}/profile', 'showProfile');
         Route::get('/users/admins', 'admins');
         Route::get('/users/admin/{id}', 'showAdmin');
         Route::get('/users/instructor/{instructor}', 'showInstructor');
         Route::delete('/users/admin/{id}', 'destroyAdmin');
         Route::delete('/users/instructor/{id}', 'deleteInstructor');
+        Route::get('users/{id}/enrollments', 'showUserEnrollment');
         Route::get('/users/search/{name}', 'search');
         Route::get('/users/{id}/restore', 'restore');
     });
@@ -83,6 +83,14 @@ Route::middleware('auth:api')->group(function () {
     });
 });
 
+Route::fallback(static function () {
+    return response()->json(['message' => 'Resource not found.'], 404);
+});
+
 Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
 Route::get('/collection', [UserController::class, 'collections']);
+Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
+//Route::get('users/{id}/enrollments', [UserController::class,'showUserEnrollment']);
+
+

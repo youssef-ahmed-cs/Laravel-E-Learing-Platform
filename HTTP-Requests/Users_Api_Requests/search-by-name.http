@@ -1,0 +1,7 @@
+### GET request to search user by username
+GET {{url}}/users/search/youssef
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU3OTA4OTAxLCJleHAiOjE3NTc5MTI1MDEsIm5iZiI6MTc1NzkwODkwMSwianRpIjoicW05akxUUVczWnpPaTdhSSIsInN1YiI6IjMyNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.2iKAB5b8y5_L7XYDhev8Q69gCZVRl1B_rqRX1LxI1sc
+Accept: application/json
+
+###

@@ -1,7 +1,6 @@
 ### GET request to fetch all notifications related to the authenticated user
-GET {{URL}}/notifications
+GET {{url}}/notifications
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 15|6hFsLL5oFgXkHxuKI2B7GXvyFNC5y7W7uPtL7Wwq483c53f3
-
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3OTEyOTM4LCJleHAiOjE3NTc5MTY1MzgsIm5iZiI6MTc1NzkxMjkzOCwianRpIjoiOFR1MTdOSDRLNU5aSEMzMCIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Bp3CWLSxj8tJh9g0yWkKUtu9zDxPL4rNisne3YoZqkw
 ###

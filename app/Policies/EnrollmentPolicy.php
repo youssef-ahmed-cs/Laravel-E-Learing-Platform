@@ -14,7 +14,7 @@ class EnrollmentPolicy
 
     public function view(User $user): bool
     {
-        return $user->role === 'admin' || $user->role === 'instructor' || $user->role === 'student';
+        return true;
     }
 
     public function create(User $user): bool
@@ -43,7 +43,7 @@ class EnrollmentPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -51,6 +51,6 @@ class EnrollmentPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 }

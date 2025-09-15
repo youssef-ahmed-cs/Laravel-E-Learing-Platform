@@ -12,6 +12,7 @@ use App\Policies\EnrollmentPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\ReviewPolicy;
 use App\Policies\UserPolicy;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +36,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('is_student', static function (User $user) {
             return $user->role === 'student';
+        });
+
+        Gate::define('markAsRead', static function (User $user, DatabaseNotification $notification) {
+            return $user->is($notification->notifiable);
         });
     }
 

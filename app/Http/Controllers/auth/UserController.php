@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserCollection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Collection;
+use App\Http\Resources\EnrollmentCollection;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Mail\WelcomeEmailMail;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,8 +20,8 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $users = User::where('role', 'student')->paginate(10);
         return response()->json([
-                'data' => new UserCollection($users)
-            ],200);
+            'data' => new UserCollection($users)
+        ], 200);
     }
 
     public function show(User $user)
@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function showInstructor(User $user): JsonResponse|UserResource
     {
-        $this->authorize('view', $user);
+//        $this->authorize('view', $user);
         if ($user->role !== 'instructor') {
             return response()->json(['message' => 'User not found or is not an instructor.'], 404);
         }
@@ -148,18 +148,34 @@ class UserController extends Controller
         ]);
     }
 
+    public function showUserEnrollment(User $user): JsonResponse
+    {
+        $this->authorize('view', $user);
+        $user->load('enrollments');
+
+        if ($user->enrollments->isEmpty()) {
+            return response()->json(['message' => 'No enrollments found'], 404);
+        }
+
+        return response()->json([
+            'enrollments' => new EnrollmentCollection($user->enrollments)
+        ]);
+    }
+
+
     public function search($name)
     {
         $this->authorize('viewAny', User::class);
-        $users = User::where('name', 'like', '%' . $name . '%')->get();
+        $users = User::where('name', 'like', "%$name%")->paginate(10);
 
         if ($users->isEmpty()) {
-            return response()->json([
-                'message' => 'No users found',
-            ], 404);
+            return response()->json(['message' => 'No users found'], 404);
         }
+
         return new UserCollection($users);
     }
+
+
 
     public function collections(): array
     {
