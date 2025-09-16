@@ -2,10 +2,10 @@
 POST {{url}}/courses
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3OTEyOTM4LCJleHAiOjE3NTc5MTY1MzgsIm5iZiI6MTc1NzkxMjkzOCwianRpIjoiOFR1MTdOSDRLNU5aSEMzMCIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Bp3CWLSxj8tJh9g0yWkKUtu9zDxPL4rNisne3YoZqkw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4MDYzNzY4LCJleHAiOjE3NTgwNjczNjgsIm5iZiI6MTc1ODA2Mzc2OCwianRpIjoiTHVRUTN0UzBrcHNCUTlRWSIsInN1YiI6IjMzMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.J8kbLLMEgkp8rbKLyJAUF1tZLSWLhgNAigapJh68bHM
 
 {
-    "title": "SQLite",
+    "title": "SQLite3",
     "description": "Learn SQLite from scratch to advanced",
     "instructor_id": 9,
     "level": "beginner",

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentCollection;
+use App\Jobs\SendWelcomeEmail;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
@@ -37,7 +38,8 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         $user = User::create($request->validated());
-        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
+//        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
+        SendWelcomeEmail::dispatch($user);
         return response()->json([
             'message' => 'User created successfully',
             'user' => new UserResource($user)

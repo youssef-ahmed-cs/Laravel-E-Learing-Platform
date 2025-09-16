@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNotificationCreateCourse;
 use App\Http\Requests\CoursesManagment\{StoreCourseRequest, UpdateCourseRequest};
 use App\Http\Resources\CourseResource;
 use App\Models\{User, Course};
@@ -32,9 +33,9 @@ class CourseController extends Controller
     {
         $this->authorize('create', Course::class);
         $course = Course::create($request->validated());
-        $users = User::all();
 
-        Notification::send($users, new CourseCreated($course));
+//        Notification::send($users, new SendNotificationCreateCourse($course));
+        SendNotificationCreateCourse::dispatch( $course);
 
         return response()->json([
             'message' => 'Course created successfully',
