@@ -8,13 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PoliceManMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->user()?->role !== 'admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
         return $next($request);
     }
 }

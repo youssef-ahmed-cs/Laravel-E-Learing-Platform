@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SuperAdminRequest;
+use App\Http\Requests\UsersManagment\SuperAdminRequest;
 use App\Http\Resources\SuperAdminResource;
 use App\Models\SuperAdmin;
 

@@ -47,8 +47,13 @@ class UserPolicy
         return $user->role === 'admin';
     }
 
-    public function restore(User $user): bool
+    public function forceDelete(User $user, User $model): bool
     {
         return $user->role === 'admin';
+    }
+
+    public function restore(User $user): bool
+    {
+        return $user->role === 'admin' && $user->trashed();
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{auth\AuthController,
     auth\UserController,
@@ -87,10 +88,15 @@ Route::fallback(static function () {
     return response()->json(['message' => 'Resource not found.'], 404);
 });
 
-Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200));
-Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
-Route::get('/collection', [UserController::class, 'collections']);
-Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
-//Route::get('users/{id}/enrollments', [UserController::class,'showUserEnrollment']);
+//Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
+//->name('try');
+//Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+Route::get('/collection', [UserController::class, 'collections'])
+    ->middleware('policeman');
+//Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
+//Route::post('set-local', static function (Request $request) {
+//    return response()->json(['message' => 'Locale set to ',
+//        $request->header()], 200);
+//})->middleware('setLocal');
 
 

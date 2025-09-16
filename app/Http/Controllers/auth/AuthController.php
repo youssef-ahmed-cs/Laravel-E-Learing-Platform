@@ -28,7 +28,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             $token = JWTAuth::fromUser($user);
-
+            $user->increment('login_count');
             return response()->json([
                 'user' => new AuthResource($user),
                 'token' => $token,
@@ -51,11 +51,11 @@ class AuthController extends Controller
 
         if ($request->hasFile('avatar')) {
             $request->validated();
-            $avatarName = $user->id . '_' . $user->name . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $avatarName = $user->id . '_' . $user->username . '.' . $request->file('avatar')->getClientOriginalExtension();
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
         }
-        Mail::to($user->email)->send(new WelcomeEmailMail($user));
+        //Mail::to($user->email)->send(new WelcomeEmailMail($user));
         $token = JWTAuth::fromUser($user);
         return response()->json([
             'message' => 'User registered successfully',
@@ -73,7 +73,7 @@ class AuthController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
             JWTAuth::invalidate($token);
-            return response()->json(['message' => 'User successfully logged out.'], 200);
+            return response()->json(['message' => "User $user successfully logged out."], 200);
         } catch (JWTException $e) {
             return response()->json([
                 'error' => 'Failed to logout, token invalid or expired',
@@ -100,7 +100,9 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Token refreshed successfully',
                 'token' => $newToken,
-                'user' => $user
+                'user name' => $user->name,
+                'user email' => $user->email,
+                'username' => $user->username,
             ], 200);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to refresh token',
@@ -119,6 +121,7 @@ class AuthController extends Controller
         $user->update([
             'password' => Hash::make($request->new_password)
         ]);
-        return response()->json(['message' => 'Password updated successfully']);
+        $name = $user->name;
+        return response()->json(['message' => "Hi $name Your password updated successfully"]);
     }
 }

@@ -1,5 +1,9 @@
 ### GET request to example server
-GET http://127.0.0.1:8000/api/table/5
+POST {{url}}/set-local
 Accept: application/json
 Content-Type: application/json
+
+{
+    "lang": "en"
+}
 ###

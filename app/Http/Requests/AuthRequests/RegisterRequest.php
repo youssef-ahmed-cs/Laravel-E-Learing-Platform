@@ -23,7 +23,7 @@ class RegisterRequest extends FormRequest
             'username' => 'required|string|max:255|unique:users',
             'bio' => 'nullable|string',
             'phone' => 'nullable|numeric',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'file|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
         ];
     }
 }

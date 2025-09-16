@@ -176,10 +176,13 @@ class UserController extends Controller
     }
 
 
-
     public function collections(): array
     {
-        return collect(['name', 'age'])->all();
+        $this->authorize('viewAny', User::class);
+        return collect([
+            'students' => User::where('role', 'student')->get(),
+            'instructors' => User::where('role', 'instructor')->get(),
+        ])->all();
     }
 
     public function restore(int $id): JsonResponse
@@ -199,4 +202,5 @@ class UserController extends Controller
             'data' => new UserResource($user),
         ], 200);
     }
+
 }
