@@ -11,6 +11,7 @@ use App\Http\Controllers\{auth\AuthController,
     ProfileController,
     ReviewController
 };
+use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -99,5 +100,7 @@ Route::get('/collection', [UserController::class, 'collections'])
 //    return response()->json(['message' => 'Locale set to ',
 //        $request->header()], 200);
 //})->middleware('setLocal');
+
+
 
 

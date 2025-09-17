@@ -1,9 +1,6 @@
 ### GET request to example server
-POST {{url}}/set-local
+GET {{url}}/get-session
 Accept: application/json
 Content-Type: application/json
 
-{
-    "lang": "en"
-}
 ###

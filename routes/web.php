@@ -27,3 +27,19 @@ Route::any('/data-app', static function () {
         'lang' => 'PHP'
     ]);
 });
+
+Route::get('/set-session', static function () {
+    Session::put('test', 'i am test value from session');
+});
+
+Route::get('/get-session', static function () {
+//    dd(Session::missing('test'));
+    if(Session::exists('test')) {
+        return response()->json(Session::get('test'));
+    }
+});
+
+Route::get('/forget-session', static function () {
+    Session::flush();
+    return response()->json(['message' => 'Session value forgotten']);
+});
