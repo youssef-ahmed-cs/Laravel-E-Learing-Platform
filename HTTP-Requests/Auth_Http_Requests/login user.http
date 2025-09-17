@@ -4,7 +4,11 @@ Accept: application/json
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
     "email": "ramadan@gamil.com",
+=======
+    "email": "pop@dev.com",
+>>>>>>> origin/main
     "password": "44611697Yy=*"
 }
 ###
