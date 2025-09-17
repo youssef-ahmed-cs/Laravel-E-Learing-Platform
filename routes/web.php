@@ -43,3 +43,6 @@ Route::get('/forget-session', static function () {
     Session::flush();
     return response()->json(['message' => 'Session value forgotten']);
 });
+
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
+->name('try');

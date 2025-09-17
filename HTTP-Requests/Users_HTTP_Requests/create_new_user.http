@@ -4,13 +4,14 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "ttooi@gmail.com",
+    "email": "egypt@dev.com",
     "password": "44611697tYt-",
     "password_confirmation": "44611697tYt-",
     "name": "ttooi",
-    "username": "ttooi",
+    "username": "egypt00",
     "role": "instructor",
-    "phone": "353578057994",
-    "bio": "I am a new instructor here to teach amazing courses!"
+    "phone": "153578057994",
+    "bio": "I am a new instructor here to teach amazing courses!",
+    "avatar": "Youssef_Ahmed.jpg"
 }
 ###
