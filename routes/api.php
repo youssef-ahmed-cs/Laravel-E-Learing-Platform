@@ -48,6 +48,8 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(CourseController::class)->group(function () {
         Route::get('/courses/{course}/category', 'getCategories');
         Route::get('/courses/{id}/lessons', 'getLessons');
+        Route::get('/courses/{id}/restore', 'restore');
+
     });
     Route::apiResource('courses', CourseController::class);
 
@@ -89,7 +91,7 @@ Route::fallback(static function () {
 
 //Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
 //->name('try');
-//Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
 Route::get('/collection', [UserController::class, 'collections'])
     ->middleware('policeman');
 //Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));

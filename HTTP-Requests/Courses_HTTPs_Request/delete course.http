@@ -1,5 +1,5 @@
 ### DELETE request to delete course
-DELETE {{URL}}/courses/129
+DELETE {{url}}/courses/26
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 9|PlnPGpnnhFkWC9pVWPtGwKwW8Cttb3UT2eguCX7ad775a816
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4MDY3NTQ4LCJleHAiOjE3NTgwNzExNDgsIm5iZiI6MTc1ODA2NzU0OCwianRpIjoiU09tN0drRFlKTWtkM1dQRSIsInN1YiI6IjMzMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.0_cRPja7nkZXiAz_rtADDNdoG_BWdrW5xcrZ0IVNUTU

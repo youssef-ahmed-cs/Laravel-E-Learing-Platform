@@ -62,7 +62,7 @@ class UserController extends Controller
 
     public function showInstructor(User $user): JsonResponse|UserResource
     {
-//        $this->authorize('view', $user);
+        $this->authorize('view', $user);
         if ($user->role !== 'instructor') {
             return response()->json(['message' => 'User not found or is not an instructor.'], 404);
         }

@@ -13,7 +13,7 @@ class UserObserver
         $user->bio = Str::limit($user->bio, 50);
         $user->email_verified_at = $user->email_verified_at ?? now();
         $user->phone = "+20{$user->phone}";
-        $user->avatar = asset('storage/' . $user->avatar) ;
+        $user->avatar = asset('storage/' . $user->avatar);
     }
 
     public function updated(User $user): void

@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "ramadan@gamil.com",
+    "email": "ramadan12@gamil.com",
     "password": "44611697Qq*",
     "password_confirmation": "44611697Qq*",
     "name": "ramadan mohamed",
-    "username": "ramadan010",
+    "username": "ramadan01012",
     "role": "admin",
-    "phone": "0107508472870",
+    "phone": "127508472870",
     "bio": "Hello, I'm ramadan from EGYPT."
 }
 ###
