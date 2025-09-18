@@ -74,6 +74,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::controller(LessonController::class)->group(function () {
         Route::get('/lessons/{lesson}/courses', 'getCourses');
+        Route::get('/lessons/{id}/restore', 'restore');
         Route::get('/lessons/{lesson}/reviews', 'getReviews');
         Route::get('/lessons/{lesson}/students', 'getStudents');
         Route::get('/lessons/{lesson}/enrollments', 'getEnrollments');
@@ -100,3 +101,6 @@ Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 20
 //    return response()->json(['message' => 'Locale set to ',
 //        $request->header()], 200);
 //})->middleware('setLocal');
+Route::get('verify-middleware-example', static function () {
+    return response()->json(['message' => 'Middleware active'], 200);
+})->middleware('verified');

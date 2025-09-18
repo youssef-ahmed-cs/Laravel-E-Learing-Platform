@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentCollection;
 use App\Jobs\SendWelcomeEmail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
@@ -31,6 +32,7 @@ class UserController extends Controller
         $users = Cache::remember('users', 60, function () {
             return User::get();
         });
+//        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
 
