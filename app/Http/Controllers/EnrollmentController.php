@@ -3,17 +3,18 @@
 
 use App\Http\Requests\EnrollmenttManagement\StoreEnrollmentRequest;
 use App\Http\Requests\EnrollmenttManagement\UpdateEnrollmentRequest;
+use App\Http\Resources\EnrollmentCollection;
 use App\Http\Resources\EnrollmentResource;
 use App\Models\Enrollment;
 use Illuminate\Http\JsonResponse;
 
 class EnrollmentController extends Controller
 {
-    public function index() //show all enrollment
+    public function index(): EnrollmentCollection
     {
         $this->authorize('viewAny', Enrollment::class);
-        $enrollments = Enrollment::with('user', 'course')->get();
-        return EnrollmentResource::collection($enrollments);
+        $enrollments = Enrollment::with('user')->get();
+        return new EnrollmentCollection($enrollments);
     }
 
     public function show(Enrollment $enrollment): EnrollmentResource
@@ -25,7 +26,6 @@ class EnrollmentController extends Controller
     public function store(StoreEnrollmentRequest $request): JsonResponse
     {
         $this->authorize('create', Enrollment::class);
-        $request->validated();
         $enrollment = Enrollment::create($request->validated());
         return response()->json([
             'message' => 'Enrollment created successfully',
@@ -63,9 +63,8 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    public function getStudents($id): JsonResponse
+    public function getStudents(Enrollment $enrollment): JsonResponse
     {
-        $enrollment = Enrollment::findOrFail($id);
         $this->authorize('view', $enrollment);
         $student = $enrollment->user;
         return response()->json([

@@ -1,0 +1,5 @@
+### GET request to force delete a user
+DELETE {{url}}/users/13/force-delete
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4MDExMDQ0LCJleHAiOjE3NTgwMTQ2NDQsIm5iZiI6MTc1ODAxMTA0NCwianRpIjoiNUEzcklSRE03elJ3aXNPZiIsInN1YiI6IjMyOCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.INDWAnd_wKpLwHH9eU8E4QASwXLprwgUL-PbZjQPwGQ
+###

@@ -1,0 +1,12 @@
+### POST request to update user password
+POST {{url}}/update-password
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 14|nur8MLPlwMN2CFClpm8GJfBgiOUjgnEFv8bftMhycc7cad46
+
+{
+    "current_password": "44611697Qo",
+    "new_password": "sdfAdfs4*",
+    "new_password_confirmation": "sdfAdfs4*"
+}
+###

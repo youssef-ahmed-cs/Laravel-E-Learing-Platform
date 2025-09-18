@@ -1,0 +1,6 @@
+### GET request to restore a course
+GET {{url}}/courses/26000/restore
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4MDc0MDYyLCJleHAiOjE3NTgwNzc2NjIsIm5iZiI6MTc1ODA3NDA2MiwianRpIjoiSG9QZ2djb1lNb3VNcDliRSIsInN1YiI6IjMzMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.uVrK4NxLyaZMmv7hK7YIbn6SXdjRbL1SVng1Qy2CfFw
+###

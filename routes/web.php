@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,28 @@ Route::any('/data-app', static function () {
     return response()->json([
         'lang' => 'PHP'
     ]);
+});
+
+Route::get('/set-session', static function () {
+    Session::put('test', 'i am test value from session');
+});
+
+Route::get('/get-session', static function () {
+//    dd(Session::missing('test'));
+    if(Session::exists('test')) {
+        return response()->json(Session::get('test'));
+    }
+});
+
+Route::get('/forget-session', static function () {
+    Session::flush();
+    return response()->json(['message' => 'Session value forgotten']);
+});
+
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
+->name('try');
+
+Route::get('users', [UserController::class , 'to_view'])->name('users');
+Route::fallback(static function () {
+    return response()->json(['message' => 'Page not found'], 404);
 });

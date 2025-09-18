@@ -1,6 +1,0 @@
-### GET request to get all enrollments
-GET {{URL}}/enrollments
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer {{TOKEN}}
-###

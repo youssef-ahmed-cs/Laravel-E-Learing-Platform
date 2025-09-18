@@ -17,10 +17,10 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show($id): CategoryResource
+    public function show(Category $category): CategoryResource
     {
-        $category = Category::with('courses')->findOrFail($id);
         $this->authorize('view', $category);
+        $category->with('courses')->first();
         return new CategoryResource($category);
     }
 

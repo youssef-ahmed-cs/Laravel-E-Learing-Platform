@@ -1,0 +1,6 @@
+### GET request to example server
+GET {{url}}/users/profile/321
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+###

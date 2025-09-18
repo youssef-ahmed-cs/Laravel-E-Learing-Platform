@@ -12,8 +12,7 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function user_can_register_with_valid_data()
+    public function user_can_register_with_valid_data(): void
     {
         $userData = [
             'name' => 'John Doe',
@@ -112,7 +111,7 @@ class AuthControllerTest extends TestCase
     }
 
     /** @test */
-    public function user_can_login_with_valid_credentials()
+    public function user_can_login_with_valid_credentials(): void
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',

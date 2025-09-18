@@ -1,0 +1,6 @@
+### GET request get all categories
+GET {{URL}}/categories
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4MDI1MTY1LCJleHAiOjE3NTgwMjg3NjUsIm5iZiI6MTc1ODAyNTE2NSwianRpIjoiNWxHakszYnk2cDdUbENzbyIsInN1YiI6IjMzMCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.QNPngW_Cr-Fy-EZCEmedE2-yNGYrNjsu8JxFv4nUSkI
+###
