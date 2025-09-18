@@ -13,7 +13,7 @@ class EnrollmentController extends Controller
     public function index(): EnrollmentCollection
     {
         $this->authorize('viewAny', Enrollment::class);
-        $enrollments = Enrollment::with('user', 'course')->get();
+        $enrollments = Enrollment::with('user')->get();
         return new EnrollmentCollection($enrollments);
     }
 

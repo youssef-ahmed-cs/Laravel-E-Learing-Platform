@@ -5,6 +5,7 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentCollection;
 use App\Jobs\SendWelcomeEmail;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
@@ -23,6 +24,14 @@ class UserController extends Controller
         return response()->json([
             'data' => new UserCollection($users)
         ], 200);
+    }
+
+    public function to_view()
+    {
+        $users = Cache::remember('users', 60, function () {
+            return User::get();
+        });
+        return view('users', compact('users'));
     }
 
     public function show(User $user)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,3 +47,5 @@ Route::get('/forget-session', static function () {
 
 Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
 ->name('try');
+
+Route::get('users', [UserController::class , 'to_view'])->name('users');
