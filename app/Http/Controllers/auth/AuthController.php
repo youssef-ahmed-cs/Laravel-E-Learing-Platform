@@ -124,4 +124,25 @@ class AuthController extends Controller
         $name = $user->name;
         return response()->json(['message' => "Hi $name Your password updated successfully"]);
     }
+
+    public function deleteAccount(): JsonResponse
+    {
+        try {
+            $user = Auth::user(); // current authenticated user using JWT & Facades Auth
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+            $userName = $user->name;
+            $this->authorize('delete', $user);
+
+            $user->forceDelete(); // delete user permanently
+//            $user->delete(); # soft delete user can be restored later
+
+            JWTAuth::invalidate(JWTAuth::getToken()); #
+
+            return response()->json(['message' => "Account for $userName deleted successfully"], 200);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to delete account', 'message' => $e->getMessage()], 500);
+        }
+    }
 }

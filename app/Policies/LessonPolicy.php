@@ -53,7 +53,7 @@ class LessonPolicy
      */
     public function restore(User $user, Lesson $lesson): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**
@@ -61,6 +61,6 @@ class LessonPolicy
      */
     public function forceDelete(User $user, Lesson $lesson): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 }

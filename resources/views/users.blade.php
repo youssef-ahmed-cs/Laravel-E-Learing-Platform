@@ -27,7 +27,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role }}</td>
-                <td>{{$user->bio}}</td>
+                <td>{{ $user->bio }}</td>
             </tr>
         @endforeach
         </tbody>

@@ -49,3 +49,6 @@ Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department'
 ->name('try');
 
 Route::get('users', [UserController::class , 'to_view'])->name('users');
+Route::fallback(static function () {
+    return response()->json(['message' => 'Page not found'], 404);
+});

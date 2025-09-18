@@ -14,6 +14,7 @@ class StoreUserRequest extends FormRequest
     {
         return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,13 +24,13 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:3',
-            'email' => ['required','string','email','max:255','unique:users'],
-            'password' => ['required','string','confirmed',Password::defaults()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'confirmed', Password::defaults()],
             'role' => 'required|in:admin,instructor,student',
             'bio' => 'nullable|string|max:255|min:10',
             'phone' => 'nullable|string|unique:users,phone|',
-            'username' => 'required|string|unique:users,username|max:255|min:3',
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'username' => ['required', 'string', 'max:255', 'min:3', 'unique:users,username'],
+            'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048|file',
         ];
     }
 }
