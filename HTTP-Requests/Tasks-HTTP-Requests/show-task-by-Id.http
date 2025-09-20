@@ -1,0 +1,8 @@
+### GET request to show task by Id
+GET {{url}}/tasks/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+Accept-Language: en-US
+
+###

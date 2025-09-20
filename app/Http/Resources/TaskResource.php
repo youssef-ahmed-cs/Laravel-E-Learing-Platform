@@ -16,10 +16,11 @@ class TaskResource extends JsonResource
             'title' => $this->title,
             'priority' => $this->priority,
             'content' => $this->content,
-            'dateline' => $this->dateline,
+            'dateline' => $this->dateline->format('Y-m-d H:i:s'),
             'completed' => $this->completed,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,//
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'lesson' => new LessonResource($this->whenLoaded('lesson')),
         ];
     }
 }

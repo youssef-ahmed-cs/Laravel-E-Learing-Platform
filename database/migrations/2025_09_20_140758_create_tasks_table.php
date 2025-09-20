@@ -17,9 +17,10 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('task_id')->nullable()->constrained('tasks')
-                ->onDelete('cascade');
+            $table->foreignId('lesson_id')->constrained('lessons')
+                ->cascadeOnDelete()->cascadeOnUpdate();
         });
+
     }
 
     public function down(): void

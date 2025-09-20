@@ -7,6 +7,7 @@ use App\Http\Requests\TaskManagement\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -68,7 +69,7 @@ class TaskController extends Controller
         $this->authorize('forceDelete', $task);
 
         $task->forceDelete();
-
+        Log::warning('Task permanently deleted', ['task_id' => $id, 'deleted_by' => auth()->user()->id]);
         return response()->json([
             'message' => 'Task permanently deleted'
         ]);
@@ -88,17 +89,17 @@ class TaskController extends Controller
         return response()->json($result);
     }
 
-//    public function getLessonsByTasks(Task $task): JsonResponse
-//    {
-//        $this->authorize('viewAny', Task::class);
-//        $tasks = Task::with('lesson')->get()->groupBy('lesson_id');
-//        $result = $tasks->map(function ($taskGroup, $lessonId) {
-//            return [
-//                'lesson_id' => $lessonId,
-//                'tasks' => TaskResource::collection($taskGroup)
-//            ];
-//        })->values();
-//
-//        return response()->json($result);
-//    }
+    public function getLessonsByTasks(Task $task): JsonResponse
+    {
+        $this->authorize('viewAny', Task::class);
+        $tasks = Task::with('lesson')->get()->groupBy('lesson_id');
+        $result = $tasks->map(function ($taskGroup, $lessonId) {
+            return [
+                'lesson_id' => $lessonId,
+                'tasks' => TaskResource::collection($taskGroup)
+            ];
+        })->values();
+
+        return response()->json($result);
+    }
 }

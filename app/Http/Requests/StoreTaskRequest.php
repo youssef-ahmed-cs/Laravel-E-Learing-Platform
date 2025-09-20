@@ -14,10 +14,11 @@ class StoreTaskRequest extends FormRequest
             'content' => ['nullable', 'string', 'max:1000' , 'min:3' ],
             'dateline' => ['required', 'date'],
             'completed' => ['boolean' , 'required'],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_id' => ['required', 'exists:users,id,role,student'],
             'lesson_id' => ['required', 'exists:lessons,id'],
         ];
     }
+
 
     public function authorize(): bool
     {

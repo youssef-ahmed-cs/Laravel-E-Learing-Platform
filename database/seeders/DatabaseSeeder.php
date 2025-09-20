@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             LessonSeeder::class,
             ProfileSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

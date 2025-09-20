@@ -10,7 +10,8 @@ use App\Http\Controllers\{auth\AuthController,
     NotificationController,
     ProfileController,
     ReviewController,
-    TaskController};
+    TaskController
+};
 use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
@@ -24,13 +25,14 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/user', 'user');
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
-        Route::post('/force-delete-user','deleteAccount');
+        Route::post('/force-delete-user', 'deleteAccount');
         Route::get('/get-token', 'getToken');
     });
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/instructors', 'instructors');
         Route::get('/users/{id}/profile', 'showProfile');
+        Route::get('user/{user}/tasks', 'userTasks');
         Route::get('/users/admins', 'admins');
         Route::get('/users/admin/{id}', 'showAdmin');
         Route::get('/users/instructor/{instructor}', 'showInstructor');
@@ -100,16 +102,10 @@ Route::fallback(static function () {
     return response()->json(['message' => 'Resource not found.'], 404);
 });
 
-Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
-->name('try');
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
-Route::get('/collection', [UserController::class, 'collections'])
-    ->middleware('policeman');
+Route::get('/collection', [UserController::class, 'collections'])->middleware('policeman');
 Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
-//Route::post('set-local', static function (Request $request) {
-//    return response()->json(['message' => 'Locale set to ',
-//        $request->header()], 200);
-//})->middleware('setLocal');
 Route::get('verify-middleware-example', static function () {
     return response()->json(['message' => 'Middleware active'], 200);
 })->middleware('verified');

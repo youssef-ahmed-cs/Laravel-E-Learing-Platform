@@ -65,6 +65,20 @@ class UserController extends Controller
         return new UserCollection($users);
     }
 
+    public function userTasks(User $user)
+    {
+        $this->authorize('view', $user);
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'User not found or is not a student.'], 404);
+        }
+        $tasks = $user->tasks;
+        return response()->json([
+            'tasks' => $tasks,
+            'total_tasks' => $tasks->count(),
+            'user' => $user->name
+        ], 200);
+    }
+
     public function admins(): UserCollection
     {
         $this->authorize('viewAdmins', User::class);
