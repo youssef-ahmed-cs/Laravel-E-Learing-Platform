@@ -47,7 +47,7 @@ class CoursePolicy
 
     public function restore(User $user, Course $course): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
 
     /**

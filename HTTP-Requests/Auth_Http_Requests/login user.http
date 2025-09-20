@@ -1,0 +1,10 @@
+### GET request to login new user
+POST {{url}}/v1/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "ramadan12@gamil.com",
+    "password": "44611697Qq*"
+}
+###

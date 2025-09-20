@@ -1,0 +1,16 @@
+### POST request to create a new user
+POST {{url}}/v1/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "egypt-cairo@dev.com",
+    "password": "44611697tYt-",
+    "password_confirmation": "44611697tYt-",
+    "name": "egypt-cairo",
+    "username": "egypt-cairo",
+    "role": "instructor",
+    "phone": "123578057994",
+    "bio": "I am a new instructor here to teach amazing courses!",
+}
+###

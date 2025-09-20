@@ -1,0 +1,7 @@
+### GET request to get authenticated user
+GET http://127.0.0.1:8000/api/user
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4MDc3NjI2LCJleHAiOjE3NTgwODEyMjYsIm5iZiI6MTc1ODA3NzYyNiwianRpIjoiMnJwYjJ6ek9nellVUkdkdCIsInN1YiI6IjMzMyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ._rBa0rKb6dQxaDFG5kGZf90zQyNnYNQMUjNQ38SWrL0
+###
+

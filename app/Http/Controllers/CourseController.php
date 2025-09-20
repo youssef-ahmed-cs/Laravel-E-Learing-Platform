@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNotificationCreateCourse;
 use App\Http\Requests\CoursesManagment\{StoreCourseRequest, UpdateCourseRequest};
 use App\Http\Resources\CourseResource;
 use App\Models\{User, Course};
 use App\Notifications\CourseCreated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -32,9 +34,14 @@ class CourseController extends Controller
     {
         $this->authorize('create', Course::class);
         $course = Course::create($request->validated());
-        $users = User::all();
 
-        Notification::send($users, new CourseCreated($course));
+//        Notification::send($users, new SendNotificationCreateCourse($course));
+        SendNotificationCreateCourse::dispatch($course);
+
+        Log::info('Course created successfully', [
+            'course_id' => $course->id,
+            'title' => $course->title,
+        ]);
 
         return response()->json([
             'message' => 'Course created successfully',
@@ -55,11 +62,16 @@ class CourseController extends Controller
         $this->authorize('delete', $course);
         $course->delete();
 
+        Log::warning('Course deleted successfully', [
+            'course_id' => $course->id,
+            'title' => $course->title,
+        ]);
+
         return response()->json([
-            'message' => 'Course deleted successfully',
+            'message' => 'Course deleted -Forced- successfully',
             'status' => 'success',
             'course' => $course->title,
-        ], 204);
+        ], 200);
     }
 
     public function getCategories(Course $course): JsonResponse
@@ -81,5 +93,35 @@ class CourseController extends Controller
             'lesson' => $course->title,
             'courses' => $lessons,
         ]);
+    }
+
+    public function restore(int $id): JsonResponse
+    {
+        $course = Course::onlyTrashed()->find($id);
+
+        if (!$course) {
+            return response()->json(['message' => 'corse not found or not trashed.'], 404);
+        }
+
+        $this->authorize('restore', $course);
+
+        Log::build([
+            'driver' => 'single',
+            'path' => storage_path('logs/courses.log'),
+        ])->info('Restoring course', ['course_id' => $course->id, 'title' => $course->title]);
+
+//        Log::info('Restoring course', ['course_id' => $course->id, 'title' => $course->title]);
+//        Log::warning('Course restored successfully', ['course_id' => $course->id, 'title' => $course->title]);
+//        Log::alert('Course restored successfully', ['course_id' => $course->id, 'title' => $course->title]);
+//        Log::critical('Course restored successfully', ['course_id' => $course->id]);
+//        Log::emergency('Course restored successfully', ['course_id' => $course->id]);
+//        Log::error('Course restored successfully', ['course_id' => $course->id]);
+
+        $course->restore();
+
+        return response()->json([
+            'message' => 'Profile restored successfully',
+            'data' => new CourseResource($course),
+        ], 200);
     }
 }

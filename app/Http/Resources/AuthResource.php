@@ -10,12 +10,17 @@ class AuthResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'Name' => $this->name,
-            'Email' => $this->email,
-            'Role' => $this->role,
-            'Bio' => $this->bio,
-            'Phone' => $this->phone,
-            'Username' => $this->username,
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->role,
+            'username' => $this->username,
+            'bio' => $this->bio,
+            'phone' => $this->phone,
+            'avatar' => $this->avatar ? asset('storage/' . $this->avatar) : null,
+            'email_verified_at' => $this->email_verified_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'id' => $this->id,
         ];
     }
 }

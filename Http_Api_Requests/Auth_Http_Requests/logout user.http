@@ -1,6 +1,0 @@
-### GET request to example server
-POST {{URL}}/logout
-Authorization: Bearer 10|nSu2sMK8sTju9zVaEFNkBPLR1c0GoQbg3z5RuBRMcfd45419
-Accept: application/json
-Content-Type: application/json
-###

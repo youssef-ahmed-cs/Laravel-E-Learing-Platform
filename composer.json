@@ -7,12 +7,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ichtrojan/laravel-otp": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/prompts": "^0.3.6",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
         "grazulex/laravel-devtoolbox": "^1.5",
         "laravel/pail": "^1.2.2",

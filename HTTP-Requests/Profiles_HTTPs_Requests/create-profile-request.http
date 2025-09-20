@@ -1,0 +1,13 @@
+### POST request to create a new profile
+POST {{url}}/profiles
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU3ODI1NDEyLCJleHAiOjE3NTc4MjkwMTIsIm5iZiI6MTc1NzgyNTQxMiwianRpIjoiWEZyUHpTUDZuZzdnMnp5bCIsInN1YiI6IjMyMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6RJ96QHs7FiBdL9DdZOgchi9gVyZ100NEFoHzsqy5Xg
+
+{
+    "age": 25,
+    "bio": "Software developer with a passion for open source.",
+    "address": "Cairo, Egypt",
+    "user_id": 322
+}
+###

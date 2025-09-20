@@ -17,4 +17,4 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var Application $app */
 $app = require __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+$app->handleRequest(request: Request::capture());

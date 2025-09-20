@@ -1,0 +1,17 @@
+### GET request to register new user
+POST {{url}}/v1/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "ramadan12@gamil.com",
+    "password": "44611697Qq*",
+    "password_confirmation": "44611697Qq*",
+    "name": "ramadan mohamed",
+    "username": "ramadan01012",
+    "role": "admin",
+    "phone": "127508472870",
+    "bio": "Hello, I'm ramadan from EGYPT."
+}
+###
+#    "avatar": ""D:\Laravel_Storm\public\myImage.png""

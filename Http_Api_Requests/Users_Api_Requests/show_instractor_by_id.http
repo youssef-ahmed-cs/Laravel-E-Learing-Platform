@@ -1,6 +1,0 @@
-### GET request to get instructor by id
-GET {{url}}/users/instructor/1
-Accept: application/json
-Content-Type: application/json
-Authorization: {{auth_token}}
-###

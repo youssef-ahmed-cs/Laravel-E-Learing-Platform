@@ -6,6 +6,7 @@ use App\Http\Requests\LessonManagement\StoreLessonRequest;
 use App\Http\Requests\LessonManagement\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use Illuminate\Http\JsonResponse;
 
 class LessonController extends Controller
 {
@@ -16,7 +17,8 @@ class LessonController extends Controller
         return LessonResource::collection($lessons);
     }
 
-    public function store(StoreLessonRequest $request){
+    public function store(StoreLessonRequest $request): JsonResponse
+    {
         $this->authorize('create', Lesson::class);
         $request->validated();
         $lesson = Lesson::create($request->validated());
@@ -26,9 +28,9 @@ class LessonController extends Controller
         ]);
     }
 
-    public function update(UpdateLessonRequest $request){
+    public function update(UpdateLessonRequest $request): JsonResponse
+    {
         $this->authorize('update', Lesson::class);
-        $request->validated();
         $data = Lesson::update($request->validated());
         return response()->json([
             'message' => 'Lesson created successfully',
@@ -36,7 +38,7 @@ class LessonController extends Controller
         ]);
     }
 
-    public function destroy(Lesson $lesson)
+    public function destroy(Lesson $lesson): JsonResponse
     {
         $this->authorize('delete', $lesson);
         $lesson->delete();
@@ -45,19 +47,37 @@ class LessonController extends Controller
         ]);
     }
 
-    public function show(Lesson $lesson)
+    public function show(Lesson $lesson): LessonResource
     {
         $this->authorize('view', $lesson);
         return new LessonResource($lesson);
     }
 
-    public function getCourses(Lesson $lesson)
+    public function getCourses(Lesson $lesson): JsonResponse
     {
         $this->authorize('view-any', $lesson);
-        $courses = $lesson->course()->get(['id', 'title', 'description','status', 'level', 'duration', 'instructor_id']);
+        $courses = $lesson->course()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);
         return response()->json([
             'lesson' => $lesson->title,
             'courses' => $courses
         ]);
+    }
+
+    public function restore(int $id): JsonResponse
+    {
+        $lesson = Lesson::onlyTrashed()->find($id);
+
+        if (!$lesson) {
+            return response()->json(['message' => 'Losson not found or not trashed.'], 404);
+        }
+
+        $this->authorize('restore', $lesson);
+
+        $lesson->restore();
+
+        return response()->json([
+            'message' => 'Lesson restored successfully',
+            'data' => new LessonResource($lesson),
+        ], 200);
     }
 }

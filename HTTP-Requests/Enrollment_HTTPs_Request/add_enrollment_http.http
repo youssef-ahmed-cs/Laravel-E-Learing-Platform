@@ -1,0 +1,14 @@
+###
+POST {{URL}}/enrollments
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU3OTE2ODYxLCJleHAiOjE3NTc5MjA0NjEsIm5iZiI6MTc1NzkxNjg2MSwianRpIjoiS3hIQ1YyelVTU05Pb0NOMSIsInN1YiI6IjMyMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.eavIixMid9xWt01lTlMzVogoYhYlYb1WilXuMPc2sGI
+
+{
+    "user_id": 250,
+    "course_id": 50,
+    "enrolled_at":"2025-08-25 16:29:05",
+    "completed_at": "2025-08-25 16:29:05",
+    "progress_percentage": 90
+}
+###
