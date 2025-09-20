@@ -55,7 +55,7 @@ class AuthController extends Controller
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
         }
-        //Mail::to($user->email)->send(new WelcomeEmailMail($user));
+        Mail::to($user->email)->send(new WelcomeEmailMail($user));
         $token = JWTAuth::fromUser($user);
         return response()->json([
             'message' => 'User registered successfully',
@@ -77,18 +77,31 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json([
                 'error' => 'Failed to logout, token invalid or expired',
-                'message' => $e->getMessage()], 500);
+                'message' => $e->getMessage() ,
+                'at line' => $e->getLine()
+            ], 500);
         }
     }
 
     public function user(): JsonResponse
     {
-        return response()->json([
-            'user' => new AuthResource(Auth::user())
-        ]);
+        try{
+            $user = Auth::user();
+            $this->authorize('view', $user);
+            return response()->json([
+                'user' => new AuthResource($user)
+            ]);
+        }
+        catch (JWTException $e){
+            return response()->json([
+                'error' => 'Failed to fetch user',
+                'message' => $e->getMessage() ,
+                'at line' => $e->getLine()
+            ], 500);
+        }
     }
 
-    public function refreshToken(): JsonResponse
+    public function refreshToken(): ?JsonResponse
     {
         try {
             $token = JWTAuth::getToken();
@@ -110,19 +123,49 @@ class AuthController extends Controller
         }
     }
 
+    public function getToken(): JsonResponse
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+            $token = JWTAuth::fromUser($user);
+
+            return response()->json([
+                'token' => $token,
+                'user name' => $user->name,
+                'user email' => $user->email,
+                'username' => $user->username,
+            ], 200);
+
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to generate token',
+                'message' => $e->getMessage(), 401], 500);
+        }
+    }
+
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
         $request->validated();
-        $user = Auth::user();
+        try{
+            $this->authorize('update', Auth::user());
+            $user = Auth::user();
+            $name = $user->name;
+            if (!Hash::check($request->current_password, $user->password)) {
+                return response()->json(['message' => 'Current password is incorrect'], 400);
+            }
 
-        if (!Hash::check($request->current_password, $user->password)) {
-            return response()->json(['message' => 'Current password is incorrect'], 400);
+            $user->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            return response()->json(['message' => "Hi $name Your password updated successfully"]);
         }
-        $user->update([
-            'password' => Hash::make($request->new_password)
-        ]);
-        $name = $user->name;
-        return response()->json(['message' => "Hi $name Your password updated successfully"]);
+        catch (JWTException $e){
+            return response()->json(['error' => 'Failed to update password',
+                'message' => $e->getMessage()], 500);
+        }
+
     }
 
     public function deleteAccount(): JsonResponse
@@ -136,9 +179,9 @@ class AuthController extends Controller
             $this->authorize('delete', $user);
 
             $user->forceDelete(); // delete user permanently
-//            $user->delete(); # soft delete user can be restored later
+            // To soft delete (so the user can be restored later), use: $user->delete();
 
-            JWTAuth::invalidate(JWTAuth::getToken()); #
+            JWTAuth::invalidate(JWTAuth::getToken()); // Invalidate the user's JWT token after account deletion
 
             return response()->json(['message' => "Account for $userName deleted successfully"], 200);
         } catch (JWTException $e) {

@@ -24,4 +24,9 @@ class Lesson extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function tasks(): BelongsTo
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

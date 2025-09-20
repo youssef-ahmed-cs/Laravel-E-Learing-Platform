@@ -15,7 +15,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable, HasApiTokens , softDeletes;
+    use HasFactory, Notifiable, HasApiTokens, softDeletes;
 
     public function getJWTIdentifier()
     {
@@ -79,6 +79,11 @@ class User extends Authenticatable implements JWTSubject
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
 }

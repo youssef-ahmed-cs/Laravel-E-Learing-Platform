@@ -9,8 +9,8 @@ use App\Http\Controllers\{auth\AuthController,
     LessonController,
     NotificationController,
     ProfileController,
-    ReviewController
-};
+    ReviewController,
+    TaskController};
 use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
@@ -25,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user','deleteAccount');
+        Route::get('/get-token', 'getToken');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -86,6 +87,13 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/notifications', 'index');
         Route::post('/notifications/{id}/read', 'markAsRead');
     });
+
+    Route::controller(TaskController::class)->group(function () {
+        Route::get('/tasks/{id}/restore', 'restore');
+        Route::delete('/tasks/{id}/force-delete', 'forceDelete');
+        Route::get('/tasks/{task}/users', 'getUsersByTask');
+    });
+    Route::apiResource('tasks', TaskController::class);
 });
 
 Route::fallback(static function () {
