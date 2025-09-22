@@ -10,7 +10,7 @@ class UserObserver
 {
     public function creating(User $user): void
     {
-        $user->bio = Str::limit($user->bio, 50);
+        $user->bio = Str::limit($user->bio, 70);
         $user->email_verified_at = $user->email_verified_at ?? now();
         $user->phone = "+20{$user->phone}";
         $user->avatar = asset('storage/' . $user->avatar);
@@ -18,7 +18,7 @@ class UserObserver
 
     public function updated(User $user): void
     {
-        $user->bio = Str::limit($user->bio, 50);
+        $user->bio = Str::limit($user->bio, 70);
         if ($user->isDirty('login_count')) {
             Log::info("User login: {$user->email} - Count: {$user->login_count}");
         }

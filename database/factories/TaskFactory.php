@@ -20,6 +20,8 @@ class TaskFactory extends Factory
             'completed' => $this->faker->boolean(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'user_id' => \App\Models\User::factory(),
+            'lesson_id' => \App\Models\Lesson::factory(),
         ];
     }
 }

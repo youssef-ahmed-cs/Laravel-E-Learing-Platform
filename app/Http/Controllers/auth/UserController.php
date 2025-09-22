@@ -32,7 +32,7 @@ class UserController extends Controller
         $users = Cache::remember('users', 60, function () {
             return User::get();
         });
-//        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
+        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
 

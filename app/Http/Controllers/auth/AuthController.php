@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\auth;
 
+use App\Events\UserRegisteredEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequests\RegisterRequest;
 use App\Http\Requests\AuthRequests\UpdatePasswordRequest;
@@ -55,8 +56,10 @@ class AuthController extends Controller
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
         }
-        Mail::to($user->email)->send(new WelcomeEmailMail($user));
+//        Mail::to($user->email)->send(new WelcomeEmailMail($user));
         $token = JWTAuth::fromUser($user);
+        UserRegisteredEvent::dispatch($user);
+        #event(new UserRegisteredEvent($user));
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,

@@ -6,11 +6,12 @@ use App\Http\Requests\LessonManagement\StoreLessonRequest;
 use App\Http\Requests\LessonManagement\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 class LessonController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $this->authorize('viewAny', Lesson::class);
         $lessons = Lesson::with('course')->get();
@@ -45,6 +46,18 @@ class LessonController extends Controller
         return response()->json([
             'message' => "lesson: {$lesson->title}  deleted from {$lesson->course->title} course , successfully",
         ]);
+    }
+
+    public function lessonTasks(Lesson $lesson): JsonResponse
+    {
+        $this->authorize('view', $lesson);
+
+        $tasks = $lesson->tasks()->get();
+        return response()->json([
+            'tasks' => $tasks,
+            'total_tasks' => $tasks->count(),
+            'lesson' => $lesson->title
+        ], 200);
     }
 
     public function show(Lesson $lesson): LessonResource

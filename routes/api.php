@@ -80,6 +80,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/lessons/{lesson}/courses', 'getCourses');
         Route::get('/lessons/{id}/restore', 'restore');
         Route::get('/lessons/{lesson}/reviews', 'getReviews');
+        Route::get('/lessons/{lesson}/tasks', 'lessonTasks');
         Route::get('/lessons/{lesson}/students', 'getStudents');
         Route::get('/lessons/{lesson}/enrollments', 'getEnrollments');
     });
@@ -95,7 +96,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/tasks/{id}/force-delete', 'forceDelete');
         Route::get('/tasks/{task}/users', 'getUsersByTask');
     });
-    Route::apiResource('tasks', TaskController::class);
+//    Route::apiResource('tasks', TaskController::class);
 });
 
 Route::fallback(static function () {
@@ -109,3 +110,5 @@ Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 20
 Route::get('verify-middleware-example', static function () {
     return response()->json(['message' => 'Middleware active'], 200);
 })->middleware('verified');
+Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
+Route::apiResource('tasks', TaskController::class);
