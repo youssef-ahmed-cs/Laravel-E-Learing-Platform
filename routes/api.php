@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
+        Route::get('guest-user', 'guestCourses')->withoutMiddleware('auth:api');
         Route::get('/get-token', 'getToken');
     });
 
@@ -111,4 +112,4 @@ Route::get('verify-middleware-example', static function () {
     return response()->json(['message' => 'Middleware active'], 200);
 })->middleware('verified');
 Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
-Route::apiResource('tasks', TaskController::class);
+//Route::apiResource('tasks', TaskController::class);

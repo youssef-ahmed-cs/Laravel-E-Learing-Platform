@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Task;
 use App\Models\User;
 use App\Observers\CourseObserver;
+use App\Observers\LessonObserver;
 use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Course::observe(CourseObserver::class);
         User::observe(UserObserver::class);
         Task::observe(TaskObserver::class);
+        Lesson::observe(LessonObserver::class);
 
         Password::defaults(static function () {
             return Password::min(8)->letters()->numbers()->mixedCase()->symbols();

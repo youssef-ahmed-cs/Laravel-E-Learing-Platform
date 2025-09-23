@@ -1,5 +1,5 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=PhpStorm
-
+### GET request to show all courses as a guest user
+GET {{url}}/guest-user
+Accept: application/json
+Content-Type: application/json
 ###

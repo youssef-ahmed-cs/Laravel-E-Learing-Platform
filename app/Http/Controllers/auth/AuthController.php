@@ -5,18 +5,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequests\RegisterRequest;
 use App\Http\Requests\AuthRequests\UpdatePasswordRequest;
 use App\Http\Resources\AuthResource;
+use App\Http\Resources\CourseResource;
 use App\Mail\WelcomeEmailMail;
 use App\Models\User;
+use App\Models\Course;
+use App\Traits\UploadImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Traits\UserTrait;
 
 class AuthController extends Controller
 {
+    use UploadImage;
+
     public function login(Request $request): ?JsonResponse
     {
         $credentials = $request->only('email', 'password');
@@ -56,10 +64,8 @@ class AuthController extends Controller
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
         }
-//        Mail::to($user->email)->send(new WelcomeEmailMail($user));
         $token = JWTAuth::fromUser($user);
         UserRegisteredEvent::dispatch($user);
-        #event(new UserRegisteredEvent($user));
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,
@@ -80,7 +86,7 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json([
                 'error' => 'Failed to logout, token invalid or expired',
-                'message' => $e->getMessage() ,
+                'message' => $e->getMessage(),
                 'at line' => $e->getLine()
             ], 500);
         }
@@ -88,17 +94,16 @@ class AuthController extends Controller
 
     public function user(): JsonResponse
     {
-        try{
+        try {
             $user = Auth::user();
             $this->authorize('view', $user);
             return response()->json([
                 'user' => new AuthResource($user)
             ]);
-        }
-        catch (JWTException $e){
+        } catch (JWTException $e) {
             return response()->json([
                 'error' => 'Failed to fetch user',
-                'message' => $e->getMessage() ,
+                'message' => $e->getMessage(),
                 'at line' => $e->getLine()
             ], 500);
         }
@@ -151,7 +156,7 @@ class AuthController extends Controller
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
         $request->validated();
-        try{
+        try {
             $this->authorize('update', Auth::user());
             $user = Auth::user();
             $name = $user->name;
@@ -163,18 +168,16 @@ class AuthController extends Controller
                 'password' => Hash::make($request->new_password)
             ]);
             return response()->json(['message' => "Hi $name Your password updated successfully"]);
-        }
-        catch (JWTException $e){
+        } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to update password',
                 'message' => $e->getMessage()], 500);
         }
-
     }
 
     public function deleteAccount(): JsonResponse
     {
         try {
-            $user = Auth::user(); // current authenticated user using JWT & Facades Auth
+            $user = Auth::user();
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
@@ -182,13 +185,31 @@ class AuthController extends Controller
             $this->authorize('delete', $user);
 
             $user->forceDelete(); // delete user permanently
-            // To soft delete (so the user can be restored later), use: $user->delete();
-
-            JWTAuth::invalidate(JWTAuth::getToken()); // Invalidate the user's JWT token after account deletion
+            if (!empty($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            Log::warning("User $userName account deleted permanently.");
+            JWTAuth::invalidate(JWTAuth::getToken());
 
             return response()->json(['message' => "Account for $userName deleted successfully"], 200);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to delete account', 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function guestCourses()
+    {
+        $courses = Course::paginate(10);
+        return response()->json([
+            'courses' => CourseResource::collection($courses),
+            'pagination' => [
+                'current_page' => $courses->currentPage(),
+                'last_page' => $courses->lastPage(),
+                'per_page' => $courses->perPage(),
+                'total' => $courses->total(),
+                'next_page_url' => $courses->nextPageUrl(),
+                'prev_page_url' => $courses->previousPageUrl()
+            ]
+        ]);
     }
 }

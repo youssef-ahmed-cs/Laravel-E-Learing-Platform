@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Observers\LessonObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PHPUnit\Framework\Attributes\Medium;
 
+#[ObservedBy([LessonObserver::class])] # This will link the observer to the model
 class Lesson extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'course_id',
         'title',

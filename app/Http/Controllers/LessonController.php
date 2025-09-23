@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LessonManagement\StoreLessonRequest;
-use App\Http\Requests\LessonManagement\UpdateLessonRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\LessonManagement\{StoreLessonRequest, UpdateLessonRequest};
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LessonController extends Controller
 {
-    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Lesson::class);
         $lessons = Lesson::with('course')->get();
@@ -44,7 +45,7 @@ class LessonController extends Controller
         $this->authorize('delete', $lesson);
         $lesson->delete();
         return response()->json([
-            'message' => "lesson: {$lesson->title}  deleted from {$lesson->course->title} course , successfully",
+            'message' => "lesson: $lesson->title  deleted from {$lesson->course->title} course , successfully",
         ]);
     }
 
@@ -57,13 +58,18 @@ class LessonController extends Controller
             'tasks' => $tasks,
             'total_tasks' => $tasks->count(),
             'lesson' => $lesson->title
-        ], 200);
+        ]);
     }
 
-    public function show(Lesson $lesson): LessonResource
+    public function show(Lesson $lesson): JsonResponse|LessonResource
     {
-        $this->authorize('view', $lesson);
-        return new LessonResource($lesson);
+        try {
+            $this->authorize('view', $lesson);
+            return new LessonResource($lesson);
+        } catch (ModelNotFoundException $e) {
+            Log::error('Error showing lesson: ' . $e->getMessage());
+            return response()->json(['message' => 'Unable to retrieve lesson.'], 500);
+        }
     }
 
     public function getCourses(Lesson $lesson): JsonResponse
@@ -81,7 +87,7 @@ class LessonController extends Controller
         $lesson = Lesson::onlyTrashed()->find($id);
 
         if (!$lesson) {
-            return response()->json(['message' => 'Losson not found or not trashed.'], 404);
+            return response()->json(['message' => 'Lesson not found or not trashed.'], 404);
         }
 
         $this->authorize('restore', $lesson);
@@ -91,6 +97,6 @@ class LessonController extends Controller
         return response()->json([
             'message' => 'Lesson restored successfully',
             'data' => new LessonResource($lesson),
-        ], 200);
+        ]);
     }
 }

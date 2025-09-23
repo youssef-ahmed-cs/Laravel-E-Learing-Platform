@@ -14,14 +14,13 @@ class TaskController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Task::class);
-        $users = Task::with('user', 'lesson')->get();
-        return TaskResource::collection($users);
+        $tasks = Task::with('user', 'lesson')->get();
+        return TaskResource::collection($tasks);
     }
 
     public function store(StoreTaskRequest $request): TaskResource
     {
         $this->authorize('create', Task::class);
-
         return new TaskResource(Task::create($request->validated()));
     }
 
@@ -33,16 +32,14 @@ class TaskController extends Controller
 
     public function update(TaskRequest $request, Task $task): TaskResource
     {
-//        $this->authorize('update', $task);
-
+        $this->authorize('update', $task);
         $task->update($request->validated());
-
         return new TaskResource($task);
     }
 
     public function destroy(Task $task): JsonResponse
     {
-//        $this->authorize('delete', $task);
+        $this->authorize('delete', $task);
 
         $task->delete();
 

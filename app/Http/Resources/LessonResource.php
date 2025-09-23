@@ -10,7 +10,7 @@ class LessonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title' => $this->title,
+            'Title' => $this->title,
             'Content' => $this->content,
             'Order' => $this->order,
             'Duration' => $this->duration,
