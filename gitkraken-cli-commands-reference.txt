@@ -1,0 +1,343 @@
+# Complete GitKraken CLI (gk) Commands Reference Guide
+
+GitKraken CLI — an AI-powered, premium developer experience that enhances Git workflows across any repository.
+⚠️ You're using the public preview of the new GitKraken CLI. Features may evolve before general availability.
+
+===============================================================================
+🔐 AUTHENTICATION COMMANDS
+===============================================================================
+
+gk auth - Authenticate with GitKraken platform
+----------------------------------------------
+gk auth login          # Login to your GitKraken account
+gk auth logout         # Logout and terminate session
+
+gk provider - Manage provider tokens
+------------------------------------
+Available providers: azure, bitbucket, github, gitlab, jira
+Current git providers: github, gitlab
+Current issue providers: jira
+
+gk provider add         # Add provider token (azure, bitbucket, github, gitlab, jira)
+gk provider list        # Display list of provider tokens
+gk provider remove      # Remove a git provider token
+gk provider set         # Set your default providers
+
+===============================================================================
+🤖 AI COMMANDS (Core Feature)
+===============================================================================
+
+gk AI - AI-powered Git operations
+---------------------------------
+This command is integrated with GitKraken AI and provides a convenient way to interact with AI tools.
+
+Commit Management:
+gk ai commit                    # Generate AI commit message
+gk ai commit -d                 # Add description to commit message
+gk ai commit -f                 # Skip confirmation prompts (force)
+gk ai commit -p /path/to/repo   # Specify repository path
+
+Changelog Generation:
+gk ai changelog                                    # Generate changelog
+gk ai changelog --base main --head feature-branch # Between specific branches/commits
+gk ai changelog -p /path/to/repo                   # For specific repository
+gk ai changelog --base <BASE_BRANCH_OR_COMMIT_SHA> --head <HEAD_BRANCH_OR_COMMIT_SHA>
+
+Code Explanation:
+gk ai explain commit <commit-sha>    # Explain specific commit changes
+gk ai explain branch                 # Explain branch changes
+
+Pull Request Management:
+gk ai pr create                     # Create PR with AI-generated description
+
+Conflict Resolution:
+gk ai resolve                       # Resolve git conflicts with AI
+gk ai resolve -p /path/to/repo      # Resolve conflicts in specific repo
+
+Utility:
+gk ai tokens                        # Show GitKraken AI tokens used by CLI
+
+===============================================================================
+📊 VISUALIZATION & GRAPH COMMANDS
+===============================================================================
+
+gk graph - Display commit graph
+-------------------------------
+Display commit graph in current repository. By default, if no flags are provided
+the graph will be shown in the terminal.
+
+gk graph                    # Show graph in terminal
+gk graph --gitkraken        # Open in GitKraken Desktop
+gk graph --gitlens          # Open in GitLens
+gk graph --gitlens-codium   # Open in GitLens Codium
+gk graph --gitlens-insiders # Open in GitLens Insiders
+
+Examples:
+gk graph
+gk graph --gitkraken
+
+===============================================================================
+🎯 WORK MANAGEMENT COMMANDS
+===============================================================================
+
+gk work (aliases: gk w, gk wrk) - Manage work items
+---------------------------------------------------
+The "work" command suite provides a unified workflow for managing a "work item"
+across its lifecycle, from task initiation to cleanup. This command helps streamline
+the process of working on tasks, enhancements, or bug fixes by automating and
+centralizing actions like branch creation, starting work on code, committing changes,
+PR management, and more.
+
+Work Item Lifecycle:
+gk work start               # Start new work item
+gk work list                # List all work items
+gk work info                # Display work item information
+gk work set                 # Set active work item
+gk work end                 # End a work item
+
+Work Item Operations:
+gk work add                 # Add repository to active work item
+gk work commit              # Commit changes across all repos in work item
+gk work push                # Push repository changes
+gk work pr                  # Manage PR for work item
+gk work update              # Update work item (not implemented yet)
+
+===============================================================================
+🏢 WORKSPACE MANAGEMENT
+===============================================================================
+
+gk workspace (alias: gk ws) - Manage workspaces
+-----------------------------------------------
+The gk workspace command suite is designed to help developers manage and perform
+bulk actions across multiple repositories grouped within a workspace. Workspaces
+are a powerful tool for streamlining workflows, enhancing collaboration, and
+boosting productivity by allowing developers to execute operations across multiple
+repositories simultaneously.
+
+gk workspace list           # List all workspaces
+gk workspace create         # Create new workspace
+gk workspace clone          # Clone a workspace
+gk workspace delete         # Delete a workspace
+gk workspace info           # View workspace information
+gk workspace set            # Set default workspace
+gk workspace unset          # Clear active workspace
+gk workspace refresh        # Synchronize workspace state
+gk workspace update         # Update a workspace
+
+===============================================================================
+🏛️ ORGANIZATION MANAGEMENT
+===============================================================================
+
+gk organization (alias: gk org) - Manage organizations
+------------------------------------------------------
+This command allows you to list your GitKraken organizations and set the default one.
+
+gk organization list        # List GitKraken organizations
+gk organization set         # Set default organization (important for AI functions)
+
+===============================================================================
+🔧 ISSUE MANAGEMENT
+===============================================================================
+
+gk issue - Manage issues
+------------------------
+This command is integrated with your provider issue tracker and provides a
+convenient way to interact with issues.
+
+gk issue list               # Show list of issues
+gk issue assign             # Assign issue to a user
+
+===============================================================================
+🔌 MCP (Model Context Protocol) COMMANDS
+===============================================================================
+
+gk mcp - MCP server management
+------------------------------
+Start a local MCP server for your favorite MCP client to interact with.
+This command can also be run in "readonly" mode, which will only allow read operations.
+For more information please visit https://help.gitkraken.com/cli/gk-cli-mcp.
+
+gk mcp                      # Start local MCP server
+gk mcp --readonly           # Start in read-only mode (-r flag)
+gk mcp config               # Generate GitKraken MCP server configuration for MCP client
+gk mcp install              # Install GitKraken MCP server in MCP client
+gk mcp uninstall            # Uninstall GitKraken MCP server
+
+Examples:
+gk mcp
+gk mcp --readonly
+
+===============================================================================
+⚙️ UTILITY COMMANDS
+===============================================================================
+
+gk completion - Shell autocompletion
+------------------------------------
+Generate the autocompletion script for gk for the specified shell.
+
+gk completion bash          # Generate bash completion script
+gk completion fish          # Generate fish completion script
+gk completion powershell    # Generate PowerShell completion script
+gk completion zsh           # Generate zsh completion script
+
+gk setup - System configuration
+-------------------------------
+gk setup                    # Display current system configuration
+
+gk version - Version information
+-------------------------------
+gk version                  # Show GitKraken CLI version
+                           # Example output: Core: 3.1.32, CLI: 3.1.9
+
+gk help - Help system
+--------------------
+gk help                     # General help
+gk [command] --help         # Help for specific command
+
+===============================================================================
+🚀 MOST USEFUL COMMANDS FOR DAILY WORKFLOW
+===============================================================================
+
+Here are the commands you'll likely use most often:
+
+1. Authentication Setup:
+   gk auth login
+   gk provider add github    # Add your GitHub token
+   gk provider add gitlab    # Add your GitLab token
+   gk organization set       # Set your organization
+
+2. AI-Powered Git Workflow:
+   git add .
+   gk ai commit              # Generate smart commit messages
+   gk ai commit -d           # Generate commit with description
+   gk ai explain commit <sha> # Understand code changes
+   gk ai resolve             # Resolve conflicts intelligently
+
+3. Visual Git Management:
+   gk graph                  # View commit history in terminal
+   gk graph --gitkraken      # Open in GitKraken Desktop
+
+4. Work Management:
+   gk work start             # Begin new work item
+   gk work commit            # Commit across repositories
+   gk workspace list         # Manage multiple repositories
+
+5. Pull Request Management:
+   gk ai pr create           # Create PR with AI description
+
+6. Changelog Generation:
+   gk ai changelog           # Generate changelog for current branch
+   gk ai changelog --base main --head feature-branch
+
+7. Conflict Resolution:
+   gk ai resolve             # Let AI help resolve merge conflicts
+
+===============================================================================
+📝 USAGE PATTERNS & EXAMPLES
+===============================================================================
+
+Complete Workflow Example:
+--------------------------
+1. gk auth login                          # Authenticate
+2. gk provider add github                 # Add GitHub integration
+3. gk organization set                    # Set organization for AI
+4. gk work start                          # Start new work item
+5. # Make your code changes
+6. git add .                              # Stage changes
+7. gk ai commit -d                        # AI commit with description
+8. gk ai pr create                        # Create PR with AI description
+9. gk work end                            # End work item
+
+AI-Focused Workflow:
+-------------------
+1. git add .                              # Stage your changes
+2. gk ai commit                           # Generate commit message
+3. gk ai changelog --base main            # See what changed
+4. gk ai pr create                        # Create PR
+5. gk ai resolve                          # Resolve any conflicts
+
+Multi-Repository Management:
+---------------------------
+1. gk workspace create                    # Create workspace
+2. gk workspace clone                     # Clone workspace repos
+3. gk work start                          # Start cross-repo work
+4. gk work add                            # Add repos to work item
+5. gk work commit                         # Commit across all repos
+6. gk work push                           # Push all changes
+
+===============================================================================
+🔍 COMMAND FLAGS SUMMARY
+===============================================================================
+
+Global Flags:
+-h, --help                  # Help for any command
+
+AI Command Flags:
+-d, --add-description       # Add description to commit (ai commit)
+-f, --force                 # Skip confirmations (ai commit)
+-p, --path string           # Repository path (multiple commands)
+--base string               # Base branch/commit (ai changelog)
+--head string               # Head branch/commit (ai changelog)
+
+Graph Command Flags:
+--gitkraken                 # Open in GitKraken Desktop
+--gitlens                   # Open in GitLens
+--gitlens-codium           # Open in GitLens Codium
+--gitlens-insiders         # Open in GitLens Insiders
+
+MCP Command Flags:
+-r, --readonly              # Run MCP server in read-only mode
+
+===============================================================================
+💡 TIPS & BEST PRACTICES
+===============================================================================
+
+1. Always authenticate first:
+   gk auth login
+
+2. Set up providers for full functionality:
+   gk provider add github
+   gk provider set
+
+3. Use AI commits for better commit messages:
+   gk ai commit -d
+
+4. Leverage workspaces for multi-repo projects:
+   gk workspace create
+   gk workspace clone
+
+5. Use work items for feature development:
+   gk work start
+   gk work add
+   gk work commit
+
+6. Generate changelogs between releases:
+   gk ai changelog --base v1.0.0 --head v2.0.0
+
+7. Let AI resolve conflicts:
+   gk ai resolve
+
+8. Create better PRs with AI:
+   gk ai pr create
+
+9. Understand code changes:
+   gk ai explain commit <sha>
+   gk ai explain branch
+
+10. Use graph visualization:
+    gk graph --gitkraken
+
+===============================================================================
+📞 SUPPORT & DOCUMENTATION
+===============================================================================
+
+For more information:
+- GitKraken CLI Documentation: https://help.gitkraken.com/cli/
+- MCP Documentation: https://help.gitkraken.com/cli/gk-cli-mcp
+- Support: GitKraken Support Team
+
+Note: This is a public preview version. Features may evolve before general availability.
+
+===============================================================================
+END OF REFERENCE GUIDE
+===============================================================================

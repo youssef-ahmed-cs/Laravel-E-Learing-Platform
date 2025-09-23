@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use PHPUnit\Framework\Attributes\Medium;
 
-#[ObservedBy([LessonObserver::class])] # This will link the observer to the model
+#[ObservedBy([LessonObserver::class])]
 class Lesson extends Model
 {
     use HasFactory, SoftDeletes;

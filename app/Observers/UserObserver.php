@@ -13,7 +13,7 @@ class UserObserver
         $user->bio = Str::limit($user->bio, 70);
         $user->email_verified_at = $user->email_verified_at ?? now();
         $user->phone = "+20{$user->phone}";
-        $user->avatar = asset('storage/' . $user->avatar);
+        $user->avatar =  url('/storage/' . $user->avatar);
     }
 
     public function updated(User $user): void
@@ -46,11 +46,6 @@ class UserObserver
      */
     public function forceDeleted(User $user): void
     {
-        //
+        Log::debug('User force deleted: ' . $user->email);
     }
 }
-
-/*
- * DB::table('users')->insert(['name'=>'Ahmed','email'=>'ahmed@gmail.com','username'=>'ahmed12','role'=>'student','bio'=> 'sdfsdfsdf sdfsd s
-dfsdfsd sdft erter  wewe yrt ryrty ','phone'=>'3535335562'])
- * */

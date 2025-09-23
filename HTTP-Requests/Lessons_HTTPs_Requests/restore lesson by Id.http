@@ -1,0 +1,7 @@
+### GET request to example server
+GET {{url}}/lessons/200/restore
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4NjYzODI0LCJleHAiOjE3NTg2Njc0MjQsIm5iZiI6MTc1ODY2MzgyNCwianRpIjoiMnhxQ1dHVnpnMXh6Rnd1ZSIsInN1YiI6IjMzNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.FNBKvMlpetL6BZuZL9RfsTTqk3wUDUc69oG_pWLeiAY
+
+###

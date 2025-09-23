@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->boolean('completed')->default(false);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()
+                ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('lesson_id')->constrained('lessons')
                 ->cascadeOnDelete()->cascadeOnUpdate();
         });

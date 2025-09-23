@@ -1,0 +1,99 @@
+gk auth - Authenticate with GitKraken platform
+gk auth login          # Login to your GitKraken account
+gk auth logout         # Logout and terminate session
+----------------------------------------
+gk provider - Manage provider tokens
+gk provider add         # Add provider token (azure, bitbucket, github, gitlab, jira)
+gk provider list        # Display list of provider tokens
+gk provider remove      # Remove a git provider token
+gk provider set         # Set your default providers
+-----------------------------------------
+gk ai - AI-powered Git operations
+# Commit Management
+gk ai commit                    # Generate AI commit message
+gk ai commit -d                 # Add description to commit message
+gk ai commit -f                 # Skip confirmation prompts
+gk ai commit -p /path/to/repo   # Specify repository path
+
+# Changelog Generation
+gk ai changelog                                    # Generate changelog
+gk ai changelog --base main --head feature-branch # Between specific branches
+gk ai changelog -p /path/to/repo                   # For specific repository
+
+# Code Explanation
+gk ai explain commit <commit-sha>    # Explain specific commit changes
+gk ai explain branch                 # Explain branch changes
+
+# Pull Request Management
+gk ai pr create                     # Create PR with AI-generated description
+
+# Conflict Resolution
+gk ai resolve                       # Resolve git conflicts with AI
+gk ai resolve -p /path/to/repo      # Resolve conflicts in specific repo
+
+# Utility
+gk ai tokens                        # Show GitKraken AI tokens used
+------------------------------------------------
+gk graph - Display commit graph
+gk graph                    # Show graph in terminal
+gk graph --gitkraken        # Open in GitKraken Desktop
+gk graph --gitlens          # Open in GitLens
+gk graph --gitlens-codium   # Open in GitLens Codium
+gk graph --gitlens-insiders # Open in GitLens Insiders
+--------------------------------------------------
+gk work (alias: gk w, gk wrk) - Manage work items
+gk work start               # Start new work item
+gk work list                # List all work items
+gk work info                # Display work item information
+gk work set                 # Set active work item
+gk work end                 # End a work item
+
+# Work Item Operations
+gk work add                 # Add repository to active work item
+gk work commit              # Commit changes across all repos in work item
+gk work push                # Push repository changes
+gk work pr                  # Manage PR for work item
+gk work update              # Update work item (not implemented yet)
+---------------------------------------------------
+gk workspace (alias: gk ws) - Manage workspaces
+gk workspace list           # List all workspaces
+gk workspace create         # Create new workspace
+gk workspace clone          # Clone a workspace
+gk workspace delete         # Delete a workspace
+gk workspace info           # View workspace information
+gk workspace set            # Set default workspace
+gk workspace unset          # Clear active workspace
+gk workspace refresh        # Synchronize workspace state
+gk workspace update         # Update a workspace
+-----------------------------------------------------
+gk organization (alias: gk org) - Manage organizations
+gk organization list        # List GitKraken organizations
+gk organization set         # Set default organization (important for AI functions)
+-----------------------------------------------------
+gk issue - Manage issues
+gk issue list               # Show list of issues
+gk issue assign             # Assign issue to a user
+-----------------------------------------------------
+gk mcp - MCP server management
+gk mcp                      # Start local MCP server
+gk mcp --readonly           # Start in read-only mode
+gk mcp config               # Generate MCP server configuration
+gk mcp install              # Install GitKraken MCP server
+gk mcp uninstall            # Uninstall GitKraken MCP server
+-----------------------------------------------------
+gk completion - Shell autocompletion
+gk completion bash          # Generate bash completion script
+gk completion fish          # Generate fish completion script
+gk completion powershell    # Generate PowerShell completion script
+gk completion zsh           # Generate zsh completion script
+-----------------------------------------------------
+gk setup - System configuration
+gk setup                    # Display current system configuration
+-----------------------------------------------------
+gk version - Version information
+gk version                  # Show GitKraken CLI version
+-----------------------------------------------------
+gk help - Help system
+gk help                     # General help
+gk [command] --help         # Help for specific command
+-----------------------------------------------------

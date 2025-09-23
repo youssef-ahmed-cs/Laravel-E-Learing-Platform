@@ -23,6 +23,7 @@ Route::any('/data', static function () {
         'lang' => 'PHP'
     ]);
 });
+
 Route::any('/data-app', static function () {
     return response()->json([
         'lang' => 'PHP'
@@ -35,7 +36,7 @@ Route::get('/set-session', static function () {
 
 Route::get('/get-session', static function () {
 //    dd(Session::missing('test'));
-    if(Session::exists('test')) {
+    if (Session::exists('test')) {
         return response()->json(Session::get('test'));
     }
 });
@@ -46,9 +47,17 @@ Route::get('/forget-session', static function () {
 });
 
 Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
-->name('try');
+    ->name('try');
 
-Route::get('users', [UserController::class , 'to_view'])->name('users');
+Route::get('users', [UserController::class, 'to_view'])->name('users');
+
 Route::fallback(static function () {
+    Log::debug('Fallback route triggered: ' . request()->url());
     return response()->json(['message' => 'Page not found'], 404);
 });
+
+Route::get('old-route', static function () {
+    return redirect('https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+});
+
+Route::redirect('telescope', 'http://127.0.0.1:8000/telescope', 301);

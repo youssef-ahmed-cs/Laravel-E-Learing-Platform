@@ -1,14 +1,14 @@
 ### POST Request to create
 POST {{URL}}/lessons
-Authorization: Bearer 1|UjZBtjaK7e6IZSoHVEYzyYx1H2o5fGWKIO5bm8ucb0ba5401
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4NjYzODI0LCJleHAiOjE3NTg2Njc0MjQsIm5iZiI6MTc1ODY2MzgyNCwianRpIjoiMnhxQ1dHVnpnMXh6Rnd1ZSIsInN1YiI6IjMzNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.FNBKvMlpetL6BZuZL9RfsTTqk3wUDUc69oG_pWLeiAY
 Accept: application/json
 Content-Type: application/json
 
 {
     "title": "{{title}}",
     "content": "{{content}}",
-    "is_free": "{{is_free}}",
-    "duration": "{{duration}}",
+    "is_free": {{is_free}},
+    "duration": {{duration}},
     "video_url": "{{video_url}}",
     "course_id": "{{course_id}}",
     "order": {{order}}

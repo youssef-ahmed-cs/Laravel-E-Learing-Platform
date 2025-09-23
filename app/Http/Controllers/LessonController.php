@@ -87,13 +87,14 @@ class LessonController extends Controller
         $lesson = Lesson::onlyTrashed()->find($id);
 
         if (!$lesson) {
+            Log::error('Lesson not found or not trashed: ID ' . $id);
             return response()->json(['message' => 'Lesson not found or not trashed.'], 404);
         }
 
         $this->authorize('restore', $lesson);
 
         $lesson->restore();
-
+        Log::alert('Lesson restored: ' . $lesson->title);
         return response()->json([
             'message' => 'Lesson restored successfully',
             'data' => new LessonResource($lesson),

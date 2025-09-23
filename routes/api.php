@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
+        Route::get('/user-stats', 'getUserStats');
         Route::get('guest-user', 'guestCourses')->withoutMiddleware('auth:api');
         Route::get('/get-token', 'getToken');
     });

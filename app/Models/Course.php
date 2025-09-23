@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Observers\CourseObserver;
+use App\Policies\CoursePolicy;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy([CourseObserver::class])]
+#[UsePolicy(CoursePolicy::class)]
 class Course extends Model
 {
     use HasFactory, Notifiable , SoftDeletes;
@@ -34,7 +38,7 @@ class Course extends Model
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
-    public function lessons()
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
     }
@@ -44,7 +48,7 @@ class Course extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function enrollments()
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }

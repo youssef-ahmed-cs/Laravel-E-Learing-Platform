@@ -31,6 +31,7 @@ class AuthController extends Controller
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
+                Log::error('Login attempt failed for email: ' . $request->email);
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
@@ -38,11 +39,13 @@ class AuthController extends Controller
 
             $token = JWTAuth::fromUser($user);
             $user->increment('login_count');
+            Log::info('Login success for email: ' . $request->email);
             return response()->json([
                 'user' => new AuthResource($user),
                 'token' => $token,
             ]);
         } catch (JWTException $e) {
+            Log::error($e->getMessage());
             return response()->json(['error' => 'Could not create token',
                 'message' => $e->getMessage()], 500);
         }
@@ -55,6 +58,7 @@ class AuthController extends Controller
         $user = User::create($data);
 
         if (!$user) {
+            Log::error('User registration failed for email: ' . $request->email);
             return response()->json(['message' => 'User registration failed'], 500);
         }
 
@@ -68,7 +72,7 @@ class AuthController extends Controller
         UserRegisteredEvent::dispatch($user);
         return response()->json([
             'message' => 'User registered successfully',
-            'user' => $user,
+            'user' => new AuthResource($user),
             'token' => $token
         ], 201);
     }
@@ -82,8 +86,10 @@ class AuthController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
             JWTAuth::invalidate($token);
+            Log::info('User logged out: ' . $user);
             return response()->json(['message' => "User $user successfully logged out."], 200);
         } catch (JWTException $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'error' => 'Failed to logout, token invalid or expired',
                 'message' => $e->getMessage(),
@@ -97,10 +103,12 @@ class AuthController extends Controller
         try {
             $user = Auth::user();
             $this->authorize('view', $user);
+            Log::info('Fetched user details for: ' . $user->email);
             return response()->json([
                 'user' => new AuthResource($user)
             ]);
         } catch (JWTException $e) {
+            Log::error($e->getMessage());
             return response()->json([
                 'error' => 'Failed to fetch user',
                 'message' => $e->getMessage(),
@@ -126,6 +134,7 @@ class AuthController extends Controller
                 'username' => $user->username,
             ], 200);
         } catch (JWTException $e) {
+            Log::error('Token refresh failed: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to refresh token',
                 'message' => $e->getMessage(), 401], 500);
         }
@@ -193,6 +202,7 @@ class AuthController extends Controller
 
             return response()->json(['message' => "Account for $userName deleted successfully"], 200);
         } catch (JWTException $e) {
+            Log::error('Account deletion failed: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to delete account', 'message' => $e->getMessage()], 500);
         }
     }
@@ -211,5 +221,27 @@ class AuthController extends Controller
                 'prev_page_url' => $courses->previousPageUrl()
             ]
         ]);
+    }
+
+    public function getUserStats(): JsonResponse
+    {
+        try {
+            $user = Auth::user();
+            $this->authorize('view', $user);
+
+            $stats = [
+                'total_courses' => $user->courses()->count(),
+                'completed_courses' => $user->courses()->wherePivot('completed', true)->count(),
+//                'completed_lessons' => $user->lessons()->wherePivot('completed', true)->count(),
+                'login_count' => $user->login_count,
+                'account_created' => $user->created_at->diffForHumans(),
+                'last_login' => $user->updated_at->diffForHumans()
+            ];
+
+            return response()->json(['stats' => $stats]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch user stats: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch statistics'], 500);
+        }
     }
 }
