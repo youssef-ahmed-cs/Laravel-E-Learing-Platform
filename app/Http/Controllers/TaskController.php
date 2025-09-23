@@ -13,22 +13,21 @@ class TaskController extends Controller
 {
     public function index()
     {
-//        $this->authorize('viewAny', Task::class);
+        $this->authorize('viewAny', Task::class);
         $users = Task::with('user', 'lesson')->get();
         return TaskResource::collection($users);
     }
 
     public function store(StoreTaskRequest $request): TaskResource
     {
-//        $this->authorize('create', Task::class);
+        $this->authorize('create', Task::class);
 
         return new TaskResource(Task::create($request->validated()));
     }
 
     public function show(Task $task): TaskResource
     {
-//        $this->authorize('view', $task);
-
+        $this->authorize('view', $task);
         return new TaskResource($task);
     }
 

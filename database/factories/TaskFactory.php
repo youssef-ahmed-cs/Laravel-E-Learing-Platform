@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
+use App\Models\{Lesson, Task, User};
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -12,16 +12,17 @@ class TaskFactory extends Factory
 
     public function definition(): array
     {
+        $now = Carbon::now();
         return [
             'title' => $this->faker->word(),
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
             'content' => $this->faker->word(),
-            'dateline' => Carbon::now(),
+            'dateline' => $now,
             'completed' => $this->faker->boolean(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'user_id' => \App\Models\User::factory(),
-            'lesson_id' => \App\Models\Lesson::factory(),
+            'created_at' => $now,
+            'updated_at' => $now,
+            'user_id' => User::factory(),
+            'lesson_id' => Lesson::factory(),
         ];
     }
 }
