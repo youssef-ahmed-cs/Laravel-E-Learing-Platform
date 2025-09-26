@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[ObservedBy(LessonObserver::class)]
 #[UsePolicy(LessonPolicy::class)]
+
 class Lesson extends Model
 {
     use HasFactory, SoftDeletes;

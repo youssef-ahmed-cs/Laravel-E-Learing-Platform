@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/users/admin/{id}', 'destroyAdmin');
         Route::delete('/users/instructor/{id}', 'deleteInstructor');
         Route::get('users/{id}/enrollments', 'showUserEnrollment');
+        Route::get('/user/avatar', 'getAvatar');
         Route::get('/users/search/{name}', 'search');
         Route::get('/users/{id}/restore', 'restore');
     });
@@ -101,9 +102,9 @@ Route::middleware('auth:api')->group(function () {
 //    Route::apiResource('tasks', TaskController::class);
 });
 
-Route::fallback(static function () {
-    return response()->json(['message' => 'Resource not found.'], 404);
-});
+//Route::fallback(static function () {
+//    return response()->json(['message' => 'Resource not found.'], 404);
+//});
 
 Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);

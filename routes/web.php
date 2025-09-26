@@ -69,7 +69,8 @@ Route::fallback(static function () {
 });
 
 Route::get('old-route', static function () {
-    return redirect('https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+    $collection = collect(['name' => 'Sadique', 'role' => 'Developer']);
+    return $collection->toPrettyJson();
 });
 
 Route::get('mask-string', static function () {

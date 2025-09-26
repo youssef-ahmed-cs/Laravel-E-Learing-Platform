@@ -34,7 +34,7 @@ class UserController extends Controller
         $users = Cache::remember('users', 60, function () {
             return User::get();
         });
-        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
+//        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
 
@@ -231,6 +231,14 @@ class UserController extends Controller
             'message' => 'Profile restored successfully',
             'data' => new UserResource($user),
         ], 200);
+    }
+
+    public function getAvatar(User $user): JsonResponse
+    {
+        $this->authorize('view', $user);
+        return response()->json([
+            'avatar' => $user->avatar
+        ]);
     }
 
 }
