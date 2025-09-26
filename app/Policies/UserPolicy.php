@@ -26,7 +26,6 @@ class UserPolicy
         return $user->role === 'admin';
     }
 
-
     public function view(User $user, User $model): bool
     {
         return $user->role === 'admin' || ($user->id === $model->id);

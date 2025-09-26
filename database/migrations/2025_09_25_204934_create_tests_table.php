@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('content');
             $table->timestamps();
-            $table->softDeletes();ix
+            $table->softDeletes();
         });
     }
 

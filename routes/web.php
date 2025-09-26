@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\auth\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 Route::get('/', static function () {
     return view('welcome');
@@ -30,16 +33,25 @@ Route::any('/data-app', static function () {
     ]);
 });
 
+Route::get('/response', static function () {
+    $arr = ['name' => 'Laravel', 'version' => '12.x'];
+    return dump($arr);
+});
+
+Route::get('/exception', static function () {
+    return throw new Exception('This is an error example');
+});
+
 Route::get('/set-session', static function () {
     Session::put('test', 'i am test value from session');
 });
 
-Route::get('/get-session', static function () {
-//    dd(Session::missing('test'));
-    if (Session::exists('test')) {
-        return response()->json(Session::get('test'));
-    }
-});
+//Route::get('/get-session', static function () {
+////    dd(Session::missing('test'));
+//    if (Session::exists('test')) {
+//        return response()->json(Session::get('test'));
+//    }
+//});
 
 Route::get('/forget-session', static function () {
     Session::flush();
@@ -58,6 +70,10 @@ Route::fallback(static function () {
 
 Route::get('old-route', static function () {
     return redirect('https://laravel.com/docs/12.x/structure#the-root-directory', 301);
+});
+
+Route::get('mask-string', static function () {
+    echo Str::mask('+201025015179', '*',  0, 11);
 });
 
 Route::redirect('telescope', 'http://127.0.0.1:8000/telescope', 301);

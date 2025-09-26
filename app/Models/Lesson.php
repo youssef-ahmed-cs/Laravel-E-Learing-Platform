@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Observers\LessonObserver;
+use App\Policies\LessonPolicy;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use PHPUnit\Framework\Attributes\Medium;
 
-#[ObservedBy([LessonObserver::class])]
+#[ObservedBy(LessonObserver::class)]
+#[UsePolicy(LessonPolicy::class)]
 class Lesson extends Model
 {
     use HasFactory, SoftDeletes;

@@ -15,16 +15,6 @@ class TestPolicy
             return false;
     }
 
-    public function view(User $user, Test $test): bool
-    {
-        return false;
-    }
-
-        {
-        return true;ublic function create(User $user): bool
-    {
-        return false;
-    }
 
     public function update(User $user, Test $test): bool
     {
@@ -41,8 +31,4 @@ class TestPolicy
         return false;
     }
 
-    public function forceDelete(User $user, Test $test): bool
-    {
-        return false;
-    }
 }
