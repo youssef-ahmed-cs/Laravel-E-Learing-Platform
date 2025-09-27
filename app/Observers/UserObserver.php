@@ -38,7 +38,7 @@ class UserObserver
      */
     public function restored(User $user): void
     {
-        //
+        Log::info('User restored: ' . $user->email);
     }
 
     /**

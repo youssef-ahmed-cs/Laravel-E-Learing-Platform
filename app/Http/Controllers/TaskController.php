@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\TaskManagement\TaskRequest;
+use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,7 @@ class TaskController extends Controller
     {
         $this->authorize('viewAny', Task::class);
         $tasks = Task::with('user', 'lesson')->get();
-        return TaskResource::collection($tasks);
+        return new TaskCollection($tasks);
     }
 
     public function store(StoreTaskRequest $request): TaskResource
