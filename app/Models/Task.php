@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\TaskObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,8 @@ class Task extends Model
         return [
             'dateline' => 'datetime',
             'completed' => 'boolean',
+            'title' => AsStringable::class,
+            'content' => AsStringable::class,
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\{auth\AuthController,
     CategoryController,
     CourseController,
     EnrollmentController,
+    FileController,
     LessonController,
     NotificationController,
     ProfileController,
@@ -115,3 +116,4 @@ Route::get('verify-middleware-example', static function () {
 })->middleware('verified');
 Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
 //Route::apiResource('tasks', TaskController::class);
+Route::post('/filer', FileController::class);

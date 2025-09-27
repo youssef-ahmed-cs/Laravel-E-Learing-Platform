@@ -70,6 +70,7 @@ class AuthController extends Controller
         }
         $token = JWTAuth::fromUser($user);
         UserRegisteredEvent::dispatch($user);
+//        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
         return response()->json([
             'message' => 'User registered successfully',
             'user' => new AuthResource($user),
@@ -232,7 +233,6 @@ class AuthController extends Controller
             $stats = [
                 'total_courses' => $user->courses()->count(),
                 'completed_courses' => $user->courses()->wherePivot('completed', true)->count(),
-//                'completed_lessons' => $user->lessons()->wherePivot('completed', true)->count(),
                 'login_count' => $user->login_count,
                 'account_created' => $user->created_at->diffForHumans(),
                 'last_login' => $user->updated_at->diffForHumans()

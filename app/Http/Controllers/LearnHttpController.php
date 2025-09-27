@@ -14,9 +14,16 @@ class LearnHttpController extends Controller
      */
     public function __invoke()
     {
-        return Http::retry(2)->get('https://jsonplaceholder.cypress.io/todos/1')
+        return Http::timeout(5)
+            ->retry(3, 100)
+            ->withHeaders([
+                'Accept' => 'application/json',
+            ])
+            ->withToken('your-token-here')
+            ->asJson()
+            ->get('https://jsonplaceholder.typicode.com/posts/1')
+            ->throw()
             ->json();
-
     }
 }
 /*

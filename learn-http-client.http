@@ -1,3 +1,5 @@
 ### GET request to local server http client
-POST http://127.0.0.1:8000/http-client
+GET http://127.0.0.1:8000/url/1?name=zhangsan&age=18&version=1.0
+Accept: application/json
+Content-Type: application/json
 ###

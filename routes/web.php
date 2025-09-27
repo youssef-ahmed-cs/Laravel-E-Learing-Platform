@@ -24,7 +24,9 @@ Route::view('/layout', 'layout')->name('layout');
 
 Route::any('/data', static function () {
     return response()->json([
-        'lang' => 'PHP'
+        'lang' => 'PHP',
+        'framework' => 'Laravel',
+        'version' => '12.x'
     ]);
 });
 
@@ -70,8 +72,7 @@ Route::fallback(static function () {
 });
 
 Route::get('old-route', static function () {
-    $collection = collect(['name' => 'Sadique', 'role' => 'Developer']);
-    return $collection->toPrettyJson();
+    return collect(['name' => 'Sadique', 'role' => 'Developer'])->toPrettyJson();
 });
 
 Route::get('mask-string', static function () {
@@ -79,6 +80,35 @@ Route::get('mask-string', static function () {
 });
 
 Route::redirect('telescope', 'http://127.0.0.1:8000/telescope', 301);
-
+# redirect to external URL code status 301 , 302 , 303 , 307 , 308
 
 Route::get('http-client', LearnHttpController::class);
+
+Route::get('/log', static function () {
+    Log::emergency('Emergency level log');# system is unusable
+    Log::alert('Alert level log'); # action must be taken immediately
+    Log::critical('Critical level log'); # severe error
+    Log::error('Error level log'); # runtime errors
+    Log::warning('Warning level log'); # exceptional occurrences
+    Log::notice('Notice level log'); # normal but significant condition
+    Log::info('Info level log'); # interesting events
+    Log::debug('Debug level log'); # detailed debug information
+    return response()->json(['message' => 'Logs have been recorded. Check your log files.']);
+});
+Route::get('/url/{id}', static function () {
+    return response()->json([
+        'url' => request()->url(),
+        'full_url' => request()->fullUrl(),
+        'previous_url' => url()->previous(),
+        'current_url' => url()->current(),
+        'with query string ' => request()->fullUrlWithQuery([
+            'name' => 'Laravel',
+            'version' => '12.x'
+        ]),
+        'without query string ' => request()->fullUrlWithoutQuery([
+            'name'
+        ]),
+        'route is ' => request()->routeIs('try'),
+        'route uri ' => request()->route('id'),
+    ]);
+})->name('try');

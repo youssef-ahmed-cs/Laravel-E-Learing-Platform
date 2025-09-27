@@ -8,6 +8,11 @@ use Illuminate\Support\Str;
 
 class UserObserver
 {
+    public function created(User $user): void
+    {
+        Log::info('New user created: ' . $user->email);
+    }
+
     public function creating(User $user): void
     {
         $user->bio = Str::limit($user->bio, 70);
@@ -23,6 +28,7 @@ class UserObserver
         if ($user->isDirty('login_count')) {
             Log::info("User login: {$user->email} - Count: {$user->login_count}");
         }
+
     }
 
     public function deleted(User $user): void
