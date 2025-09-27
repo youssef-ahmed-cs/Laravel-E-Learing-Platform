@@ -19,7 +19,7 @@ use Illuminate\Notifications\Notifiable;
 #[UsePolicy(CoursePolicy::class)]
 class Course extends Model
 {
-    use HasFactory, Notifiable , SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'title',

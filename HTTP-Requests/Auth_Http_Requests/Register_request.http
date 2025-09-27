@@ -4,14 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "youssef-hany@gamil.com",
+    "email": "devhub@dev.com",
     "password": "44611697Qq*",
     "password_confirmation": "44611697Qq*",
-    "name": "Youssef Mohamed",
-    "username": "youssef-hany",
+    "name": "dev hub",
+    "username": "devhub",
     "role": "admin",
-    "phone": "01297672244",
-    "bio": "Hello, I'm Youssef from EGYPT."
+    "phone": "1225015097",
+    "bio": "Hello, I'm dev hub from EGYPT Cario."
 }
 ###
-#    "avatar": ""D:\Laravel_Storm\public\myImage.png""

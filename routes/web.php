@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\auth\UserController;
+use App\Http\Controllers\LearnHttpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -74,7 +75,10 @@ Route::get('old-route', static function () {
 });
 
 Route::get('mask-string', static function () {
-    echo Str::mask('+201025015179', '*',  0, 11);
+    echo Str::mask('+201025015179', '*', 0, 11);
 });
 
 Route::redirect('telescope', 'http://127.0.0.1:8000/telescope', 301);
+
+
+Route::get('http-client', LearnHttpController::class);
