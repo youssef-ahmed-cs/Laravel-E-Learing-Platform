@@ -1,0 +1,15 @@
+Logging is a crucial part of any application for monitoring and debugging. Laravel provides a
+ powerful and flexible logging system that is built on top of the popular Monolog library.
+ This allows you to configure various logging
+channels to process and store your logs in different ways.
+
+Log Levels
+Before we get into the types of logs, it's important to understand log levels. These levels are used to categorize the severity of a log message. Laravel supports the eight standard syslog levels, ordered from least to most severe:
+debug: Detailed information that is useful for debugging.
+info: Informational messages that highlight the progress of the application.
+notice: Normal but significant events.
+warning: Exceptional occurrences that are not errors.
+error: Runtime errors that do not require immediate action but should be logged and monitored.
+critical: Critical conditions, e.g., component unavailable, unexpected exception.
+alert: Action must be taken immediately, e.g., entire website down, database unavailable.
+emergency: The system is unusable.

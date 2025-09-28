@@ -1,0 +1,11 @@
+{
+  "name": "Global Variables",
+  "variables": {
+    "url": {
+      "value": "http://127.0.0.1:8000/api",
+      "type": "string",
+      "id": 0,
+      "isSecret": false
+    }
+  }
+}

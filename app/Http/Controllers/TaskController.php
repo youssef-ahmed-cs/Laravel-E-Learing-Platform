@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public function index()
+    /**
+     * @returns TaskCollection
+     */
+    public function index(): TaskCollection
     {
         $this->authorize('viewAny', Task::class);
         $tasks = Task::with('user', 'lesson')->get();
@@ -51,8 +54,11 @@ class TaskController extends Controller
     {
         $task = Task::withTrashed()->findOrFail($id);
         $this->authorize('restore', $task);
-
         $task->restore();
+        Log::build([
+            'driver' => 'single',
+            'path' => storage_path('logs/task.log'),
+        ])->notice('Task restored', ['task_id' => $id, 'restored_by' => auth()->user()->name]);
 
         return response()->json([
             'message' => 'Task restored successfully',

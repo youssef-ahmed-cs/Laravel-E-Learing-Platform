@@ -16,8 +16,10 @@ use App\Http\Controllers\{auth\AuthController,
 use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login', 'login');
+        Route::post('/register', 'register');
+    });
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -103,9 +105,10 @@ Route::middleware('auth:api')->group(function () {
 //    Route::apiResource('tasks', TaskController::class);
 });
 
-//Route::fallback(static function () {
-//    return response()->json(['message' => 'Resource not found.'], 404);
-//});
+Route::fallback(static function () {
+    Log::warning('API Route not found: ' . request()->url() . ' Method: ' . request()->method() . ', IP: ' . request()->ip());
+    return response()->json(['message' => 'Resource not found.'], 404);
+});
 
 Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
