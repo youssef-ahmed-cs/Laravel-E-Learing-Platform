@@ -14,11 +14,14 @@ class UserResource extends JsonResource
             'Name' => $this->name,
             'Email' => $this->email,
             'Role' => $this->role,
-            'Bio' => $this->bio,
+            'Bio' => $this->whenNotNull($this->bio),
             'Avatar' => $this->avatar,
             'Phone' => $this->phone,
             'Username' => $this->username,
-            'Created At' => $this->created_at,
+            'Created At' => $this->created_at->format('d M Y'),
+            'Updated At' => $this->updated_at->format('d M Y'),
+//            'Profiles_counted' => $this->whenCounted('profile')
+            'profile' => new ProfileResource($this->whenLoaded('profile')),
         ];
     }
 }

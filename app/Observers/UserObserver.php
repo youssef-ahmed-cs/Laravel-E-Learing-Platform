@@ -11,6 +11,7 @@ class UserObserver
     public function created(User $user): void
     {
         Log::info('New user created: ' . $user->email);
+        $user->created_at = $user->created_at->diffForHumans() ?? now()->diffForHumans();
     }
 
     public function creating(User $user): void
@@ -18,8 +19,8 @@ class UserObserver
         $user->bio = Str::limit($user->bio, 70);
         $user->email_verified_at = $user->email_verified_at ?? now();
         $user->phone = "+20{$user->phone}";
-        $user->phone = Str::mask($user->phone, '*',0, strlen($user->phone) - 2);
-        $user->avatar =  url('/storage/' . $user->avatar);
+        $user->phone = Str::mask($user->phone, '*', 0, strlen($user->phone) - 2);
+        $user->avatar = url('/storage/' . $user->avatar);
     }
 
     public function updated(User $user): void

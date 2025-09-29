@@ -2,28 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+
 
 class LearnHttpController extends Controller
 {
-    /**
-     * @throws ConnectionException
-     * @throws RequestException
-     */
     public function __invoke()
     {
-        return Http::timeout(5)
-            ->retry(3, 100)
-            ->withHeaders([
-                'Accept' => 'application/json',
-            ])
-            ->withToken('your-token-here')
-            ->asJson()
-            ->get('https://jsonplaceholder.typicode.com/posts/1')
-            ->throw()
-            ->json();
+        $users = User::with(['profile'])->get();
+        return UserResource::collection($users);
     }
 }
 /*
