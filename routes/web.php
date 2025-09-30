@@ -1,12 +1,15 @@
 <?php
 
+use App\Enums\User;
 use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\LearnHttpController;
+use App\Http\Controllers\UploadFromUrlController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Models\User as UserModel;
 
 Route::get('/', static function () {
     return view('welcome');
@@ -72,12 +75,12 @@ Route::fallback(static function () {
 });
 
 Route::get('old-route', static function () {
-    return collect(['name' => 'Sadique', 'role' => 'Developer'])->toPrettyJson();
+    return collect(['name' => 'Quesadilla', 'role' => 'Developer'])->toPrettyJson();
 });
 
 Route::get('mask-string', static function () {
-    echo Str::mask('+201025015179', '*', 0, 11);
-});
+    dd(session('status'));
+})->name('tryRoute');
 
 Route::redirect('telescope', 'http://127.0.0.1:8000/telescope', 301);
 # redirect to external URL code status 301 , 302 , 303 , 307 , 308
@@ -95,6 +98,7 @@ Route::get('/log', static function () {
     Log::debug('Debug level log'); # detailed debug information
     return response()->json(['message' => 'Logs have been recorded. Check your log files.']);
 });
+
 Route::get('/url/{id}', static function () {
     return response()->json([
         'url' => request()->url(),
@@ -112,3 +116,5 @@ Route::get('/url/{id}', static function () {
         'route uri ' => request()->route('id'),
     ]);
 })->name('try');
+
+Route::get('/person', UploadFromUrlController::class);

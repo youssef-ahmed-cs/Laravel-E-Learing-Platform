@@ -5,7 +5,9 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentCollection;
 use App\Jobs\SendWelcomeEmail;
+use App\Policies\UserPolicy;
 use App\Traits\UploadImage;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 {
     use UploadImage;
+
     public function index(): JsonResponse
     {
         $this->authorize('viewAny', User::class);
