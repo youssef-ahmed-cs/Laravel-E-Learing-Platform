@@ -13,6 +13,15 @@ class RegisterRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'email' => strtolower($this->email),
+            'username' => strtolower($this->username),
+            'name' => ucwords($this->name),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
