@@ -107,7 +107,7 @@ Route::middleware(['auth:api', 'verified'])->group(function () {
         Route::delete('/tasks/{id}/force-delete', 'forceDelete');
         Route::get('/tasks/{task}/users', 'getUsersByTask');
     });
-//    Route::apiResource('tasks', TaskController::class);
+    Route::apiResource('tasks', TaskController::class);
 });
 
 Route::fallback(static function () {
