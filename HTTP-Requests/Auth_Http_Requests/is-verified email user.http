@@ -1,0 +1,6 @@
+### GET request to check if email is verified
+GET {{url}}/auth/is-verified
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mjc5NzY0LCJleHAiOjE3NTkyODMzNjQsIm5iZiI6MTc1OTI3OTc2NCwianRpIjoidGtJUzM3S240SUxWRUtpTiIsInN1YiI6IjM1OSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Vx6W_BJiZVKQF9sWpGRSLhSA7uMNnPApQgggC1N-wEU
+###

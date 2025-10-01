@@ -17,7 +17,7 @@ class AuthResource extends JsonResource
             'bio' => $this->bio,
             'phone' => $this->phone,
             'avatar' => $this->avatar ? url('/storage/' . $this->avatar) : null,
-            'email_verified_at' => $this->email_verified_at->format('Y-m-d H:i:s'),
+            'email_verified_at' => $this->email_verified_at,
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'id' => $this->id,

@@ -22,10 +22,15 @@ Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
     });
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::get('/auth/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
+
+Route::middleware(['auth:api', 'verified'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
+        Route::post('/auth/resend-verification', 'resendVerificationEmail')->name('verification.resend');
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');

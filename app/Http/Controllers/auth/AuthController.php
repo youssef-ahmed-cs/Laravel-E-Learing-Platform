@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Traits\UserTrait;
+use Illuminate\Auth\Events\Registered;
+
+//handles the import
+
 
 class AuthController extends Controller
 {
@@ -70,6 +74,7 @@ class AuthController extends Controller
         }
         $token = JWTAuth::fromUser($user);
         UserRegisteredEvent::dispatch($user);
+        event(new Registered($user));
 //        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
         return response()->json([
             'message' => 'User registered successfully',
@@ -208,6 +213,7 @@ class AuthController extends Controller
         }
     }
 
+
     public function guestCourses()
     {
         $courses = Course::paginate(10);
@@ -243,5 +249,42 @@ class AuthController extends Controller
             Log::error('Failed to fetch user stats: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to fetch statistics'], 500);
         }
+
     }
+
+    public function resendVerificationEmail(Request $request): JsonResponse
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified.'], 400);
+        }
+
+        $user->sendEmailVerificationNotification();
+        return response()->json(['message' => 'Verification link resent!']);
+
+        return response()->json(['message' => 'Verification email resent'], 200);
+    }
+
+    public function verifyEmail($id, $hash, Request $request)
+    {
+        $user = User::findOrFail($id);
+
+        if (!hash_equals((string)$hash, sha1($user->getEmailForVerification()))) {
+            return response()->json(['message' => 'Invalid verification link'], 403);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email already verified'], 200);
+        }
+
+        $user->markEmailAsVerified();
+
+        return response()->json(['message' => 'Email verified successfully'], 200);
+    }
+
 }

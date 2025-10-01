@@ -1,0 +1,6 @@
+### GET request to example server
+GET {{url}}/auth/verify-email/363/6d1d341d6c9d332454ed695d5758dbffd2cfeb41
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5MjgyMjM3LCJleHAiOjE3NTkyODU4MzcsIm5iZiI6MTc1OTI4MjIzNywianRpIjoiTURkQWJ1VVRYUVRSb2dnNSIsInN1YiI6IjM2MyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.zfygDOVgNIlgUt0XzoEYde0VzT5c-qHM30gpCLj-VzM
+###
