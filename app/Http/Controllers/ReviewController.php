@@ -7,12 +7,16 @@ use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\User;
 use App\Notifications\NewReview;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Notification;
 
 class ReviewController extends Controller
 {
+    /**
+     * @throws AuthorizationException
+     */
     public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Review::class);
@@ -20,6 +24,9 @@ class ReviewController extends Controller
         return ReviewResource::collection($reviews);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function destroy(Review $review, User $user): JsonResponse
     {
         $this->authorize('delete', $review);

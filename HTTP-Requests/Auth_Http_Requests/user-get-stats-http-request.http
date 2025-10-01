@@ -1,0 +1,7 @@
+### GET request to get user stats
+GET {{url}}/user-stats
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU4ODI4NzQ0LCJleHAiOjE3NTg4MzIzNDQsIm5iZiI6MTc1ODgyODc0NCwianRpIjoiRE1qUVJHZGJMVFAzV0tqVCIsInN1YiI6IjM0OSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.INsR-pDRpjE6yofjp3Y3DrrY-yXsWkDxWfsKuEszcsA
+
+###

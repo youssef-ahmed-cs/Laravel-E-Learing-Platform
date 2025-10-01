@@ -2,19 +2,26 @@
 
 namespace App\Models;
 
+use App\Casts\HumanDateCast;
+use App\Casts\PriceCast;
 use App\Observers\CourseObserver;
+use App\Policies\CoursePolicy;
+use Elegantly\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy([CourseObserver::class])]
+#[UsePolicy(CoursePolicy::class)]
 class Course extends Model
 {
-    use HasFactory, Notifiable , SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -28,22 +35,31 @@ class Course extends Model
         'category_id',
     ];
 
+    public function casts(): array
+    {
+        return [
+            'price' => MoneyCast::class . ':USD',
+            'duration' => 'integer',
+            'created_at' => HumanDateCast::class
+        ];
+    }
+
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
-    public function lessons()
+    public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function enrollments()
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }

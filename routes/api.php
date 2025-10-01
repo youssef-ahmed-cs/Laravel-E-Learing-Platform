@@ -6,35 +6,50 @@ use App\Http\Controllers\{auth\AuthController,
     CategoryController,
     CourseController,
     EnrollmentController,
+    FileController,
     LessonController,
     NotificationController,
     ProfileController,
-    ReviewController
+    ReviewController,
+    TaskController
 };
 use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login', 'login');
+        Route::post('/register', 'register');
+    });
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::get('/auth/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
+
+Route::middleware(['auth:api', 'verified'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
+        Route::post('/auth/resend-verification', 'resendVerificationEmail')->name('verification.resend');
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
+        Route::post('/force-delete-user', 'deleteAccount');
+        Route::get('/user-stats', 'getUserStats');
+        Route::get('guest-user', 'guestCourses')->withoutMiddleware('auth:api');
+        Route::get('/get-token', 'getToken');
     });
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/users/instructors', 'instructors');
         Route::get('/users/{id}/profile', 'showProfile');
+        Route::get('user/{user}/tasks', 'userTasks');
         Route::get('/users/admins', 'admins');
         Route::get('/users/admin/{id}', 'showAdmin');
         Route::get('/users/instructor/{instructor}', 'showInstructor');
         Route::delete('/users/admin/{id}', 'destroyAdmin');
         Route::delete('/users/instructor/{id}', 'deleteInstructor');
         Route::get('users/{id}/enrollments', 'showUserEnrollment');
+        Route::get('/user/avatar', 'getAvatar');
         Route::get('/users/search/{name}', 'search');
         Route::get('/users/{id}/restore', 'restore');
     });
@@ -76,6 +91,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/lessons/{lesson}/courses', 'getCourses');
         Route::get('/lessons/{id}/restore', 'restore');
         Route::get('/lessons/{lesson}/reviews', 'getReviews');
+        Route::get('/lessons/{lesson}/tasks', 'lessonTasks');
         Route::get('/lessons/{lesson}/students', 'getStudents');
         Route::get('/lessons/{lesson}/enrollments', 'getEnrollments');
     });
@@ -85,22 +101,27 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/notifications', 'index');
         Route::post('/notifications/{id}/read', 'markAsRead');
     });
+
+    Route::controller(TaskController::class)->group(function () {
+        Route::get('/tasks/{id}/restore', 'restore');
+        Route::delete('/tasks/{id}/force-delete', 'forceDelete');
+        Route::get('/tasks/{task}/users', 'getUsersByTask');
+    });
+//    Route::apiResource('tasks', TaskController::class);
 });
 
 Route::fallback(static function () {
+    Log::warning('API Route not found: ' . request()->url() . ' Method: ' . request()->method() . ', IP: ' . request()->ip());
     return response()->json(['message' => 'Resource not found.'], 404);
 });
 
-Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))
-->name('try');
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
-Route::get('/collection', [UserController::class, 'collections'])
-    ->middleware('policeman');
+Route::get('/collection', [UserController::class, 'collections'])->middleware('policeman');
 Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
-//Route::post('set-local', static function (Request $request) {
-//    return response()->json(['message' => 'Locale set to ',
-//        $request->header()], 200);
-//})->middleware('setLocal');
 Route::get('verify-middleware-example', static function () {
     return response()->json(['message' => 'Middleware active'], 200);
 })->middleware('verified');
+Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
+//Route::apiResource('tasks', TaskController::class);
+Route::post('/filer', FileController::class);

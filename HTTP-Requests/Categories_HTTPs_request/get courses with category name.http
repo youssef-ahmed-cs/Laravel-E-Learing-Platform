@@ -1,5 +1,5 @@
 ### GET request to example server
-GET {{URL}}/categories/1/courses
+GET {{URL}}/categories/200/courses
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer 8|on0DtCRy0xn0Kgd41BBBwPC45T3PZv45nGUI7vJD0dade51c

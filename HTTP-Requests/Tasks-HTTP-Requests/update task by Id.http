@@ -1,0 +1,10 @@
+### PATCH Task by ID to update its details
+PATCH {{url}}/tasks/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4NDU2ODE5LCJleHAiOjE3NTg0NjA0MTksIm5iZiI6MTc1ODQ1NjgxOSwianRpIjoicE1FY0w3NUVkeHB1UUR6dCIsInN1YiI6IjMzNyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.KRUkxX-vDFaeFBO8ZRxFKn4J6yFudUfJWo69gZcaPhc
+
+{
+    "title": "Laracan"
+}
+###

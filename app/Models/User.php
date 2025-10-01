@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,9 +15,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+#[ObservedBy([UserObserver::class])]
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasApiTokens , softDeletes;
+    use HasFactory, Notifiable, HasApiTokens, softDeletes;
 
     public function getJWTIdentifier()
     {
@@ -30,14 +33,15 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
-        'role',
-        'bio',
-        'avatar',
-        'phone',
         'username',
+        'role',
+        'avatar',
+        'bio',
+        'phone',
+        'remember_token',
         'login_count',
-        'deleted_at'
     ];
 
     protected $hidden = [
@@ -52,7 +56,8 @@ class User extends Authenticatable implements JWTSubject
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'login_count' => 'integer'
+            'login_count' => 'integer',
+//            'id' => 'string'
         ];
     }
 
@@ -79,6 +84,11 @@ class User extends Authenticatable implements JWTSubject
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 
 }

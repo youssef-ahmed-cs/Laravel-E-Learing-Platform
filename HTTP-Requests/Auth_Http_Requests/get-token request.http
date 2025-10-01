@@ -1,0 +1,6 @@
+### GET request to get token
+GET {{url}}/get-token
+Accept: application/json
+Content-Type: application/json
+Azuthorization: Bearer {{token}}
+###

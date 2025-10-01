@@ -5,6 +5,9 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EnrollmentCollection;
 use App\Jobs\SendWelcomeEmail;
+use App\Policies\UserPolicy;
+use App\Traits\UploadImage;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
@@ -18,6 +21,8 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    use UploadImage;
+
     public function index(): JsonResponse
     {
         $this->authorize('viewAny', User::class);
@@ -55,6 +60,7 @@ class UserController extends Controller
             'message' => 'User created successfully',
             'user' => new UserResource($user)
         ], 201);
+
     }
 
     public function instructors(): UserCollection
@@ -62,6 +68,20 @@ class UserController extends Controller
         $this->authorize('viewInstructors', User::class);
         $users = User::where('role', 'instructor')->paginate(10);
         return new UserCollection($users);
+    }
+
+    public function userTasks(User $user)
+    {
+        $this->authorize('view', $user);
+        if ($user->role !== 'student') {
+            return response()->json(['message' => 'User not found or is not a student.'], 404);
+        }
+        $tasks = $user->tasks;
+        return response()->json([
+            'tasks' => $tasks,
+            'total_tasks' => $tasks->count(),
+            'user' => $user->name
+        ], 200);
     }
 
     public function admins(): UserCollection
@@ -214,6 +234,14 @@ class UserController extends Controller
             'message' => 'Profile restored successfully',
             'data' => new UserResource($user),
         ], 200);
+    }
+
+    public function getAvatar(User $user): JsonResponse
+    {
+        $this->authorize('view', $user);
+        return response()->json([
+            'avatar' => $user->avatar
+        ]);
     }
 
 }

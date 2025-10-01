@@ -1,0 +1,6 @@
+### POST request to force delete by token
+POST {{url}}/force-delete-user
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4NjQyODQxLCJleHAiOjE3NTg2NDY0NDEsIm5iZiI6MTc1ODY0Mjg0MSwianRpIjoib1hscmdaZ1lMbG5DTUl2YyIsInN1YiI6IjM0NSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.qNtPdR_QoMjTT_78vYgMwzK33tRm9iuoJKGn-mPxhik
+###

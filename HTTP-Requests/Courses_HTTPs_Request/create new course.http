@@ -2,16 +2,17 @@
 POST {{url}}/courses
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU4MDYzNzY4LCJleHAiOjE3NTgwNjczNjgsIm5iZiI6MTc1ODA2Mzc2OCwianRpIjoiTHVRUTN0UzBrcHNCUTlRWSIsInN1YiI6IjMzMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.J8kbLLMEgkp8rbKLyJAUF1tZLSWLhgNAigapJh68bHM
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU5MDEyODcwLCJleHAiOjE3NTkwMTY0NzAsIm5iZiI6MTc1OTAxMjg3MCwianRpIjoiR3NvQVAzRWREa3o4Zjd3VSIsInN1YiI6IjM1MyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.ASnPoeP7h4upwtIn58FTCudlnHhe1NFvi0lgaX9b7pA
 
 {
-    "title": "PHP v8.5",
-    "description": "Learn new PHP v8.5 from scratch to advanced",
+    "title": "Go v7",
+    "description": "Learn new JAVA from scratch to advanced",
     "instructor_id": 9,
     "level": "beginner",
-    "price": 100.0,
+    "price": 10000,
     "category_id": 2,
     "duration": 120,
-    "status":"archived"
+    "status": "archived"
 }
+
 ###

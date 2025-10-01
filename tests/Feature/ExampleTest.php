@@ -9,7 +9,14 @@ class ExampleTest extends TestCase
     public function test_the_application_returns_a_successful_response(): void
     {
         $response = $this->get('/');
+        $response->assertSee('to');
+        $response->assertStatus(200);
+    }
 
+    public function test_the_application_contains_any_words(): void
+    {
+        $response = $this->get('/');
+        $response->assertSee('Laravel');
         $response->assertStatus(200);
     }
 
@@ -22,6 +29,12 @@ class ExampleTest extends TestCase
     public function test_ping_index(): void
     {
         $response = $this->get('/api/ping');
+        $response->assertStatus(200);
+    }
+
+    public function test_task_index(): void
+    {
+        $response = $this->get('/api/ping-01');
         $response->assertStatus(200);
     }
 
