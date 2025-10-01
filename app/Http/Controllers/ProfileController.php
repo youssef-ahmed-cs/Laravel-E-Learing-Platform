@@ -2,85 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use App\Http\Requests\ProfileManagement\{ProfileRequest, UpdateProfileRequest};
-use App\Http\Resources\ProfileResource;
-use App\Models\Profile;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
     {
-        $this->authorize('viewAny', Profile::class);
-        return ProfileResource::collection(Profile::load('user')->paginate(5));
-    }
-
-    public function store(ProfileRequest $request): JsonResponse
-    {
-        $this->authorize('create', Profile::class);
-        $profile = Profile::create($request->validated());
-
-        return response()->json([
-            'message' => 'Profile created successfully',
-            'data' => new ProfileResource($profile),
-        ], 201);
-    }
-
-    public function show(Profile $profile): ProfileResource
-    {
-        $this->authorize('view', $profile);
-        return new ProfileResource($profile);
-    }
-
-    public function showByUser()
-    {
-        $user = auth()->user();
-
-        if (!$user?->profile) {
-            return response()->json(['message' => 'Profile not found'], 404);
-        }
-
-        $this->authorize('view', $user->profile);
-        return new ProfileResource($user->profile);
-    }
-
-    public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
-    {
-        $this->authorize('update', $profile);
-        $profile->update($request->validated());
-        return response()->json([
-            'message' => 'Profile updated successfully',
-            'data' => new ProfileResource($profile),
+        return view('profile.edit', [
+            'user' => $request->user(),
         ]);
     }
 
-    public function destroy(Profile $profile): JsonResponse
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $this->authorize('delete', $profile);
-        $profile->delete();
-        $name = $profile->user?->name;
-        return response()->json(['message' => "Profile related $name deleted successfully"]);
-    }
+        $request->user()->fill($request->validated());
 
-
-    public function restore(int $id): JsonResponse
-    {
-        $profile = Profile::onlyTrashed()->find($id);
-
-        if (!$profile) {
-            return response()->json(['message' => 'Profile not found or not trashed.'], 404);
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        $this->authorize('restore', $profile);
+        $request->user()->save();
 
-        $profile->restore();
-
-        return response()->json([
-            'message' => 'Profile restored successfully',
-            'data' => new ProfileResource($profile),
-        ], 200);
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
 
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
+    }
 }

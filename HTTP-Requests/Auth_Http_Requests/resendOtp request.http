@@ -1,0 +1,9 @@
+### GET request to example server
+POST {{url}}/otp/resend
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "youssef.ahmed.fci@gmail.com"
+}
+###

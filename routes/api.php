@@ -9,8 +9,10 @@ use App\Http\Controllers\{auth\AuthController,
     FileController,
     LessonController,
     NotificationController,
+    OtpController,
     ProfileController,
     ReviewController,
+    SendSmsController,
     TaskController
 };
 use Illuminate\Support\Facades\Session;
@@ -26,10 +28,14 @@ Route::get('/auth/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmai
     ->middleware(['signed'])
     ->name('verification.verify');
 
+Route::post('/otp/verify', [AuthController::class, 'verifyOtp'])->name('otp.verify');
+Route::post('/otp/resend', [AuthController::class, 'resendOtp'])->name('otp.resend');
+
 Route::middleware(['auth:api', 'verified'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
+        Route::get('/auth/is-verified', 'isVerified');
         Route::post('/auth/resend-verification', 'resendVerificationEmail')->name('verification.resend');
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
@@ -125,3 +131,4 @@ Route::get('verify-middleware-example', static function () {
 Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
 //Route::apiResource('tasks', TaskController::class);
 Route::post('/filer', FileController::class);
+Route::get('/sms', SendSmsController::class);
