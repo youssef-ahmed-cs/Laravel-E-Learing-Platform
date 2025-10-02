@@ -34,9 +34,7 @@ class UserController extends Controller
 
     public function to_view()
     {
-        $users = Cache::remember('users', 60, function () {
-            return User::get();
-        });
+        $users =  User::all_users()->get(); # DRY principle with local scope in User model we use it here
 //        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
