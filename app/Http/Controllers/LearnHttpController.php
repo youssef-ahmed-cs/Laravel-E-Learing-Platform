@@ -2,28 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use Illuminate\Support\Facades\Cookie;
-use JetBrains\PhpStorm\NoReturn;
-
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Http;
 
 class LearnHttpController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): JsonResponse
     {
-//        return redirect()->route('tryRoute')->with('status', 'مرحبا بك في لارافيل');
-//        return back()->with('status', 'مرحبا بك في لارافيل');
-//        return to_route('tryRoute')->with('status', 'مرحبا بك في لارافيل');
-//        return response()->view('welcome')->with('status', 'مرحبا بك في لارافيل');
-//        return response()->file(storage_path('app/private/avatars/youssef.png')); # serve a file as a response
-//          return response()->download(storage_path('app/private/avatars/youssef.png'), 'my_avatar.png', ['Content-Type' => 'image/png'])
-//              ->deleteFileAfterSend(true); # serve a file as a response and delete it after sending
-//        return response()->streamDownload(function () {
-//            echo "Hello, this is a streamed download response.";
-//        }, 'streamed_file.txt', ['Content-Type' => 'text/plain']);
-        # with() => flash data to a session for one request only
+        $response = Http::request()->get('http-client');
 
+        return response()->json($response->json());
     }
 }
 /*

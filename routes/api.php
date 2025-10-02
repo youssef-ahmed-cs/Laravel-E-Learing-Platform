@@ -7,14 +7,14 @@ use App\Http\Controllers\{auth\AuthController,
     CourseController,
     EnrollmentController,
     FileController,
+    LearnHttpController,
     LessonController,
     NotificationController,
     OtpController,
     ProfileController,
     ReviewController,
     SendSmsController,
-    TaskController
-};
+    TaskController};
 use Illuminate\Support\Facades\Session;
 
 Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
@@ -132,3 +132,4 @@ Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 20
 //Route::apiResource('tasks', TaskController::class);
 Route::post('/filer', FileController::class);
 Route::get('/sms', SendSmsController::class);
+Route::get('/http-client', [LearnHttpController::class]);

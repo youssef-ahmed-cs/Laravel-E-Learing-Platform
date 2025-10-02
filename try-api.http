@@ -1,9 +1,5 @@
 ### GET request to example server
-POST http://127.0.0.1:8000/send-otp
+GET {{url}}/http-client
 Accept: application/json
-Content-Type: application/json
 
-{
-    "email": "youssef.ahmed.fci@gmail.com"
-}
 ###

@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "email": "youssef.ahmed.fci@gmail.com",
+    "email": "youssef.ahmed.fci45@gmail.com",
     "password": "44611697Qq*",
     "password_confirmation": "44611697Qq*",
-    "name": "youssef.ahmed.fci",
-    "username": "youssef.ahmed.654",
+    "name": "youssef.ahmed.i",
+    "username": "youssef.ahmed.654454",
     "role": "admin",
-    "phone": "2012776457225",
-    "bio": "Hello, I'm youssef.ahmed.fci Ahmed from EGYPT Cari."
+    "phone": "+2012976457225",
+    "bio": "Hello, I'm youssef.ahmed.i Ahmed from EGYPT Cari."
 }
 ###
