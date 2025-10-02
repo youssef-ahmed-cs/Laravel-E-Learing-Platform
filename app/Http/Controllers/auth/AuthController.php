@@ -6,9 +6,11 @@ use App\Http\Requests\AuthRequests\RegisterRequest;
 use App\Http\Requests\AuthRequests\UpdatePasswordRequest;
 use App\Http\Resources\AuthResource;
 use App\Http\Resources\CourseResource;
+use App\Mail\OtpMail;
 use App\Mail\WelcomeEmailMail;
 use App\Models\User;
 use App\Models\Course;
+use App\Notifications\SendTwoFactorCode;
 use App\Traits\UploadImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,10 +19,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Traits\UserTrait;
 use Illuminate\Auth\Events\Registered;
+use SadiqSalau\LaravelOtp\Facades\Otp;
+use App\Otp\UserRegistrationOtp;
 
 //handles the import
 
@@ -55,7 +60,7 @@ class AuthController extends Controller
         }
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request)
     {
         $data = $request->validated();
 
@@ -73,9 +78,23 @@ class AuthController extends Controller
             $user->update(['avatar' => $avatarPath]);
         }
         $token = JWTAuth::fromUser($user);
-        UserRegisteredEvent::dispatch($user);
+//        UserRegisteredEvent::dispatch($user);
         event(new Registered($user));
+//        $user->generateTwoFactorCode();
+//        $user->notify(new SendTwoFactorCode());
+
 //        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
+//            Mail::to($user->email)->send(new OtpMail($user));
+//        $otp = Otp::identifier($request->email)->send(
+//            new UserRegistrationOtp(
+//                name: $request->name,
+//                email: $request->email,
+//                password: $request->password
+//            ),
+//            Notification::route('mail', $request->email)
+//        );
+//        Log::info('OTP: ' . $otp['status'] . ' sent to ' . $request->email . ' at ' . now());
+//        return __($otp['status']);
         return response()->json([
             'message' => 'User registered successfully',
             'user' => new AuthResource($user),
@@ -267,6 +286,7 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
         return response()->json(['message' => 'Verification link resent!']);
 
+        Log::notice('Verification email resent to: ' . $user->email . ' at ' . now());
         return response()->json(['message' => 'Verification email resent'], 200);
     }
 
@@ -275,6 +295,7 @@ class AuthController extends Controller
         $user = User::findOrFail($id);
 
         if (!hash_equals((string)$hash, sha1($user->getEmailForVerification()))) {
+            Log::error('Email verification failed for user ID: ' . $id);
             return response()->json(['message' => 'Invalid verification link'], 403);
         }
 
@@ -283,8 +304,65 @@ class AuthController extends Controller
         }
 
         $user->markEmailAsVerified();
-
+        Log::info('Email verified for user: ' . $user->email);
         return response()->json(['message' => 'Email verified successfully'], 200);
     }
 
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|string',
+        ]);
+
+        if (app('otp')->check($request->otp, $request->email)) {
+            $user = User::where('email', $request->email)->firstOrFail();
+
+            $user->update(['email_verified_at' => now()]);
+            Auth::login($user);
+
+            return response()->json([
+                'message' => 'Email verified successfully',
+                'user' => $user,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Invalid or expired OTP',
+        ], 422);
+    }
+
+
+    public function resendOtp(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'exists:users,email']
+        ]);
+
+        $otp = Otp::identifier($request->email)->update();
+
+        if ($otp['status'] !== Otp::OTP_SENT) {
+            return response()->json([
+                'message' => __($otp['status'])
+            ], 422);
+        }
+
+        return response()->json([
+            'message' => __($otp['status'])
+        ], 200);
+    }
+
+    public function isVerified(): JsonResponse
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+        Log::info('Email verification status checked for: ' . $user->email);
+        return response()->json([
+            'Name' => $user->name,
+            'Email' => $user->email,
+            'email_verified' => $user->hasVerifiedEmail()
+        ], 200);
+    }
 }

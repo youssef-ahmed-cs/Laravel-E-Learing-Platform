@@ -13,7 +13,7 @@ class FileController extends Controller
         # create directory with name Laravel-Files in storage/app
 //        return Storage::makeDirectory('Laravel-Files');
 
-        # store file in storage/app/Laravel-Files with original name
+        # store a file in storage/app/Laravel-Files with original name
 //        Storage::putFileAs('avatars', $files,$name,'public');
 //        return response()->json(['message' => 'File uploaded successfully']);
 

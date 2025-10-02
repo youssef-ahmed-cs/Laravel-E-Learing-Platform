@@ -296,8 +296,8 @@ MCP Command Flags:
    gk auth login
 
 2. Set up providers for full functionality:
-   gk provider add github
-   gk provider set
+   gk provider add github # Add GitHub token
+   gk provider set # Set default providers
 
 3. Use AI commits for better commit messages:
    gk ai commit -d

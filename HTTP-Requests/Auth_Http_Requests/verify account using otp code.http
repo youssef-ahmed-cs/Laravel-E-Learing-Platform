@@ -1,0 +1,12 @@
+### GET request to example server
+POST {{url}}/otp/verify
+Accept:  application/json
+Content-Type: application/json
+#Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzU5MzQxMjYyLCJleHAiOjE3NTkzNDQ4NjIsIm5iZiI6MTc1OTM0MTI2MiwianRpIjoiNjFRN2hXNWxETm5rRlFUUSIsInN1YiI6IjM3MyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.sr7zITXhZOWwUWbF4fVfP1EyUiV0kItZQl-wPswSMDs
+
+{
+    "email": "youssef.ahmed.fci@gmail.com",
+    "code": "565168"
+}
+
+###
