@@ -69,5 +69,9 @@ class AppServiceProvider extends ServiceProvider
         Builder::macro('all_users', function () {
             return $this->whereIn('role', ['student', 'instructor', 'admin']);
         });
+
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }
