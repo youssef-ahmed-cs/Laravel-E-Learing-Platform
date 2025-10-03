@@ -11,20 +11,25 @@ use App\Observers\LessonObserver;
 use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
-        //
+        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     public function boot(): void
@@ -70,8 +75,15 @@ class AppServiceProvider extends ServiceProvider
             return $this->whereIn('role', ['student', 'instructor', 'admin']);
         });
 
-        RateLimiter::for('api', function (Request $request) {
+        RateLimiter::for('api', static function (Request $request) {
             return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+        });
+
+        #explain => Premium users can make 5 requests per minute, while non-premium users are limited to 3 requests per minute.
+        RateLimiter::for('premium', static function (Request $request) {
+            return $request->user()?->is_premium
+                ? Limit::perMinute(5)
+                : Limit::perMinute(3);
         });
     }
 }

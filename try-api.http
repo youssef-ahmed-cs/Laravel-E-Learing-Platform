@@ -1,5 +1,6 @@
 ### GET request to example server
-GET {{url}}/http-client
+GET http://127.0.0.1:8000/url
 Accept: application/json
+Content-Type: application/json
 
 ###

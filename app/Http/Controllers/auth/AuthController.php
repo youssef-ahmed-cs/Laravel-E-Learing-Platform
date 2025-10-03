@@ -27,9 +27,6 @@ use Illuminate\Auth\Events\Registered;
 use SadiqSalau\LaravelOtp\Facades\Otp;
 use App\Otp\UserRegistrationOtp;
 
-//handles the import
-
-
 class AuthController extends Controller
 {
     use UploadImage;
@@ -82,7 +79,7 @@ class AuthController extends Controller
         event(new Registered($user));
 //        $user->generateTwoFactorCode();
 //        $user->notify(new SendTwoFactorCode());
-
+//        event();
 //        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
 //            Mail::to($user->email)->send(new OtpMail($user));
 //        $otp = Otp::identifier($request->email)->send(

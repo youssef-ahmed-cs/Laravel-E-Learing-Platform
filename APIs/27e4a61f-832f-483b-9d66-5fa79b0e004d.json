@@ -1,0 +1,20 @@
+{
+  "name": "try ",
+  "request": {
+    "type": "http",
+    "url": "https://app.requestly.io/echo",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "GET",
+    "queryParams": [],
+    "headers": [],
+    "body": null,
+    "contentType": "text/plain",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    }
+  }
+}

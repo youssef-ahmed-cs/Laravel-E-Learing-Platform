@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
 class LearnHttpController extends Controller
 {
+    /**
+     * @throws ConnectionException
+     */
     public function __invoke(): JsonResponse
     {
-        $response = Http::request()->get('http-client');
-
+        $response = Http::get('https://jsonplaceholder.cypress.io/todos/1');
         return response()->json($response->json());
     }
 }
