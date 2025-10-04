@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Policies;
 
 use App\Models\User;
@@ -27,6 +28,21 @@ class CategoryPolicy
     }
 
     public function delete(User $user, Category $category)
+    {
+        return $user->role === 'admin';
+    }
+
+    public function restore(User $user, Category $category): bool
+    {
+        return $user->role === 'admin';
+    }
+
+    public function forceDelete(User $user, Category $category): bool
+    {
+        return $user->role === 'admin';
+    }
+
+    public function getAllTrashed(User $user): bool
     {
         return $user->role === 'admin';
     }

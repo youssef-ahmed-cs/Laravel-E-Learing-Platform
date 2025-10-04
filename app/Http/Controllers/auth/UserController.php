@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function to_view()
     {
-        $users =  User::all_users()->get(); # DRY principle with local scope in User model we use it here
+        $users = User::all_users()->get(); # DRY principle with local scope in User model we use it here
 //        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
@@ -239,6 +239,14 @@ class UserController extends Controller
         $this->authorize('view', $user);
         return response()->json([
             'avatar' => $user->avatar
+        ]);
+    }
+
+    public function recentFirstUsers(): JsonResponse
+    {
+        $users = User::recentFirst()->get();
+        return response()->json([
+            'data' => $users
         ]);
     }
 

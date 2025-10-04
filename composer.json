@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.3",
         "elegantly/laravel-money": "^2.2",
+        "google-gemini-php/laravel": "^2.0",
         "ichtrojan/laravel-otp": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/pail": "^1.2",
@@ -27,7 +28,6 @@
         "fakerphp/faker": "^1.23",
         "grazulex/laravel-devtoolbox": "^1.5",
         "laravel/boost": "^1.2",
-        "laravel/breeze": "^2.3",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",

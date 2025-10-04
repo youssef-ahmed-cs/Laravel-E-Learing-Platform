@@ -1,47 +1,50 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{auth\AuthController,
     auth\UserController,
     CategoryController,
     CourseController,
     EnrollmentController,
     FileController,
-    LearnHttpController,
+    ForgetPasswordController,
     LessonController,
     NotificationController,
-    OtpController,
     ProfileController,
     ReviewController,
     SendSmsController,
-    TaskController};
-use Illuminate\Support\Facades\Session;
+    TaskController,
+    VerifyEmailController};
+use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->middleware(['guest', 'throttle:60,1'])->group(function () {
+Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
     });
+
+    Route::controller(ForgetPasswordController::class)->group(function () {
+        Route::post('forgot-password-by-otp', 'forgotPassword');
+        Route::post('verify-forgot-password-otp', 'verifyOtp');
+        Route::post('reset-password-by-otp', 'resetPassword');
+    });
+
+    Route::controller(VerifyEmailController::class)->group(function () {
+        Route::post('/auth/verify-email-otp', 'verifyEmailOtp')->name('verification.verify');
+        Route::post('/auth/resend-verification-email-otp', 'resendEmail')->name('verification.resend');
+        Route::get('/auth/is-verified', 'isVerified');
+    });
 });
 
-Route::get('/auth/verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])
-    ->middleware(['signed'])
-    ->name('verification.verify');
 
-Route::post('/otp/verify', [AuthController::class, 'verifyOtp'])->name('otp.verify');
-Route::post('/otp/resend', [AuthController::class, 'resendOtp'])->name('otp.resend');
-
-Route::middleware(['auth:api', 'verified' , 'throttle:premium'])->group(function () {
+Route::middleware(['auth:api', 'verified', 'throttle:premium'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/logout', 'logout');
         Route::get('/user', 'user');
-        Route::get('/auth/is-verified', 'isVerified');
-        Route::post('/auth/resend-verification', 'resendVerificationEmail')->name('verification.resend');
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
         Route::get('/user-stats', 'getUserStats');
-        Route::get('guest-user', 'guestCourses')->withoutMiddleware('auth:api');
+        Route::get('guest-user', 'guestCourses')->withoutMiddleware(['auth:api' , 'verified']);
         Route::get('/get-token', 'getToken');
     });
 
@@ -71,7 +74,6 @@ Route::middleware(['auth:api', 'verified' , 'throttle:premium'])->group(function
         Route::get('/courses/{course}/category', 'getCategories');
         Route::get('/courses/{id}/lessons', 'getLessons');
         Route::get('/courses/{id}/restore', 'restore');
-
     });
     Route::apiResource('courses', CourseController::class);
 
@@ -83,6 +85,12 @@ Route::middleware(['auth:api', 'verified' , 'throttle:premium'])->group(function
 
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories/{category}/courses', 'getCourses');
+        Route::get('/categories/{id}/restore', 'restore');
+        Route::delete('/categories/{id}/force-delete', 'forceDelete');
+        Route::get('/categories/trashed', 'getTrashed');
+        Route::get('/categories/search/{name}', 'search');
+        Route::get('/categories/{id}/exists', 'checkExists');
+//        Route::get('/categories/{id}/courses', 'getCourses');
     });
     Route::apiResource('categories', CategoryController::class);
 
@@ -132,4 +140,8 @@ Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 20
 //Route::apiResource('tasks', TaskController::class);
 Route::post('/filer', FileController::class);
 Route::get('/sms', SendSmsController::class);
-Route::get('/http-client', [LearnHttpController::class]);
+//Route::get('/http-client', [LearnHttpController::class]);
+Route::get('/users-recent', [UserController::class, 'recentFirstUsers'])
+    ->middleware('throttle:5,1');
+
+

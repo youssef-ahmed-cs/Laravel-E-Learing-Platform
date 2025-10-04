@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 
@@ -11,30 +12,28 @@ class LearnHttpController extends Controller
     /**
      * @throws ConnectionException
      */
-    public function __invoke(): JsonResponse
+    public function __invoke()
     {
-        $response = Http::get('https://jsonplaceholder.cypress.io/todos/1');
-        return response()->json($response->json());
+        return Http::timeout(6)->get('https://jsonplaceholder.typicode.com/posts', [
+            'id' => 2
+        ])->json();
     }
 }
 /*
- *       body returns the body of the response as a string
-         json returns the body of the response as a json
-         successful returns true if the response status code is 200-299
-         status returns the status code of the response
-         ok returns true if the response status code is 200
-         collect returns the body of the response as a collection
-         headers returns the headers of the response
-         redirect returns the URL the response was redirected to
-         clientError returns true if the response status code is 400-499
-         serverError returns true if the response status code is 500-599
-         throw throws an exception if the response status code is 400 or greater
-         contentType sets the Content-Type header for the request
-         withHeaders sets the headers for the request
-         withToken sets the Authorization header for the request
-         asForm sets the request's Content-Type to application/x-www-form-urlencoded
-         asJson sets the request's Content-Type to application/json
-         timeout sets the maximum number of seconds the request should take
-         retry retries the request a given number of times if it fails
-
+ * body -> get the body of the response as a string
+ * JSON -> get the body of the response as an array or object
+ * ok -> determine if the response has a 200-level status code <status code 200-299>
+ * successful -> determine if the response has a 200-level status code <status code 200-299>
+ * failed -> determine if the response has a 400 or 500-level status code <status code 400-599>
+ * clientError -> determine if the response has a 400-level status code <status code 400-499>
+ * serverError -> determine if the response has a 500-level status code <status code 500-599>
+ * status -> get the status code of the response like 200, 404, 500 and so on
+ * created -> determine if the response has a 201 status code
+ * accepted -> determine if the response has a 202 status code
+ * noContent -> determine if the response has a 204 status code
+ * header -> get a specific header from the response
+ * headers -> get all of the headers from the response
+ * throw -> throw an exception if the response status code is >= 400
+ * timeout -> determine if the response has a 408 status code
+ * redirect -> determine if the response has a 300-level status code <status code 300-399>
  * */

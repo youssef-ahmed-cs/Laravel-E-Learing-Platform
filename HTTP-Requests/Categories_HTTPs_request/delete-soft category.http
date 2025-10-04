@@ -1,0 +1,8 @@
+### GET request to delete-soft a category by ID
+DELETE {{url}}/categories/149
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5NjEyOTY3LCJleHAiOjE3NTk2MTY1NjcsIm5iZiI6MTc1OTYxMjk2NywianRpIjoiWjJKamlCUVBNbjNXR29kNiIsInN1YiI6IjQwMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.MS5bHYDIw7wJYLCdqtMJX49_Pp9VABtpOyCsePjw45g
+
+
+###

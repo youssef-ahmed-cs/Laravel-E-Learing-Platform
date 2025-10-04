@@ -27,5 +27,12 @@ Route::get('/success', [StripeController::class, 'success'])->name('stripe.succe
 Route::post('/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
 Route::post('/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 Route::get('users',[UserController::class,'to_view'])->middleware('throttle:5,1');
-Route::get('url',[LearnHttpController::class]);
-require __DIR__ . '/auth.php';
+Route::get('url', LearnHttpController::class);
+
+Route::get('/users/{roles}', static function (?string $roles) {
+    return response()->json([
+        'roles' => $roles
+    ]);
+})->whereIn('roles', \App\Enums\User::cases());
+
+//require __DIR__ . '/auth.php';

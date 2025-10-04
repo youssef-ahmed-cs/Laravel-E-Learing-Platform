@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\Traits\UserTrait;
 use Illuminate\Auth\Events\Registered;
 use SadiqSalau\LaravelOtp\Facades\Otp;
 use App\Otp\UserRegistrationOtp;
@@ -57,7 +56,7 @@ class AuthController extends Controller
         }
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -70,17 +69,17 @@ class AuthController extends Controller
 
         if ($request->hasFile('avatar')) {
             $request->validated();
-            $avatarName = $user->id . '_' . $user->username . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $avatarName = $user->id . '_' . $user->username . '.' . $request->file('avatar')?->getClientOriginalExtension();
             $avatarPath = $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->update(['avatar' => $avatarPath]);
         }
         $token = JWTAuth::fromUser($user);
 //        UserRegisteredEvent::dispatch($user);
-        event(new Registered($user));
+//        event(new Registered($user));
 //        $user->generateTwoFactorCode();
 //        $user->notify(new SendTwoFactorCode());
 //        event();
-//        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
+        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
 //            Mail::to($user->email)->send(new OtpMail($user));
 //        $otp = Otp::identifier($request->email)->send(
 //            new UserRegistrationOtp(
@@ -230,7 +229,7 @@ class AuthController extends Controller
     }
 
 
-    public function guestCourses()
+    public function guestCourses(): JsonResponse
     {
         $courses = Course::paginate(10);
         return response()->json([
