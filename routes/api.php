@@ -144,4 +144,11 @@ Route::get('/sms', SendSmsController::class);
 Route::get('/users-recent', [UserController::class, 'recentFirstUsers'])
     ->middleware('throttle:5,1');
 
+# Example of logging SQL queries for debugging purposes
+Route::get('sql-log', static function () {
+    DB::enableQueryLog();
+    User::where('name', 'like', '%youssef%')->get();
+    $queries = DB::getQueryLog();
+    return response()->json($queries, 200);
+});
 
