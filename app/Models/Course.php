@@ -6,7 +6,6 @@ use App\Casts\HumanDateCast;
 use App\Casts\PriceCast;
 use App\Observers\CourseObserver;
 use App\Policies\CoursePolicy;
-use Elegantly\Money\MoneyCast;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
@@ -38,9 +37,9 @@ class Course extends Model
     public function casts(): array
     {
         return [
-            'price' => MoneyCast::class . ':USD',
+//            'price' => 'decimal:2',
             'duration' => 'integer',
-            'created_at' => HumanDateCast::class
+            'created_at' => 'datetime',
         ];
     }
 

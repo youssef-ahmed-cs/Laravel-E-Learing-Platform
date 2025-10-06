@@ -40,6 +40,7 @@ class RegisterRequest extends FormRequest
             'phone' => 'nullable|string|unique:users,phone',
             'username' => ['required', 'string', 'max:255', 'min:3', 'unique:users,username'],
             'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048|file',
+            'is_premium' => 'nullable|boolean',
         ];
     }
 

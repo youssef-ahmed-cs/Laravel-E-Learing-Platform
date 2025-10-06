@@ -35,7 +35,12 @@ class CourseController extends Controller
         $this->authorize('create', Course::class);
         $course = Course::create($request->validated());
 
-//        Notification::send($users, new SendNotificationCreateCourse($course));
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailName = $course->name . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $thumbnailPath = $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
+            $course->update(['thumbnail' => $thumbnailPath]);
+        }
+
         SendNotificationCreateCourse::dispatch($course);
 
         Log::info('Course created successfully', [

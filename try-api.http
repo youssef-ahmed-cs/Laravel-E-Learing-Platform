@@ -1,9 +1,5 @@
-### GET request to example server
-POST http://127.0.0.1:8000/send-otp
+### GET request to check if a category exists by name
+GET http://127.0.0.1:8000/url
 Accept: application/json
 Content-Type: application/json
-
-{
-    "email": "youssef.ahmed.fci@gmail.com"
-}
 ###

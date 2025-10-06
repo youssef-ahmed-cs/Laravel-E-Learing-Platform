@@ -1,0 +1,9 @@
+### GET request to resend verification email otp
+POST {{url}}/v1/auth/resend-verification-email-otp
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "youssef.ahmed.fci@gmail.com"
+}
+###

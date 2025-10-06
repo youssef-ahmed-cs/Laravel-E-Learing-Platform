@@ -16,7 +16,7 @@
     </p>
     <div class="flex justify-center mb-6">
             <span class="text-3xl font-mono font-semibold tracking-widest bg-gray-100 px-6 py-3 rounded-lg border border-gray-200 text-blue-600">
-                {{ $user->otp }}
+                {{ $user->two_factor_code }}
             </span>
     </div>
     <p class="text-center text-gray-500 text-sm">

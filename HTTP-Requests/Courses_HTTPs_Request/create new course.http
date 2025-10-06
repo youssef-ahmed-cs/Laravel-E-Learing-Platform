@@ -12,7 +12,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vM
     "price": 10000,
     "category_id": 2,
     "duration": 120,
-    "status": "archived"
+    "status": "archived",
+    "thumbnail": "https://example.com/thumbnail.jpg"
 }
 
 ###

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Builders\UserBuilder;
 use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -43,10 +44,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'remember_token',
         'login_count',
         'two_factor_code',
-        'two_factor_expires_at'
+        'two_factor_expires_at',
+        'is_premium'
     ];
 
-    protected $hidden = [
+    protected array $hidden = [
         'password',
         'remember_token',
         'login_count'
@@ -100,5 +102,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         $this->two_factor_expires_at = now()->addMinutes(10);
         $this->save();
     }
+
+//    public function newEloquentBuilder($query): UserBuilder
+//    {
+//        return new UserBuilder($query);
+//    }
 
 }

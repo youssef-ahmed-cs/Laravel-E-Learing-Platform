@@ -8,11 +8,17 @@ use Illuminate\Support\Carbon;
 
 class HumanDateCast implements CastsAttributes
 {
-    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
+    /**
+     * Outbound casting disabled per this project's CastsAttributes contract (expects null return type).
+     */
+    public function get(Model $model, string $key, mixed $value, array $attributes): null
     {
-        return Carbon::parse($value)->diffForHumans();
+        return null;
     }
 
+    /**
+     * Prepare the value for storage.
+     */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         return $value;
