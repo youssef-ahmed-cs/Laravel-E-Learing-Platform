@@ -16,10 +16,12 @@
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.12",
         "laravel/tinker": "^2.10.1",
+        "nyholm/psr7": "^1.8",
         "opcodesio/log-viewer": "^3.19",
         "predis/predis": "^3.2",
         "sadiqsalau/laravel-otp": "^1.0",
         "stripe/stripe-php": "^18.0",
+        "symfony/psr-http-message-bridge": "^7.3",
         "tymon/jwt-auth": "^2.2",
         "vonage/client": "^4.2"
     },

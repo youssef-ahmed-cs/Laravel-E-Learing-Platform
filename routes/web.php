@@ -5,6 +5,7 @@ use App\Http\Controllers\LearnHttpController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/', function () {
@@ -26,7 +27,7 @@ Route::get('/', [StripeController::class, 'index'])->name('stripe.index');
 Route::get('/success', [StripeController::class, 'success'])->name('stripe.success');
 Route::post('/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
 Route::post('/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
-Route::get('users',[UserController::class,'to_view'])->middleware('throttle:5,1');
+Route::get('users', [UserController::class, 'to_view'])->middleware('throttle:5,1');
 Route::get('url', LearnHttpController::class);
 
 Route::get('/users/{roles}', static function (?string $roles) {
@@ -36,3 +37,9 @@ Route::get('/users/{roles}', static function (?string $roles) {
 })->whereIn('roles', \App\Enums\User::cases());
 
 //require __DIR__ . '/auth.php';
+Route::get('users/{user}', static function (User $user) {
+    return response()->json([
+        'user' => $user
+    ]);
+})->name('users.show02');
+Route::redirect('youssef', 'https://x.com/', 301);

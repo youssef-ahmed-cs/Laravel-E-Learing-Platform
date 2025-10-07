@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Http\Controllers\{auth\AuthController,
     auth\UserController,
     CategoryController,
@@ -13,7 +14,8 @@ use App\Http\Controllers\{auth\AuthController,
     ReviewController,
     SendSmsController,
     TaskController,
-    VerifyEmailController};
+    VerifyEmailController
+};
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
@@ -44,7 +46,7 @@ Route::middleware(['auth:api', 'verified', 'throttle:premium'])->group(function 
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
         Route::get('/user-stats', 'getUserStats');
-        Route::get('guest-user', 'guestCourses')->withoutMiddleware(['auth:api' , 'verified']);
+        Route::get('guest-user', 'guestCourses')->withoutMiddleware(['auth:api', 'verified']);
         Route::get('/get-token', 'getToken');
     });
 
