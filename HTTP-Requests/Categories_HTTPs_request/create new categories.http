@@ -1,12 +1,13 @@
 ### GET request to example server
-POST {{URL}}/categories
+POST {{url}}/categories
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 8|on0DtCRy0xn0Kgd41BBBwPC45T3PZv45nGUI7vJD0dade51c
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5OTAxODEzLCJleHAiOjE3NTk5MDU0MTMsIm5iZiI6MTc1OTkwMTgxMywianRpIjoiYVJTSFZ5VG52T2RWVDVQNyIsInN1YiI6IjQwOSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.yBU5p-r4jcGK_ezcmmo7U46pX4GzRPI3bwx_m79ll_4
 
 {
-    "name": ".NET",
-    "description": "dotNet",
-    "slug": "soft-safe-sofa-sdcard-asap"
+    "name": "Laravel",
+    "description": "A framework for web artisans",
+    "slug": "laravel-framework-php"
 }
+
 ###

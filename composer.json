@@ -14,6 +14,7 @@
         "laravel/pail": "^1.2",
         "laravel/prompts": "^0.3.6",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.23",
         "laravel/telescope": "^5.12",
         "laravel/tinker": "^2.10.1",
         "nyholm/psr7": "^1.8",
