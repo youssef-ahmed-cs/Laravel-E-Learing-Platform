@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmailVerification\ResendEmailRequest;
 use App\Http\Requests\EmailVerification\VerifyEmailRequest;
+use App\Mail\EmailVerifiedSuccessfully;
 use App\Mail\OtpMail;
 use App\Mail\verify_email_otpMail;
 use App\Models\User;
@@ -28,7 +29,8 @@ class VerifyEmailController extends Controller
             'two_factor_code' => null,
             'two_factor_expires_at' => null,
         ]);
-
+        Log::info('Email verified successfully for user ID: ' . $user->id);
+        Mail::to($user->email)->send(new EmailVerifiedSuccessfully($user));
         return $this->successResponse('Email verified successfully');
     }
 
@@ -50,7 +52,7 @@ class VerifyEmailController extends Controller
         ]);
 
         Mail::to($user->email)->send(new verify_email_otpMail($user));
-
+        Log::notice('Verification code resent to email: ' . $user->email);
         return $this->successResponse('Verification code resent successfully');
     }
 

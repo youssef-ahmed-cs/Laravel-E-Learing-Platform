@@ -115,13 +115,6 @@ class CourseController extends Controller
             'path' => storage_path('logs/courses.log'),
         ])->info('Restoring course', ['course_id' => $course->id, 'title' => $course->title]);
 
-//        Log::info('Restoring course', ['course_id' => $course->id, 'title' => $course->title]);
-//        Log::warning('Course restored successfully', ['course_id' => $course->id, 'title' => $course->title]);
-//        Log::alert('Course restored successfully', ['course_id' => $course->id, 'title' => $course->title]);
-//        Log::critical('Course restored successfully', ['course_id' => $course->id]);
-//        Log::emergency('Course restored successfully', ['course_id' => $course->id]);
-//        Log::error('Course restored successfully', ['course_id' => $course->id]);
-
         $course->restore();
 
         return response()->json([

@@ -1,6 +1,5 @@
-<?php #Tinker console
+<?php
+
 use App\Models\{Enrollment, Task, User, Course, Profile};
 
-$user = User::firstOrCreate(
-    ['username' => 'saf'],
-);
+$user = User::find(1);
