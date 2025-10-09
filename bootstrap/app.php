@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'setLocal' => SetLocalMiddleware::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->statefulApi();
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

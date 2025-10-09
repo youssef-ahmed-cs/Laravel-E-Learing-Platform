@@ -14,15 +14,25 @@ use App\Http\Controllers\{auth\AuthController,
     ReviewController,
     SendSmsController,
     TaskController,
-    VerifyEmailController
-};
+    VerifyEmailController};
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteGoogleController;
+//Route::prefix('google')->name('google.')->group(function () {
+//    Route::controller(SocialiteController::class)->group(function () {
+//        Route::get('/redirect', 'redirect')->name('redirect');
+//        Route::get('/login', 'login')->name('login');
+//    });
+//});
+
+
 
 Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
     });
+    # Google Socialite Routes <-- Example: /api/v1/google/redirect -->
+
 
     Route::controller(ForgetPasswordController::class)->group(function () {
         Route::post('forgot-password-by-otp', 'forgotPassword');

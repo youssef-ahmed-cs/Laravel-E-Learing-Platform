@@ -4,6 +4,7 @@ use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\LearnHttpController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialiteGoogleController;
 use App\Http\Controllers\StripeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,8 @@ Route::get('users/{user}', static function (User $user) {
     ]);
 })->name('users.show02');
 Route::redirect('youssef', 'https://x.com/', 301);
+
+Route::controller(SocialiteGoogleController::class)->name('google.')->group(function () {
+    Route::get('/google/login', 'login')->name('redirect');
+    Route::get('/google/callback', 'callback')->name('callback');
+});

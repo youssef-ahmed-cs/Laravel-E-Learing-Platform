@@ -1,5 +1,6 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=PhpStorm
+### GET request to login with Google
+GET http://127.0.0.1:8000/google/login
+Accept: application/json
+Content-Type: application/json
 
 ###
