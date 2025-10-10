@@ -49,3 +49,11 @@ Route::controller(SocialiteGoogleController::class)->name('google.')->group(func
     Route::get('/google/login', 'login')->name('redirect');
     Route::get('/google/callback', 'callback')->name('callback');
 });
+
+Route::get('users-caching', static function () {
+    # Using the cache helper function
+    $users = Cache::remember('users', 60, static function () {
+        return User::all();
+    });
+    return view('users', compact('users'));
+})->name('users.show');
