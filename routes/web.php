@@ -39,10 +39,14 @@ Route::get('/users/{roles}', static function (?string $roles) {
 
 //require __DIR__ . '/auth.php';
 Route::get('users/{user}', static function (User $user) {
+    if (!request()->hasValidSignature()) {
+        abort(401);
+    }
     return response()->json([
         'user' => $user
     ]);
 })->name('users.show02');
+
 Route::redirect('youssef', 'https://x.com/', 301);
 
 Route::controller(SocialiteGoogleController::class)->name('google.')->group(function () {
@@ -57,3 +61,7 @@ Route::get('users-caching', static function () {
     });
     return view('users', compact('users'));
 })->name('users.show');
+
+Route::get('/caps/{text}', static function (string $text) {
+    return Response::caps($text);
+});

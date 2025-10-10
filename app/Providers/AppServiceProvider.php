@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -84,6 +85,10 @@ class AppServiceProvider extends ServiceProvider
             return $request->user()?->is_premium
                 ? Limit::perMinute(5)
                 : Limit::perMinute(3);
+        });
+
+        Response::macro('caps', static function ($value) {
+            return Response::make(strtoupper($value));
         });
     }
 }
