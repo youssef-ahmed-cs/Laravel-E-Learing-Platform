@@ -55,6 +55,7 @@ Route::middleware(['auth:api', 'verified', 'throttle:premium'])->group(function 
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
+        Route::get('/user-avatar', 'getAvatar');
         Route::get('/user-stats', 'getUserStats');
         Route::get('guest-user', 'guestCourses')->withoutMiddleware(['auth:api', 'verified']);
         Route::get('/get-token', 'getToken');
@@ -181,6 +182,7 @@ Route::get('string', static function () {
 //    $truncated = Str::limit('The quick brown fox jumps over the lazy dog', 20);
     # convert a string to lowercase
 //    $converted = Str::lower('LARAVEL');
+    # convert a string to uppercase
 //    $converted = Str::upper('youssef');
     # convert a string to snake case
 //    $converted = Str::snake('YoussefAhmedFci');

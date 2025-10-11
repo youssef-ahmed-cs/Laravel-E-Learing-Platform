@@ -361,4 +361,16 @@ class AuthController extends Controller
             'email_verified' => $user->hasVerifiedEmail()
         ], 200);
     }
+
+    public function getAvatar(): JsonResponse
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+        Log::info('Avatar fetched for user: ' . $user->email);
+        return response()->json([
+            'avatar_url' => $user->avatar ? Storage::url($user->avatar) : null
+        ], 200);
+    }
 }
