@@ -10,6 +10,7 @@ use App\Traits\UploadImage;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
@@ -238,7 +239,7 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
         return response()->json([
-            'avatar' => $user->avatar
+            'avatar' => $user->avatar ? Storage::url($user->avatar) : null
         ]);
     }
 

@@ -370,6 +370,7 @@ class AuthController extends Controller
         }
         Log::info('Avatar fetched for user: ' . $user->email);
         return response()->json([
+            # If avatar exists, return full URL, else null
             'avatar_url' => $user->avatar ? Storage::url($user->avatar) : null
         ], 200);
     }

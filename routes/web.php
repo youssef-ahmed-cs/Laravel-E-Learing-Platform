@@ -4,6 +4,7 @@ use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\LearnHttpController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\SocialiteGoogleController;
 use App\Http\Controllers\StripeController;
 use App\Models\User;
@@ -65,3 +66,5 @@ Route::get('users-caching', static function () {
 Route::get('/caps/{text}', static function (string $text) {
     return Response::caps($text);
 });
+
+Route::get('/generate-qrcode', [QrCodeController::class, 'generate']);
