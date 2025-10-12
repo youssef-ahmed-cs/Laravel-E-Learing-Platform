@@ -1,5 +1,5 @@
 ### GET request to local server http client
-GET http://127.0.0.1:8000/generate-qrcode
+GET http://127.0.0.1:8000/url
 Accept: application/json
-Content-Type: image/svg+xml
+Content-Type: application/json
 ###

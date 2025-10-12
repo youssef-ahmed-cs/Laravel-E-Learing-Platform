@@ -364,7 +364,7 @@ class AuthController extends Controller
 
     public function getAvatar(): JsonResponse
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }

@@ -14,16 +14,17 @@ use App\Http\Controllers\{auth\AuthController,
     ReviewController,
     SendSmsController,
     TaskController,
-    VerifyEmailController};
+    VerifyEmailController
+};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteGoogleController;
+
 //Route::prefix('google')->name('google.')->group(function () {
 //    Route::controller(SocialiteController::class)->group(function () {
 //        Route::get('/redirect', 'redirect')->name('redirect');
 //        Route::get('/login', 'login')->name('login');
 //    });
 //});
-
 
 
 Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {

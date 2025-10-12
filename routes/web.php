@@ -8,11 +8,12 @@ use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\SocialiteGoogleController;
 use App\Http\Controllers\StripeController;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -68,3 +69,6 @@ Route::get('/caps/{text}', static function (string $text) {
 });
 
 Route::get('/generate-qrcode', [QrCodeController::class, 'generate']);
+Route::get('show-ip', static function (Request $request) {
+    dd($request->method());
+});
