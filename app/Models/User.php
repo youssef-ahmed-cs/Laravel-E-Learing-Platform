@@ -45,7 +45,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'login_count',
         'two_factor_code',
         'two_factor_expires_at',
-        'is_premium'
+        'is_premium',
+        'provider_id',
+        'id'
     ];
 
     protected array $hidden = [

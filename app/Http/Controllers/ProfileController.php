@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Vonage\Users\User;
 
 class ProfileController extends Controller
 {
@@ -40,21 +42,20 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(User $user): JsonResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
+        $this->authorize('delete', $user);
         $user->delete();
+        return response()->json([
+            'message' => 'User deleted successfully'
+        ]);
+    }
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+    public function show(User $user): JsonResponse
+    {
+        $this->authorize('view', $user);
+        return response()->json([
+            'user' => $user
+        ]);
     }
 }

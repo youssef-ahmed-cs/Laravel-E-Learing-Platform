@@ -14,9 +14,7 @@ class LearnHttpController extends Controller
      */
     public function __invoke()
     {
-        return Http::timeout(6)->get('https://jsonplaceholder.typicode.com/posts', [
-            'id' => 2
-        ])->json();
+        return response('hi', 200);
     }
 }
 /*

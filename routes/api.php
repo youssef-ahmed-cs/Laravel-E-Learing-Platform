@@ -17,12 +17,23 @@ use App\Http\Controllers\{auth\AuthController,
     VerifyEmailController
 };
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteGoogleController;
+
+//Route::prefix('google')->name('google.')->group(function () {
+//    Route::controller(SocialiteController::class)->group(function () {
+//        Route::get('/redirect', 'redirect')->name('redirect');
+//        Route::get('/login', 'login')->name('login');
+//    });
+//});
+
 
 Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
     });
+    # Google Socialite Routes <-- Example: /api/v1/google/redirect -->
+
 
     Route::controller(ForgetPasswordController::class)->group(function () {
         Route::post('forgot-password-by-otp', 'forgotPassword');
@@ -45,6 +56,7 @@ Route::middleware(['auth:api', 'verified', 'throttle:premium'])->group(function 
         Route::post('/refresh-token', 'refreshToken');
         Route::post('update-password', 'updatePassword');
         Route::post('/force-delete-user', 'deleteAccount');
+        Route::get('/user-avatar', 'getAvatar');
         Route::get('/user-stats', 'getUserStats');
         Route::get('guest-user', 'guestCourses')->withoutMiddleware(['auth:api', 'verified']);
         Route::get('/get-token', 'getToken');
@@ -135,9 +147,54 @@ Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department'
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
 Route::get('/collection', [UserController::class, 'collections'])->middleware('policeman');
 Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
-Route::get('verify-middleware-example', static function () {
-    return response()->json(['message' => 'Middleware active'], 200);
-})->middleware('verified');
+
+Route::get('string', static function () {
+    # Using the Str facades to get the part of the string before the "@" character
+//    $slice = Str::beforeLast('youssef.ahmed.fci@gmail.com', '@');
+    # Using the Str facades to get the part of the string between two strings
+//    $slice = Str::between('This is my name', 'This', 'name');
+    # Using the Str facades to convert a string to camel case
+//    $converted = Str::camel('youssef_ahmed_fci');
+    # Using the Str facades to convert a string to title case
+//    $url = Str::chopStart('https://laravel.com', ['https://', 'http://']);
+    # Using the Str facades to remove a part of the string from the end
+//    $url = Str::chopEnd('app/Models/Photograph.php', '.php');
+    # Using the Str facades to check if a string contains a specific substring
+//    $contains = Str::contains('This is my name', 'MY', ignoreCase: true);
+    # Using the Str facades to check if a string does not contain a specific substring
+//    $doesntContain = Str::doesntContain('This is name', ['my', 'your']);
+    # remove duplicate spaces
+//    $result = Str::deduplicate('The   Laravel   Framework');
+    # check if a string ends with a specific substring
+//    $result = Str::endsWith('This is my name', 'name');
+    # add a specific substring to the end of a string if it doesn't already end with it
+//    $adjusted = Str::finish('this/string', '/');
+    # convert a string to pascal case
+//    $converted = Str::pascal('YoussefAhmedFci');
+    # convert a string to a more human-readable format
+//    $headline = Str::headline('EmailNotificationSent');
+    # check if a string matches a specific pattern
+//    $matches = Str::is('*
+    # check if a string is a valid URL
+//    $isUrl = Str::isUrl('http://example.com');
+    # get the length of a string
+//    $len = Str::length('Hello World!');
+    # limit the number of characters in a string
+//    $truncated = Str::limit('The quick brown fox jumps over the lazy dog', 20);
+    # convert a string to lowercase
+//    $converted = Str::lower('LARAVEL');
+    # convert a string to uppercase
+//    $converted = Str::upper('youssef');
+    # convert a string to snake case
+//    $converted = Str::snake('YoussefAhmedFci');
+    # convert markdown to HTML
+//    $html = Str::markdown('# Laravel');
+    # mask a portion of a string with a specific character
+    $string = Str::mask('taylor@example.com', '*', 3);
+
+    return response()->json(['Your string is: ' => $string], 200);
+});
+
 Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
 //Route::apiResource('tasks', TaskController::class);
 Route::post('/filer', FileController::class);
