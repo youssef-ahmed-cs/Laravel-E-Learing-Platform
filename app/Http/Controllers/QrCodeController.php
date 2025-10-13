@@ -8,7 +8,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class QrCodeController extends Controller
 {
 
-    public function generate()
+    public function __invoke()
     {
         $logoPath = public_path('logo.png');
 
@@ -17,11 +17,11 @@ class QrCodeController extends Controller
         }
 
         $qrCode = QrCode::size(250)
-            ->merge($logoPath, 0.3, true)
-            ->errorCorrection('H')
-            ->generate($user->email ?? 'default@example.com');
+            ->format('png')
+            ->merge(public_path('logo.png'), 0.3, true)
+            ->generate('youssef.ahmed.fci@gmail.com');
 
-        return response($qrCode);
+        return response($qrCode)->header('Content-Type', 'image/png');
     }
 
 }
