@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserObserver
@@ -12,6 +13,7 @@ class UserObserver
     {
         Log::info('New user created: ' . $user->email);
         $user->created_at = $user->created_at->diffForHumans() ?? now()->diffForHumans();
+//        $user->avatar = $user->avatar ?? Storage::url('avatars/default.png');
     }
 
     public function creating(User $user): void
@@ -20,7 +22,10 @@ class UserObserver
 //        $user->email_verified_at = $user->email_verified_at ?? now();
 //        $user->phone = "+20{$user->phone}";
 //        $user->phone = Str::mask($user->phone, '*', 0, strlen($user->phone) - 2);
-        $user->avatar = url('/storage/' . $user->avatar);
+        // Keep only a relative path in the database; generate full URL at the resource layer
+        if (empty($user->avatar)) {
+            $user->avatar = 'avatars/default.png'; // ensure this file exists on the public disk
+        }
     }
 
     public function updated(User $user): void

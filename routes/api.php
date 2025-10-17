@@ -211,3 +211,7 @@ Route::get('sql-log', static function () {
     return response()->json($queries, 200);
 });
 
+Route::get('/users/try/v10', static function () {
+    $users = DB::table('users')->simplePaginate(10);
+    return response()->json($users, 200);
+});
