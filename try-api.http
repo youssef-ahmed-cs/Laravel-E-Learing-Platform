@@ -1,5 +1,5 @@
 ### GET request to check if a category exists by name
-GET http://127.0.0.1:8000/api/sql-log
+GET http://127.0.0.1:8000/api/users/try/v10
 Accept: application/json
 Content-Type: application/json
 ###

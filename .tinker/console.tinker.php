@@ -2,5 +2,6 @@
 
 use App\Models\{Enrollment, Task, User, Course, Profile};
 
-$user = User::find(1);
-echo URL::signedRoute('users.show02' , $user);
+//$user = User::with('courses:title,id,instructor_id')->find(1);
+$user = User::with('courses')->find(1);
+//$enrollments = Enrollment::with('course:id,title')->where('user_id', 111)->get();

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserObserver
@@ -20,7 +21,7 @@ class UserObserver
 //        $user->email_verified_at = $user->email_verified_at ?? now();
 //        $user->phone = "+20{$user->phone}";
 //        $user->phone = Str::mask($user->phone, '*', 0, strlen($user->phone) - 2);
-        $user->avatar = url('/storage/' . $user->avatar);
+        $user->avatar = Storage::url($user->avatar);
     }
 
     public function updated(User $user): void
