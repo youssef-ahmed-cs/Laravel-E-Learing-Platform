@@ -1,4 +1,4 @@
-### GET request to login new user
+### Login User
 POST {{url}}/v1/login
 Accept: application/json
 Content-Type: application/json

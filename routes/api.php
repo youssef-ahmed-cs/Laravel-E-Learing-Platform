@@ -215,3 +215,7 @@ Route::get('/users/try/v10', static function () {
     $users = DB::table('users')->simplePaginate(10);
     return response()->json($users, 200);
 });
+
+Route::get('try-throttle', static function () {
+    return response()->json(['message' => 'This is a throttled route'], 200);
+});
