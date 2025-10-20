@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::table('students', function (Blueprint $table) {
             $table->json('skills')->after('remember_token')->nullable();
+            $table->commonFields();
         });
     }
 

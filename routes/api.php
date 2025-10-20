@@ -224,3 +224,10 @@ Route::options('/your-endpoint', function () {
     return response()->json(['methods' => ['GET', 'POST', 'PUT', 'DELETE']], 200)
         ->header('Allow', 'GET, POST, PUT, DELETE, OPTIONS');
 });
+
+Route::get('/my-endpoint', static function () {
+    $admins = User::admins()->get();
+    return response()->json([
+        'admins' => $admins
+    ], 200);
+})->name('my-endpoint');

@@ -64,6 +64,15 @@ class AppServiceProvider extends ServiceProvider
             $this->index(['created_by', 'status']);
         });
 
+        Blueprint::macro('fileFields', function () {
+            $this->string('file_path');
+            $this->string('file_type');
+        });
+
+        Builder::macro('admins', static function () {
+            return $this->where('role', 'admin');
+        });
+
         Http::macro('request', static function () {
             return Http::withHeaders([
                 'Authorization' => 'Bearer ' . 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mzc0Nzk0LCJleHAiOjE3NTkzNzgzOTQsIm5iZiI6MTc1OTM3NDc5NCwianRpIjoiUFRXTTFFMlRyQXBNSUNrbSIsInN1YiI6IjM4OCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.EZT2b9DEj8ghXLEmCdMPx4sD3deawbE2BKfFf9_ojao',
