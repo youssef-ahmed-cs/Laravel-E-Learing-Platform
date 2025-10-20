@@ -24,10 +24,10 @@ class SendNotificationCreateCourse implements ShouldQueue
 
     public function handle(): void
     {
-//        $users = User::all();
+        //        $users = User::all();
         User::chunk(100, function ($users) {
             Notification::send($users, new CourseCreated($this->course));
         });
-//        Notification::send($users, new CourseCreated($this->course));
+        //        Notification::send($users, new CourseCreated($this->course));
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[ObservedBy([TaskObserver::class])]
 class Task extends Model
 {
-    use  SoftDeletes, HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -23,7 +23,7 @@ class Task extends Model
         'completed',
         'user_id',
         'lesson_id',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected function casts(): array

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Http;
 
 class LearnHttpController extends Controller
 {

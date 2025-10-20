@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendNotificationCreateCourse;
-use App\Http\Requests\CoursesManagment\{StoreCourseRequest, UpdateCourseRequest};
+use App\Http\Requests\CoursesManagment\StoreCourseRequest;
+use App\Http\Requests\CoursesManagment\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
-use App\Models\{User, Course};
-use App\Notifications\CourseCreated;
+use App\Jobs\SendNotificationCreateCourse;
+use App\Models\Course;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
     public function index(): JsonResponse
     {
-        $this->authorize('viewAny', Course::class);
+//        $this->authorize('viewAny', Course::class);
         $courses = Course::with('categories')->paginate(10);
 
         return response()->json([
@@ -25,18 +24,18 @@ class CourseController extends Controller
 
     public function show(Course $course): CourseResource
     {
-        $this->authorize('view', $course);
+       // $this->authorize('view', $course);
 
         return new CourseResource($course);
     }
 
     public function store(StoreCourseRequest $request): JsonResponse
     {
-        $this->authorize('create', Course::class);
+        #$this->authorize('create', Course::class);
         $course = Course::create($request->validated());
 
         if ($request->hasFile('thumbnail')) {
-            $thumbnailName = $course->name . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $thumbnailName = $course->name.'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $thumbnailPath = $request->file('thumbnail')->storeAs('thumbnails', $thumbnailName, 'public');
             $course->update(['thumbnail' => $thumbnailPath]);
         }
@@ -51,12 +50,12 @@ class CourseController extends Controller
         return response()->json([
             'message' => 'Course created successfully',
             'course' => new CourseResource($course),
-        ]);
+        ],201);
     }
 
     public function update(UpdateCourseRequest $request, Course $course): CourseResource
     {
-        $this->authorize('update', $course);
+//        $this->authorize('update', $course);
         $course->update($request->validated());
 
         return new CourseResource($course);
@@ -64,7 +63,7 @@ class CourseController extends Controller
 
     public function destroy(Course $course): JsonResponse
     {
-        $this->authorize('delete', $course);
+//        $this->authorize('delete', $course);
         $course->delete();
 
         Log::warning('Course deleted successfully', [
@@ -104,11 +103,11 @@ class CourseController extends Controller
     {
         $course = Course::onlyTrashed()->find($id);
 
-        if (!$course) {
+        if (! $course) {
             return response()->json(['message' => 'corse not found or not trashed.'], 404);
         }
 
-        $this->authorize('restore', $course);
+//        $this->authorize('restore', $course);
 
         Log::build([
             'driver' => 'single',

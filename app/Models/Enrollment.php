@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Enrollment extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'course_id',
@@ -26,5 +27,4 @@ class Enrollment extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
 }

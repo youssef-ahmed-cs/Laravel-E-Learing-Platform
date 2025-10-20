@@ -12,9 +12,10 @@ class PoliceManMiddleware
     {
         if ($request->user()?->role !== 'admin') {
             return response()->json([
-                'message' => 'Forbidden'
+                'message' => 'Forbidden',
             ], 403);
         }
+
         return $next($request);
     }
 }

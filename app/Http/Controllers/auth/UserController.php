@@ -3,22 +3,20 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UsersManagment\StoreUserRequest;
+use App\Http\Requests\UsersManagment\UpdateUserRequest;
 use App\Http\Resources\EnrollmentCollection;
-use App\Jobs\SendWelcomeEmail;
-use App\Policies\UserPolicy;
-use App\Traits\UploadImage;
-use Illuminate\Database\Eloquent\Attributes\UsePolicy;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UsersManagment\{StoreUserRequest, UpdateUserRequest};
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Jobs\SendWelcomeEmail;
 use App\Mail\WelcomeEmailMail;
 use App\Models\User;
+use App\Traits\UploadImage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -28,15 +26,17 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
         $users = User::where('role', 'student')->paginate(10);
+
         return response()->json([
-            'data' => new UserCollection($users)
+            'data' => new UserCollection($users),
         ], 200);
     }
 
     public function to_view()
     {
-        $users = User::all_users()->get(); # DRY principle with local scope in User model we use it here
-//        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
+        $users = User::all_users()->get(); // DRY principle with local scope in User model we use it here
+
+        //        $users = DB::table('users')->orderByRaw('LENGTH(name)  DESC' )->get();
         return view('users', compact('users'));
     }
 
@@ -46,6 +46,7 @@ class UserController extends Controller
         if ($user->role !== 'student') {
             return response()->json(['message' => 'User not found or is not a student.'], 404);
         }
+
         return new UserResource($user);
     }
 
@@ -53,11 +54,12 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
         $user = User::create($request->validated());
-//        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
+        //        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
         SendWelcomeEmail::dispatch($user);
+
         return response()->json([
             'message' => 'User created successfully',
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ], 201);
 
     }
@@ -66,6 +68,7 @@ class UserController extends Controller
     {
         $this->authorize('viewInstructors', User::class);
         $users = User::where('role', 'instructor')->paginate(10);
+
         return new UserCollection($users);
     }
 
@@ -76,10 +79,11 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found or is not a student.'], 404);
         }
         $tasks = $user->tasks;
+
         return response()->json([
             'tasks' => $tasks,
             'total_tasks' => $tasks->count(),
-            'user' => $user->name
+            'user' => $user->name,
         ], 200);
     }
 
@@ -87,6 +91,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAdmins', User::class);
         $users = User::where('role', 'admin')->paginate(10);
+
         return new UserCollection($users);
     }
 
@@ -96,6 +101,7 @@ class UserController extends Controller
         if ($user->role !== 'instructor') {
             return response()->json(['message' => 'User not found or is not an instructor.'], 404);
         }
+
         return new UserResource($user);
     }
 
@@ -105,6 +111,7 @@ class UserController extends Controller
         if ($user->role !== 'admin') {
             return response()->json(['message' => 'User not found or is not an admin.'], 404);
         }
+
         return new UserResource($user);
     }
 
@@ -115,7 +122,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User updated successfully',
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ]);
     }
 
@@ -124,17 +131,17 @@ class UserController extends Controller
         $this->authorize('delete', $user);
         if ($user->role !== 'student') {
             return response()->json([
-                'message' => 'User is not a student'
+                'message' => 'User is not a student',
             ], 403);
         }
         $userName = $user->name;
         $user->delete();
+
         return response()->json([
             'message' => 'Student deleted successfully',
-            'Name' => $userName
+            'Name' => $userName,
         ]);
     }
-
 
     public function deleteInstructor(User $user): JsonResponse
     {
@@ -145,9 +152,10 @@ class UserController extends Controller
             }
             $userName = $user->name;
             $user->delete();
+
             return response()->json([
                 'message' => 'Instructor deleted successfully',
-                'Name' => $userName
+                'Name' => $userName,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Instructor not found'], 404);
@@ -160,9 +168,10 @@ class UserController extends Controller
         $this->authorize('view', $user);
         if ($user->profile) {
             return response()->json([
-                'profile' => $user->profile
+                'profile' => $user->profile,
             ]);
         }
+
         return response()->json(['message' => 'Profile not found'], 404);
     }
 
@@ -174,9 +183,10 @@ class UserController extends Controller
         }
         $userName = $user->name;
         $user->delete();
+
         return response()->json([
             'message' => 'Admin deleted successfully',
-            'Name' => $userName
+            'Name' => $userName,
         ]);
     }
 
@@ -190,10 +200,9 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'enrollments' => new EnrollmentCollection($user->enrollments)
+            'enrollments' => new EnrollmentCollection($user->enrollments),
         ]);
     }
-
 
     public function search($name)
     {
@@ -207,10 +216,10 @@ class UserController extends Controller
         return new UserCollection($users);
     }
 
-
     public function collections(): array
     {
         $this->authorize('viewAny', User::class);
+
         return collect([
             'students' => User::where('role', 'student')->get(),
             'instructors' => User::where('role', 'instructor')->get(),
@@ -221,7 +230,7 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->find($id);
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'user not found or not trashed.'], 404);
         }
 
@@ -238,17 +247,18 @@ class UserController extends Controller
     public function getAvatar(User $user): JsonResponse
     {
         $this->authorize('view', $user);
+
         return response()->json([
-            'avatar' => $user->avatar ? Storage::url($user->avatar) : null
+            'avatar' => $user->avatar ? Storage::url($user->avatar) : null,
         ]);
     }
 
     public function recentFirstUsers(): JsonResponse
     {
         $users = User::recentFirst()->get();
+
         return response()->json([
-            'data' => $users
+            'data' => $users,
         ]);
     }
-
 }

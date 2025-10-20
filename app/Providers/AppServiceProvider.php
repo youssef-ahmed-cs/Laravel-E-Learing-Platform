@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        # Add a macro to the Blueprint class for common fields used in multiple tables Don't repeat yourself (DRY principle)
+        // Add a macro to the Blueprint class for common fields used in multiple tables Don't repeat yourself (DRY principle)
         Blueprint::macro('commonFields', function () {
             $this->id();
             $this->string('status')->default('active');
@@ -64,9 +64,18 @@ class AppServiceProvider extends ServiceProvider
             $this->index(['created_by', 'status']);
         });
 
+        Blueprint::macro('fileFields', function () {
+            $this->string('file_path');
+            $this->string('file_type');
+        });
+
+        Builder::macro('admins', static function () {
+            return $this->where('role', 'admin');
+        });
+
         Http::macro('request', static function () {
             return Http::withHeaders([
-                'Authorization' => 'Bearer ' . 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mzc0Nzk0LCJleHAiOjE3NTkzNzgzOTQsIm5iZiI6MTc1OTM3NDc5NCwianRpIjoiUFRXTTFFMlRyQXBNSUNrbSIsInN1YiI6IjM4OCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.EZT2b9DEj8ghXLEmCdMPx4sD3deawbE2BKfFf9_ojao',
+                'Authorization' => 'Bearer '.'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mzc0Nzk0LCJleHAiOjE3NTkzNzgzOTQsIm5iZiI6MTc1OTM3NDc5NCwianRpIjoiUFRXTTFFMlRyQXBNSUNrbSIsInN1YiI6IjM4OCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.EZT2b9DEj8ghXLEmCdMPx4sD3deawbE2BKfFf9_ojao',
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->baseUrl('localhost:8000/api/')->timeout(10);
@@ -80,7 +89,7 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
         });
 
-        #explain => Premium users can make 5 requests per minute, while non-premium users are limited to 3 requests per minute.
+        // explain => Premium users can make 5 requests per minute, while non-premium users are limited to 3 requests per minute.
         RateLimiter::for('premium', static function (Request $request) {
             return $request->user()?->is_premium
                 ? Limit::perMinute(5)

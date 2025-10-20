@@ -9,12 +9,13 @@ use Illuminate\Notifications\Notifiable;
 
 class Review extends Model
 {
-    use Notifiable;
     use HasFactory;
+    use Notifiable;
+
     protected $fillable = [
         'user_id',
         'course_id',
-        'rating', #from 1 to 5
+        'rating', // from 1 to 5
         'comment',
     ];
 

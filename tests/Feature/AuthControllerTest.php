@@ -22,7 +22,7 @@ class AuthControllerTest extends TestCase
             'role' => 'student',
             'username' => 'john_doe',
             'bio' => 'Test bio',
-            'phone' => '1234567890'
+            'phone' => '1234567890',
         ];
 
         $response = $this->postJson('/api/register', $userData);
@@ -39,17 +39,17 @@ class AuthControllerTest extends TestCase
                     'bio',
                     'phone',
                 ],
-                'token'
+                'token',
             ])
             ->assertJson([
-                'message' => 'User registered successfully'
+                'message' => 'User registered successfully',
             ]);
 
         $this->assertDatabaseHas('users', [
             'email' => 'john@example.com',
             'name' => 'John Doe',
             'role' => 'student',
-            'username' => 'john_doe'
+            'username' => 'john_doe',
         ]);
     }
 
@@ -61,7 +61,7 @@ class AuthControllerTest extends TestCase
             'email' => 'invalid-email',
             'password' => '123', // Too short
             'role' => 'invalid_role',
-            'username' => ''
+            'username' => '',
         ];
 
         $response = $this->postJson('/api/register', $invalidData);
@@ -81,7 +81,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'role' => 'student',
-            'username' => 'johndoe'
+            'username' => 'johndoe',
         ];
 
         $response = $this->postJson('/api/register', $userData);
@@ -101,7 +101,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'role' => 'student',
-            'username' => 'existinguser'
+            'username' => 'existinguser',
         ];
 
         $response = $this->postJson('/api/register', $userData);
@@ -115,12 +115,12 @@ class AuthControllerTest extends TestCase
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => Hash::make('password123')
+            'password' => Hash::make('password123'),
         ]);
 
         $loginData = [
             'email' => 'test@example.com',
-            'password' => 'password123'
+            'password' => 'password123',
         ];
 
         $response = $this->postJson('/api/login', $loginData);
@@ -133,12 +133,12 @@ class AuthControllerTest extends TestCase
                     'name',
                     'email',
                     'role',
-                    'username'
+                    'username',
                 ],
-                'token'
+                'token',
             ])
             ->assertJson([
-                'message' => 'Login successful'
+                'message' => 'Login successful',
             ]);
     }
 
@@ -147,19 +147,19 @@ class AuthControllerTest extends TestCase
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => Hash::make('password123')
+            'password' => Hash::make('password123'),
         ]);
 
         $loginData = [
             'email' => 'test@example.com',
-            'password' => 'wrongpassword'
+            'password' => 'wrongpassword',
         ];
 
         $response = $this->postJson('/api/login', $loginData);
 
         $response->assertStatus(401)
             ->assertJson([
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
             ]);
     }
 
@@ -168,14 +168,14 @@ class AuthControllerTest extends TestCase
     {
         $loginData = [
             'email' => 'nonexistent@example.com',
-            'password' => 'password123'
+            'password' => 'password123',
         ];
 
         $response = $this->postJson('/api/login', $loginData);
 
         $response->assertStatus(401)
             ->assertJson([
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
             ]);
     }
 
@@ -184,7 +184,7 @@ class AuthControllerTest extends TestCase
     {
         $invalidData = [
             'email' => 'invalid-email',
-            'password' => '123' // Too short
+            'password' => '123', // Too short
         ];
 
         $response = $this->postJson('/api/login', $invalidData);
@@ -203,13 +203,13 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'message' => 'Logged out successfully'
+                'message' => 'Logged out successfully',
             ]);
 
         // Verify all tokens are deleted
         $this->assertDatabaseMissing('personal_access_tokens', [
             'tokenable_id' => $user->id,
-            'tokenable_type' => User::class
+            'tokenable_type' => User::class,
         ]);
     }
 
@@ -227,7 +227,7 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'role' => 'student'
+            'role' => 'student',
         ]);
         Sanctum::actingAs($user);
 
@@ -240,16 +240,16 @@ class AuthControllerTest extends TestCase
                     'name',
                     'email',
                     'role',
-                    'username'
-                ]
+                    'username',
+                ],
             ])
             ->assertJson([
                 'user' => [
                     'id' => $user->id,
                     'name' => 'Test User',
                     'email' => 'test@example.com',
-                    'role' => 'student'
-                ]
+                    'role' => 'student',
+                ],
             ]);
     }
 
@@ -275,16 +275,16 @@ class AuthControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'message',
-                'token'
+                'token',
             ])
             ->assertJson([
-                'message' => 'Token refreshed successfully'
+                'message' => 'Token refreshed successfully',
             ]);
 
         // Verify old tokens are deleted
         $this->assertDatabaseMissing('personal_access_tokens', [
             'tokenable_id' => $user->id,
-            'name' => 'old_token'
+            'name' => 'old_token',
         ]);
     }
 
@@ -308,19 +308,19 @@ class AuthControllerTest extends TestCase
                 'password' => 'password123',
                 'password_confirmation' => 'password123',
                 'role' => $role,
-                'username' => "test_{$role}"
+                'username' => "test_{$role}",
             ];
 
             $response = $this->postJson('/api/register', $userData);
 
             $response->assertStatus(201)
                 ->assertJson([
-                    'message' => 'User registered successfully'
+                    'message' => 'User registered successfully',
                 ]);
 
             $this->assertDatabaseHas('users', [
                 'email' => "test_{$role}@example.com",
-                'role' => $role
+                'role' => $role,
             ]);
         }
     }
@@ -330,12 +330,12 @@ class AuthControllerTest extends TestCase
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => Hash::make('password123')
+            'password' => Hash::make('password123'),
         ]);
 
         $loginData = [
             'email' => 'test@example.com',
-            'password' => 'password123'
+            'password' => 'password123',
         ];
 
         $response = $this->postJson('/api/login', $loginData);
@@ -349,7 +349,7 @@ class AuthControllerTest extends TestCase
         $this->assertDatabaseHas('personal_access_tokens', [
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'name' => 'auth_token'
+            'name' => 'auth_token',
         ]);
     }
 
@@ -362,7 +362,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'role' => 'student',
-            'username' => 'johndoe'
+            'username' => 'johndoe',
         ];
 
         $response = $this->postJson('/api/register', $userData);
@@ -377,7 +377,7 @@ class AuthControllerTest extends TestCase
         $this->assertDatabaseHas('personal_access_tokens', [
             'tokenable_id' => $user->id,
             'tokenable_type' => User::class,
-            'name' => 'auth_token'
+            'name' => 'auth_token',
         ]);
     }
 
@@ -390,7 +390,7 @@ class AuthControllerTest extends TestCase
             'password' => 'password123',
             'password_confirmation' => 'password123',
             'role' => 'student',
-            'username' => 'johndoe'
+            'username' => 'johndoe',
         ];
 
         $this->postJson('/api/register', $userData);

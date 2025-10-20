@@ -23,15 +23,16 @@ class ForgetPasswordController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'User not found check your database.'], 404);
         }
         $otp = random_int(1000, 9999);
         $user->update([
             'two_factor_code' => $otp,
-            'two_factor_expires_at' => now()->addMinutes(10)
+            'two_factor_expires_at' => now()->addMinutes(10),
         ]);
         Mail::to($user->email)->send(new OtpMail($user));
+
         return response()->json([
             'message' => 'OTP sent to your email address',
         ]);
@@ -46,7 +47,7 @@ class ForgetPasswordController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => 'Email not found'], 404);
         }
 
@@ -63,7 +64,7 @@ class ForgetPasswordController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => 'Email not found'], 404);
         }
 
@@ -79,7 +80,8 @@ class ForgetPasswordController extends Controller
         $user->two_factor_code = null;
         $user->two_factor_expires_at = null;
         $user->save();
-        Log::notice('Password reset successful for user ID: ' . $user->id);
+        Log::notice('Password reset successful for user ID: '.$user->id);
+
         return response()->json(['message' => 'Password reset successful'], 200);
     }
 }

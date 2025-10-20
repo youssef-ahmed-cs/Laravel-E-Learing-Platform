@@ -19,7 +19,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 #[ObservedBy([UserObserver::class])]
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasApiTokens, softDeletes;
+    use HasApiTokens, HasFactory, Notifiable, softDeletes;
 
     public function getJWTIdentifier()
     {
@@ -47,15 +47,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'two_factor_expires_at',
         'is_premium',
         'provider_id',
-        'id'
+        'id',
     ];
 
     protected array $hidden = [
         'password',
         'remember_token',
-        'login_count'
+        'login_count',
     ];
-
 
     protected function casts(): array
     {
@@ -63,7 +62,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'login_count' => 'integer',
-//            'id' => 'string'
+            //            'id' => 'string'
+            'is_premium' => 'boolean',
         ];
     }
 
@@ -105,9 +105,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         $this->save();
     }
 
-//    public function newEloquentBuilder($query): UserBuilder
-//    {
-//        return new UserBuilder($query);
-//    }
-
+    public function newEloquentBuilder($query): UserBuilder
+    {
+        return new UserBuilder($query);
+    }
 }

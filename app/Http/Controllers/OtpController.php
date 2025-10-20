@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
+
+use App\Mail\OtpMail;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
-use App\Mail\OtpMail;
-use Illuminate\Http\Request;
 use Random\RandomException;
 
 class OtpController extends Controller
@@ -15,7 +17,7 @@ class OtpController extends Controller
     public function sendOtp(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $email = $validated['email'];
@@ -25,5 +27,5 @@ class OtpController extends Controller
         Mail::to($email)->send(new OtpMail($otp));
 
         return response()->json(['message' => 'OTP sent successfully']);
- }
+    }
 }

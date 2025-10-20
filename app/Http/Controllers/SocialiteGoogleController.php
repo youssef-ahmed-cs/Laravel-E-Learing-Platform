@@ -19,7 +19,7 @@ class SocialiteGoogleController
         $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::updateOrCreate([
-            'provider_id' => $googleUser->getId()
+            'provider_id' => $googleUser->getId(),
         ], [
             'name' => $googleUser->getName(),
             'email' => $googleUser->getEmail(),

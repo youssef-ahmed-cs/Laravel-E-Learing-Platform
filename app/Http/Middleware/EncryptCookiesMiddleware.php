@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class EncryptCookiesMiddleware
 {
     protected array $except = [
-        'test'
+        'test',
     ];
 
     public function handle(Request $request, Closure $next)

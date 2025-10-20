@@ -6,12 +6,13 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TaskPolicy {
+class TaskPolicy
+{
     use HandlesAuthorization;
 
     public function viewAny(User $user): bool
     {
-            return $user->role === 'admin';
+        return $user->role === 'admin';
     }
 
     public function view(User $user, Task $task): bool

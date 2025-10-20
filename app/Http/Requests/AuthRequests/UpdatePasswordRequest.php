@@ -4,6 +4,7 @@ namespace App\Http\Requests\AuthRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+
 class UpdatePasswordRequest extends FormRequest
 {
     /**

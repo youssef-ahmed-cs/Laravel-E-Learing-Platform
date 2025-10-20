@@ -16,7 +16,7 @@ class LessonResource extends JsonResource
             'Duration' => $this->duration,
             'IS_Free' => $this->is_free,
             'Video_url' => $this->video_url,
-            'Course' => new CourseResource($this->course)
+            'Course' => new CourseResource($this->course),
         ];
     }
 }

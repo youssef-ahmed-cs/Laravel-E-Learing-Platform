@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class NewReview extends Notification
     use Queueable;
 
     protected $review;
+
     public function __construct($review)
     {
         $this->review = $review;
@@ -46,7 +46,7 @@ class NewReview extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'A new review has been submitted for your course: ' . $this->review->course->title,
+            'message' => 'A new review has been submitted for your course: '.$this->review->course->title,
             'review_id' => $this->review->id,
             'course_id' => $this->review->course->id,
             'course_title' => $this->review->course->title,

@@ -16,7 +16,7 @@ class UserBuilder extends Builder
         return $this->orderBy('created_at', 'desc')->limit(5);
     }
 
-    public function studentsWithCourses() : static
+    public function studentsWithCourses(): static
     {
         return $this->where('role', 'student')->with('courses');
     }

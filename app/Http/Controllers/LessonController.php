@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use App\Http\Requests\LessonManagement\{StoreLessonRequest, UpdateLessonRequest};
+use App\Http\Requests\LessonManagement\StoreLessonRequest;
+use App\Http\Requests\LessonManagement\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Models\Lesson;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 class LessonController extends Controller
 {
@@ -16,6 +17,7 @@ class LessonController extends Controller
     {
         $this->authorize('viewAny', Lesson::class);
         $lessons = Lesson::with('course')->get();
+
         return LessonResource::collection($lessons);
     }
 
@@ -24,9 +26,10 @@ class LessonController extends Controller
         $this->authorize('create', Lesson::class);
         $request->validated();
         $lesson = Lesson::create($request->validated());
+
         return response()->json([
             'message' => 'Lesson created successfully',
-            'lesson' => new LessonResource($lesson)
+            'lesson' => new LessonResource($lesson),
         ]);
     }
 
@@ -34,9 +37,10 @@ class LessonController extends Controller
     {
         $this->authorize('update', Lesson::class);
         $data = Lesson::update($request->validated());
+
         return response()->json([
             'message' => 'Lesson created successfully',
-            'lesson' => new LessonResource($data)
+            'lesson' => new LessonResource($data),
         ]);
     }
 
@@ -44,6 +48,7 @@ class LessonController extends Controller
     {
         $this->authorize('delete', $lesson);
         $lesson->delete();
+
         return response()->json([
             'message' => "lesson: $lesson->title  deleted from {$lesson->course->title} course , successfully",
         ]);
@@ -54,10 +59,11 @@ class LessonController extends Controller
         $this->authorize('view', $lesson);
 
         $tasks = $lesson->tasks()->get();
+
         return response()->json([
             'tasks' => $tasks,
             'total_tasks' => $tasks->count(),
-            'lesson' => $lesson->title
+            'lesson' => $lesson->title,
         ]);
     }
 
@@ -65,9 +71,11 @@ class LessonController extends Controller
     {
         try {
             $this->authorize('view', $lesson);
+
             return new LessonResource($lesson);
         } catch (ModelNotFoundException $e) {
-            Log::error('Error showing lesson: ' . $e->getMessage());
+            Log::error('Error showing lesson: '.$e->getMessage());
+
             return response()->json(['message' => 'Unable to retrieve lesson.'], 500);
         }
     }
@@ -76,9 +84,10 @@ class LessonController extends Controller
     {
         $this->authorize('view-any', $lesson);
         $courses = $lesson->course()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);
+
         return response()->json([
             'lesson' => $lesson->title,
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
 
@@ -86,15 +95,17 @@ class LessonController extends Controller
     {
         $lesson = Lesson::onlyTrashed()->find($id);
 
-        if (!$lesson) {
-            Log::error('Lesson not found or not trashed: ID ' . $id);
+        if (! $lesson) {
+            Log::error('Lesson not found or not trashed: ID '.$id);
+
             return response()->json(['message' => 'Lesson not found or not trashed.'], 404);
         }
 
         $this->authorize('restore', $lesson);
 
         $lesson->restore();
-        Log::alert('Lesson restored: ' . $lesson->title);
+        Log::alert('Lesson restored: '.$lesson->title);
+
         return response()->json([
             'message' => 'Lesson restored successfully',
             'data' => new LessonResource($lesson),

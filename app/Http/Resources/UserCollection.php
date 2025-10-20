@@ -17,7 +17,7 @@ class UserCollection extends ResourceCollection
                 'count' => $this->count(),
                 'per_page' => $this->perPage(),
                 'current_page' => $this->currentPage(),
-                'total_pages' => $this->lastPage()
+                'total_pages' => $this->lastPage(),
             ],
         ];
     }
