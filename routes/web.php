@@ -68,7 +68,7 @@ Route::get('/caps/{text}', static function (string $text) {
     return Response::caps($text);
 });
 
-Route::get('/generate-qrcode', [QrCodeController::class, 'generate']);
+Route::get('/generate-qrcode', QrCodeController::class);
 Route::get('show-ip', static function (Request $request) {
     dd($request->method());
 });

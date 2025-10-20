@@ -1,0 +1,9 @@
+GET http://localhost:80/api/item?id=99
+Accept: application/json
+
+### GET request to check throttle rate limiting
+GET http://127.0.0.1:8000/api/try-throttle
+###
+
+### Image Response
+GET https://i.pravatar.cc/300?u=whalvorson@greenfelder.org

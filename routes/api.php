@@ -27,7 +27,7 @@ use App\Http\Controllers\SocialiteGoogleController;
 //});
 
 
-Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
+Route::prefix('v1')->middleware(['throttle:10,1'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
@@ -205,9 +205,29 @@ Route::get('/users-recent', [UserController::class, 'recentFirstUsers'])
 
 # Example of logging SQL queries for debugging purposes
 Route::get('sql-log', static function () {
-    DB::enableQueryLog();
-    User::where('name', 'like', '%youssef%')->get();
-    $queries = DB::getQueryLog();
+    DB::enableQueryLog(); # Enable query logging
+    User::query()->take(5)->pluck('name'); # Sample query to be logged
+    $queries = DB::getQueryLog(); # Retrieve the logged queries
     return response()->json($queries, 200);
 });
 
+Route::get('/users/try/v10', static function () {
+    $users = DB::table('users')->simplePaginate(10);
+    return response()->json($users, 200);
+});
+
+Route::get('try-throttle', static function () {
+    return response()->json(['message' => 'This is a throttled route'], 200);
+});
+
+Route::options('/your-endpoint', function () {
+    return response()->json(['methods' => ['GET', 'POST', 'PUT', 'DELETE']], 200)
+        ->header('Allow', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
+Route::get('/my-endpoint', static function () {
+    $admins = User::admins()->get();
+    return response()->json([
+        'admins' => $admins
+    ], 200);
+})->name('my-endpoint');
