@@ -1,14 +1,21 @@
 <?php
 
-use App\Models\{Enrollment, Task, User, Course, Profile};
+use Illuminate\Support\Number;
 
-### Tinkerer Console v1.0 ###
-//$user = User::firstOrFail();
-//$users = User::all();
-//$admins = $users->where('role', 'admin');
-//$count = User::where('role', 'student')->count();
-//$users = User::with(['courses:title,instructor_id'])
-//    ->where('id', 1)->get();
+# abbreviate a number (e.g., 1.5K, 2.3M)
+$number = Number::abbreviate(12000);
+$number = Number::abbreviate(1230000, precision: 3);
+$number = Number::abbreviate(987654321, precision: 2);
+$number = Number::abbreviate(1500, precision: 1);
 
-$user = User::where('id', '1')
-    ->get(['id', 'name', 'email', 'role']);
+Number::forHumans(1000000); # returns "1 million"
+Number::format(1000000); # returns "1,000,000"
+Number::format(123456789, locale: 'en'); # 123,456,789
+Number::format(123456789, locale: 'ar'); # ١٢٣٬٤٥٦٬٧٨٩
+
+//Number::toFileSize(1024); // 1 KB
+Number::percentage(10, locale: 'ar', precision: 2);
+
+//Number::percentage(25); # 25%
+//Number::percentage((1/3)*100 , 2); # 25%
+# abbreviate a number (e.g., 1.5 K, 2.3 M)

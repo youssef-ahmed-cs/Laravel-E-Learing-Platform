@@ -13,6 +13,6 @@ class SomeTest extends TestCase
 
     public function test_example2(): void
     {
-        $this->assertEquals(2, -1+3);
+        $this->assertEquals(2, -1 + 3);
     }
 }

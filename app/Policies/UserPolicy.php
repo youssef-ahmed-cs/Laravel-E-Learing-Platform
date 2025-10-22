@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
+use App\Enums\User as Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
-use App\Enums\User as Role;
 
 class UserPolicy
 {
@@ -18,7 +18,6 @@ class UserPolicy
         return ($user->role === Role::ADMIN->value || $user->role === Role::INSTRUCTOR->value) ? Response::allow() :
             Response::deny('You are not authorized');
     }
-
 
     public function viewInstructors(User $user): Response
     {

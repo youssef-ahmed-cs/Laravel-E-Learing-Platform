@@ -13,6 +13,7 @@ class WelcomeEmailMail extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
+
     public function __construct($name)
     {
         $this->name = $name;

@@ -16,9 +16,10 @@ class ExampleTest extends TestCase
     public function test_the_application_contains_any_words(): void
     {
         $response = $this->get('/');
-        $response->assertSee('Laravel');
+        $response->assertSee('to');
         $response->assertStatus(200);
     }
+    // assertSee used to
 
     public function test_collection_index(): void
     {
@@ -32,9 +33,9 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_task_index(): void
+    public function test_to_show_is_premium_function(): void
     {
-        $response = $this->get('/api/ping-01');
+        $response = $this->get('/api/my-endpoint');
         $response->assertStatus(200);
     }
 
@@ -44,4 +45,10 @@ class ExampleTest extends TestCase
         $response->assertStatus(301);
     }
 
+    public function test_homepage_displays_welcome(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('to');
+    }
 }

@@ -19,18 +19,21 @@ class TaskController extends Controller
     {
         $this->authorize('viewAny', Task::class);
         $tasks = Task::with('user', 'lesson')->get();
+
         return new TaskCollection($tasks);
     }
 
     public function store(StoreTaskRequest $request): TaskResource
     {
         $this->authorize('create', Task::class);
+
         return new TaskResource(Task::create($request->validated()));
     }
 
     public function show(Task $task): TaskResource
     {
         $this->authorize('view', $task);
+
         return new TaskResource($task);
     }
 
@@ -38,6 +41,7 @@ class TaskController extends Controller
     {
         $this->authorize('update', $task);
         $task->update($request->validated());
+
         return new TaskResource($task);
     }
 
@@ -62,7 +66,7 @@ class TaskController extends Controller
 
         return response()->json([
             'message' => 'Task restored successfully',
-            'task' => new TaskResource($task)
+            'task' => new TaskResource($task),
         ]);
     }
 
@@ -73,8 +77,9 @@ class TaskController extends Controller
 
         $task->forceDelete();
         Log::warning('Task permanently deleted', ['task_id' => $id, 'deleted_by' => auth()->user()->id]);
+
         return response()->json([
-            'message' => 'Task permanently deleted'
+            'message' => 'Task permanently deleted',
         ]);
     }
 
@@ -86,9 +91,10 @@ class TaskController extends Controller
             return [
                 'user_id' => $userId,
                 'name' => $taskGroup->first()->user->name ?? null,
-                'tasks' => TaskResource::collection($taskGroup)
+                'tasks' => TaskResource::collection($taskGroup),
             ];
         })->values();
+
         return response()->json($result);
     }
 
@@ -99,7 +105,7 @@ class TaskController extends Controller
         $result = $tasks->map(function ($taskGroup, $lessonId) {
             return [
                 'lesson_id' => $lessonId,
-                'tasks' => TaskResource::collection($taskGroup)
+                'tasks' => TaskResource::collection($taskGroup),
             ];
         })->values();
 

@@ -7,9 +7,7 @@ use Illuminate\Notifications\Notification;
 
 class OtpNotification extends Notification
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function via($notifiable): array
     {

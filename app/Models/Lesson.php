@@ -25,7 +25,7 @@ class Lesson extends Model
         'order',
         'duration',
         'is_free',
-        'video_url'
+        'video_url',
     ];
 
     public function course(): BelongsTo

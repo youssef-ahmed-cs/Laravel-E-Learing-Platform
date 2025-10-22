@@ -28,7 +28,7 @@ class StoreLessonRequest extends FormRequest
             'video_url' => 'nullable|string',
             'order' => 'required|integer|min:1',
             'is_free' => 'required|boolean',
-            'duration' => 'required|integer|min:1'
+            'duration' => 'required|integer|min:1',
         ];
     }
 }

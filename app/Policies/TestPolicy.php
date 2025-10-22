@@ -12,9 +12,8 @@ class TestPolicy
 
     public function viewAny(User $user): bool
     {
-            return false;
+        return false;
     }
-
 
     public function update(User $user, Test $test): bool
     {
@@ -30,5 +29,4 @@ class TestPolicy
     {
         return false;
     }
-
 }

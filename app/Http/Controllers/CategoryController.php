@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryManagement\StoreCategoryRequest;
 use App\Http\Requests\CategoryMenegemnt\UpdateCategoryRequest;
@@ -13,8 +15,9 @@ class CategoryController extends Controller
     {
         $this->authorize('viewAny', Category::class);
         $categories = Category::with('courses')->pluck('name', 'id');
+
         return response()->json([
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -22,6 +25,7 @@ class CategoryController extends Controller
     {
         $this->authorize('view', $category);
         $category->with('courses')->first();
+
         return new CategoryResource($category);
     }
 
@@ -29,9 +33,10 @@ class CategoryController extends Controller
     {
         $this->authorize('create', Category::class);
         $category = Category::create($request->validated());
+
         return response()->json([
             'message' => 'Category created successfully',
-            'category' => $category
+            'category' => $category,
         ]);
     }
 
@@ -43,7 +48,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'message' => 'Category updated successfully',
-            'category' => $category->fresh()
+            'category' => $category->fresh(),
         ]);
     }
 
@@ -51,8 +56,9 @@ class CategoryController extends Controller
     {
         $this->authorize('delete', $category);
         $category->delete();
+
         return response()->json([
-            'message' => "Category {$category->name} deleted successfully"
+            'message' => "Category {$category->name} deleted successfully",
         ]);
     }
 
@@ -60,9 +66,10 @@ class CategoryController extends Controller
     {
         $this->authorize('view', $category);
         $courses = $category->courses()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);
+
         return response()->json([
             'category' => $category->name,
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
 
@@ -80,38 +87,39 @@ class CategoryController extends Controller
     public function restore($id): JsonResponse
     {
         $category = Category::withTrashed()->find($id);
-        if (!$category) {
+        if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
         $this->authorize('restore', $category);
         if ($category->trashed()) {
             $category->restore();
+
             return response()->json(['message' => 'Category restored successfully', 'category' => $category]);
         }
-        Log::info('Category restore attempted but category is not deleted. ID: ' . $category->id);
+        Log::info('Category restore attempted but category is not deleted. ID: '.$category->id);
+
         return response()->json(['message' => 'Category is not deleted'], 400);
     }
 
     public function forceDelete($id): JsonResponse
     {
         $category = Category::withTrashed()->find($id);
-        if (!$category) {
+        if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
         $this->authorize('forceDelete', $category);
         if ($category->trashed()) {
-            Log::warning('Permanently deleting category ID: ' . $category->id);
+            Log::warning('Permanently deleting category ID: '.$category->id);
             $category->forceDelete();
+
             return response()->json(['message' => 'Category permanently deleted']);
         }
+
         return response()->json(['message' => 'Category must be soft deleted first'], 400);
     }
 
     /**
      * Search for categories by name.
-     *
-     * @param string $name
-     * @return \Illuminate\Http\JsonResponse
      */
     public function search(string $name): JsonResponse
     {
@@ -123,8 +131,9 @@ class CategoryController extends Controller
 
         if ($categories->isEmpty()) {
             Log::info("No categories found matching the search criteria: {$name}");
+
             return response()->json([
-                'message' => 'No categories found matching the search criteria.'
+                'message' => 'No categories found matching the search criteria.',
             ], 404);
         }
 
@@ -137,8 +146,9 @@ class CategoryController extends Controller
     {
         $this->authorize('view', $category);
         $categories = $category->courses()->get(['id', 'title', 'description', 'status', 'level', 'duration', 'instructor_id']);
+
         return response()->json([
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 }

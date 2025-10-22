@@ -35,17 +35,18 @@ Route::get('url', LearnHttpController::class);
 
 Route::get('/users/{roles}', static function (?string $roles) {
     return response()->json([
-        'roles' => $roles
+        'roles' => $roles,
     ]);
 })->whereIn('roles', \App\Enums\User::cases());
 
-//require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 Route::get('users/{user}', static function (User $user) {
-    if (!request()->hasValidSignature()) {
+    if (! request()->hasValidSignature()) {
         abort(401);
     }
+
     return response()->json([
-        'user' => $user
+        'user' => $user,
     ]);
 })->name('users.show02');
 
@@ -57,10 +58,11 @@ Route::controller(SocialiteGoogleController::class)->name('google.')->group(func
 });
 
 Route::get('users-caching', static function () {
-    # Using the cache helper function
+    // Using the cache helper function
     $users = Cache::remember('users', 60, static function () {
         return User::all();
     });
+
     return view('users', compact('users'));
 })->name('users.show');
 
@@ -69,6 +71,7 @@ Route::get('/caps/{text}', static function (string $text) {
 });
 
 Route::get('/generate-qrcode', QrCodeController::class);
+
 Route::get('show-ip', static function (Request $request) {
     dd($request->method());
 });

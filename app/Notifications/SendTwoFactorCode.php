@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -33,7 +32,6 @@ class SendTwoFactorCode extends Notification
     /**
      * Get the mail representation of the notification.
      */
-
     public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
@@ -42,7 +40,6 @@ class SendTwoFactorCode extends Notification
             ->line('The code will expire in 10 minutes')
             ->line('If you have not tried to login, ignore this message.');
     }
-
 
     /**
      * Get the array representation of the notification.

@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'Username' => $this->username,
             'Created At' => $this->created_at->format('d M Y'),
             'Updated At' => $this->updated_at->format('d M Y'),
-//            'Profiles_counted' => $this->whenCounted('profile')
+            //            'Profiles_counted' => $this->whenCounted('profile')
             'profile' => new ProfileResource($this->whenLoaded('profile')),
         ];
     }

@@ -14,9 +14,9 @@ class EnrollmentResource extends JsonResource
             'Course_id' => $this->course_id,
             'Enrolled_at' => $this->enrolled_at,
             'Completed_at' => $this->completed_at,
-            'student name' =>$this->user?->name,
-            'course name' =>$this->course?->title,
-            'course price' =>$this->course?->price,
+            'student name' => $this->user?->name,
+            'course name' => $this->course?->title,
+            'course price' => $this->course?->price,
         ];
     }
 }

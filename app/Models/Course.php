@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Casts\HumanDateCast;
-use App\Casts\PriceCast;
 use App\Observers\CourseObserver;
 use App\Policies\CoursePolicy;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +34,7 @@ class Course extends Model
     public function casts(): array
     {
         return [
-//            'price' => 'decimal:2',
+            //            'price' => 'decimal:2',
             'duration' => 'integer',
             'created_at' => 'datetime',
         ];

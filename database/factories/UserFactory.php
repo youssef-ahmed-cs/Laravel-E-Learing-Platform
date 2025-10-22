@@ -12,8 +12,7 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-
-    protected static ?string $password; #?string => null | string
+    protected static ?string $password; // ?string => null | string
 
     /**
      * Define the model's default state.
@@ -32,7 +31,7 @@ class UserFactory extends Factory
             'role' => 'student', // Default role
             'bio' => fake()->paragraph(),
             'phone' => fake()->unique()->phoneNumber(),
-            'avatar' => 'https://i.pravatar.cc/300?u=' . fake()->unique()->email(),
+            'avatar' => 'https://i.pravatar.cc/300?u='.fake()->unique()->email(),
         ];
     }
 

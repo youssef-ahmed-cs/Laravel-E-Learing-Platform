@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller
@@ -11,6 +12,7 @@ class NotificationController extends Controller
         $notifications = $user->notifications()
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+
         return response()->json([
             'success' => true,
             'notifications' => $notifications->items(),
@@ -25,6 +27,7 @@ class NotificationController extends Controller
         if ($notification) {
             $this->authorize('markAsRead', $notification);
             $notification->markAsRead();
+
             return response()->json(['message' => 'Notification marked as read']);
         }
 

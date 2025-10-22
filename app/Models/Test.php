@@ -15,8 +15,9 @@ class Test extends Model
         'content',
         'status',
     ];
+
     protected $casts = [
         'status' => \App\Enums\User::class,
     ];
-        // The casts() method was removed because the 'id' field should not be cast to string due to conflicting database definitions.
+    // The casts() method was removed because the 'id' field should not be cast to string due to conflicting database definitions.
 }

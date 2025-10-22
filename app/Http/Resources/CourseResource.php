@@ -21,9 +21,9 @@ class CourseResource extends JsonResource
             'level' => $this->level,
             'price' => $this->price,
             'status' => $this->status,
-            'thumbnail' => $this->thumbnail ? asset('storage/' . $this->thumbnail) : null,
+            'thumbnail' => $this->thumbnail ? asset('storage/'.$this->thumbnail) : null,
             'duration' => $this->duration,
-                        'number_of_enrollments' => $this->enrollments()->count(),
+            'number_of_enrollments' => $this->enrollments()->count(),
             'category' => $this->categories?->name,
             'lessons' => [
                 'total' => $this->lessons->count(),

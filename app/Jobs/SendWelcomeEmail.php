@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Mail;
 
 class SendWelcomeEmail implements ShouldQueue
 {
-    use Queueable , Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable , InteractsWithQueue, Queueable, Queueable, SerializesModels;
 
     public $user;
+
     public function __construct($user)
     {
         $this->user = $user;

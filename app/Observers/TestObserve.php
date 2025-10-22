@@ -31,10 +31,7 @@ class TestObserve
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user): void
-    {
-
-    }
+    public function deleted(User $user): void {}
 
     public function saving(User $user): void
     {

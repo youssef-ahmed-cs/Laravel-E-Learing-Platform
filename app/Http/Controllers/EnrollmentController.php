@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
 
 use App\Http\Requests\EnrollmenttManagement\StoreEnrollmentRequest;
 use App\Http\Requests\EnrollmenttManagement\UpdateEnrollmentRequest;
@@ -14,12 +15,14 @@ class EnrollmentController extends Controller
     {
         $this->authorize('viewAny', Enrollment::class);
         $enrollments = Enrollment::with('user')->get();
+
         return new EnrollmentCollection($enrollments);
     }
 
     public function show(Enrollment $enrollment): EnrollmentResource
     {
         $this->authorize('view', $enrollment);
+
         return new EnrollmentResource($enrollment);
     }
 
@@ -27,9 +30,10 @@ class EnrollmentController extends Controller
     {
         $this->authorize('create', Enrollment::class);
         $enrollment = Enrollment::create($request->validated());
+
         return response()->json([
             'message' => 'Enrollment created successfully',
-            'Info' => new EnrollmentResource($enrollment)
+            'Info' => new EnrollmentResource($enrollment),
         ]);
     }
 
@@ -37,9 +41,10 @@ class EnrollmentController extends Controller
     {
         $this->authorize('update', $enrollment);
         $enrollment->update($request->validated());
+
         return response()->json([
             'message' => 'Enrollment updated successfully',
-            'Info' => new EnrollmentResource($enrollment)
+            'Info' => new EnrollmentResource($enrollment),
         ]);
     }
 
@@ -47,9 +52,10 @@ class EnrollmentController extends Controller
     {
         $this->authorize('delete', $enrollment);
         $enrollment->delete();
+
         return response()->json([
             'message' => 'Enrollment deleted successfully',
-            'some info' => "student name: {$enrollment->user->name} and course title is {$enrollment->course->title}"
+            'some info' => "student name: {$enrollment->user->name} and course title is {$enrollment->course->title}",
         ]);
     }
 
@@ -58,8 +64,9 @@ class EnrollmentController extends Controller
         $enrollment = Enrollment::findOrFail($id);
         $this->authorize('view', $enrollment);
         $course = $enrollment->course;
+
         return response()->json([
-            'course' => $course
+            'course' => $course,
         ]);
     }
 
@@ -67,8 +74,9 @@ class EnrollmentController extends Controller
     {
         $this->authorize('view', $enrollment);
         $student = $enrollment->user;
+
         return response()->json([
-            'student' => $student
+            'student' => $student,
         ]);
     }
 }

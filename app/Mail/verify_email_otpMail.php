@@ -11,7 +11,9 @@ use Illuminate\Queue\SerializesModels;
 class verify_email_otpMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $user;
+
     public function __construct($user)
     {
         $this->user = $user;

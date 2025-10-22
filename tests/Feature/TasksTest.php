@@ -12,6 +12,7 @@ use Tests\TestCase;
 class TasksTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
+
     public function test_example(): void
     {
         $response = $this->get('/');
@@ -26,7 +27,7 @@ class TasksTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
     }
 
-    public function test_tasks_route_returns_tasks_list(): void # test the structure of the returned JSON
+    public function test_tasks_route_returns_tasks_list(): void // test the structure of the returned JSON
     {
         $response = $this->get('/api/tasks');
         $response->assertStatus(200);
@@ -42,9 +43,9 @@ class TasksTest extends TestCase
                     'user_id',
                     'lesson_id',
                     'created_at',
-                    'updated_at'
-                ]
-            ]
+                    'updated_at',
+                ],
+            ],
         ]);
     }
 
@@ -60,7 +61,7 @@ class TasksTest extends TestCase
             'priority' => 'low',
             'dateline' => now()->addDay()->toDateString(),
             'user_id' => $user->id,
-            'lesson_id' => $lesson->id
+            'lesson_id' => $lesson->id,
         ];
 
         $response = $this->postJson('/api/tasks', $payload);
@@ -69,13 +70,12 @@ class TasksTest extends TestCase
             ->assertJsonFragment(['title' => 'New Task']);
     }
 
-
     public function test_can_update_task(): void
     {
         $task = Task::factory()->create();
 
         $response = $this->putJson("/api/tasks/{$task->id}", [
-            'title' => 'Updated Title'
+            'title' => 'Updated Title',
         ]);
 
         $response->assertStatus(200)
@@ -91,9 +91,4 @@ class TasksTest extends TestCase
         $response->assertStatus(204);
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
-
-
-
-
-
 }

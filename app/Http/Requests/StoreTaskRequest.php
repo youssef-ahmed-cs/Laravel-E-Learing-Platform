@@ -56,6 +56,4 @@ class StoreTaskRequest extends FormRequest
             'lesson_id.exists' => 'The selected lesson_id is invalid.',
         ];
     }
-
-
 }

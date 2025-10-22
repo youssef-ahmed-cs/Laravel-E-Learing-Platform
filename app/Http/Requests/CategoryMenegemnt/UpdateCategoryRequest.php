@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
@@ -22,7 +21,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name' => 'sometimes|required|string|max:255|unique:categories,name',
             'description' => 'nullable|string',
-            'slug' => 'sometimes|required|string|max:255|unique:categories,slug'
+            'slug' => 'sometimes|required|string|max:255|unique:categories,slug',
         ];
     }
 }

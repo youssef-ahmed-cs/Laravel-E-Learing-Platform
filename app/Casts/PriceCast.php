@@ -9,7 +9,7 @@ class PriceCast implements CastsAttributes
 {
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return '$' . number_format($value, 2);
+        return '$'.number_format($value, 2);
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed

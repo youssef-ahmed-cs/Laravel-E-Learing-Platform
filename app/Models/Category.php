@@ -17,7 +17,6 @@ class Category extends EloquentModel
         'slug',
     ];
 
-
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'category_id');

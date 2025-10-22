@@ -6,7 +6,6 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Vonage\Users\User;
@@ -46,16 +45,18 @@ class ProfileController extends Controller
     {
         $this->authorize('delete', $user);
         $user->delete();
+
         return response()->json([
-            'message' => 'User deleted successfully'
+            'message' => 'User deleted successfully',
         ]);
     }
 
     public function show(User $user): JsonResponse
     {
         $this->authorize('view', $user);
+
         return response()->json([
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }
