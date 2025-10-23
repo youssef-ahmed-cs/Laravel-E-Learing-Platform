@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\ProfileResource;
+use App\Models\Profile;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,51 +14,49 @@ use Vonage\Users\User;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function index()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $this->authorize('view-any', Profile::class);
+        $users_profile = Profile::with('user')->get();
+        return ProfileResource::collection($users_profile);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function show(Profile $profile): ProfileResource
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $this->authorize('view', $profile);
+        return new ProfileResource($profile);
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(User $user): JsonResponse
+    public function update(ProfileUpdateRequest $request, Profile $profile): JsonResponse
     {
-        $this->authorize('delete', $user);
-        $user->delete();
+        $this->authorize('update', $profile);
+        $profile->update($request->validated());
 
         return response()->json([
-            'message' => 'User deleted successfully',
+            'message' => 'Profile updated successfully',
+            'profile' => new ProfileResource($profile),
         ]);
     }
 
-    public function show(User $user): JsonResponse
+    public function destroy(Profile $profile): JsonResponse
     {
-        $this->authorize('view', $user);
+        $this->authorize('delete', $profile);
+        $profile->delete();
 
         return response()->json([
-            'user' => $user,
+            'message' => 'Profile deleted successfully',
         ]);
     }
+
+    public function restore(Profile $profile): JsonResponse
+    {
+        $this->authorize('restore', $profile);
+        $profile->restore();
+
+        return response()->json([
+            'message' => 'Profile restored successfully',
+            'profile' => new ProfileResource($profile),
+        ]);
+    }
+
 }
