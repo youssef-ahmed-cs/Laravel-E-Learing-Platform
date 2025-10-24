@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileManagement\ProfileRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
@@ -36,6 +37,17 @@ class ProfileController extends Controller
             'message' => 'Profile updated successfully',
             'profile' => new ProfileResource($profile),
         ]);
+    }
+
+    public function store(ProfileRequest $request): JsonResponse
+    {
+        $this->authorize('create', Profile::class);
+        $profile = Profile::create($request->validated());
+
+        return response()->json([
+            'message' => 'Profile created successfully',
+            'profile' => new ProfileResource($profile),
+        ], 201);
     }
 
     public function destroy(Profile $profile): JsonResponse

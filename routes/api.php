@@ -12,10 +12,14 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SendSmsController;
+use App\Http\Controllers\CodeEditorController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 
 // Route::prefix('google')->name('google.')->group(function () {
 //    Route::controller(SocialiteController::class)->group(function () {
@@ -135,15 +139,15 @@ Route::middleware('throttle:premium')->group(function () {
 });
 
 Route::fallback(static function () {
-    Log::warning('API Route not found: '.request()->url().' Method: '.request()->method().', IP: '.request()->ip());
+    Log::warning('API Route not found: ' . request()->url() . ' Method: ' . request()->method() . ', IP: ' . request()->ip());
 
     return response()->json(['message' => 'Resource not found.'], 404);
 });
 
-Route::get('try', static fn () => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
+Route::get('try', static fn() => response()->json(['GPA' => '3.60', 'department' => 'CS'], 200))->name('try');
 Route::redirect('old-route', 'https://laravel.com/docs/12.x/structure#the-root-directory', 301);
 Route::get('/collection', [UserController::class, 'collections'])->middleware('policeman');
-Route::delete('/ping', static fn () => response()->json(['message' => 'pong'], 200));
+Route::delete('/ping', static fn() => response()->json(['message' => 'pong'], 200));
 
 Route::get('string', static function () {
     // Using the Str facades to get the part of the string before the "@" character
@@ -192,7 +196,7 @@ Route::get('string', static function () {
     return response()->json(['Your string is: ' => $string], 200);
 });
 
-Route::get('/ping-01', static fn () => response()->json(['message' => 'pong'], 200));
+Route::get('/ping-01', static fn() => response()->json(['message' => 'pong'], 200));
 // Route::apiResource('tasks', TaskController::class);
 Route::post('/filer', FileController::class);
 Route::get('/sms', SendSmsController::class);
@@ -231,3 +235,10 @@ Route::get('/my-endpoint', static function () {
         'admins with premium' => $admins,
     ], 200);
 })->name('my-endpoint');
+
+Route::post('code-editor', CodeEditorController::class);
+
+
+//Route::post('/run-code', function (Request $request) {
+//
+//});
