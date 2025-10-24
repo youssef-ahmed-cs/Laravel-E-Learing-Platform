@@ -2,12 +2,15 @@
 POST {{url}}/profiles
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU3ODI1NDEyLCJleHAiOjE3NTc4MjkwMTIsIm5iZiI6MTc1NzgyNTQxMiwianRpIjoiWEZyUHpTUDZuZzdnMnp5bCIsInN1YiI6IjMyMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6RJ96QHs7FiBdL9DdZOgchi9gVyZ100NEFoHzsqy5Xg
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzYxMjQ0MTEzLCJleHAiOjE3NjEyNDc3MTMsIm5iZiI6MTc2MTI0NDExMywianRpIjoibU5NR0x5WjdGZFBYT2dwTiIsInN1YiI6IjQwOSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ._DaXMOvXLJukBMtvUiqnX-qYuA-nQNz5vL2PfFbgn-4
 
 {
+    "name": "Youssef Ahmed",
+    "email": "youssef.ahmed.fci@gmail.com",
+    "phone": "+201234567890",
     "age": 25,
     "bio": "Software developer with a passion for open source.",
     "address": "Cairo, Egypt",
-    "user_id": 322
+    "user_id": 50
 }
 ###

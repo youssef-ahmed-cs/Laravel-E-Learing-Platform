@@ -230,11 +230,11 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->find($id);
 
-        if (! $user) {
+        if (!$user) {
             return response()->json(['message' => 'user not found or not trashed.'], 404);
         }
 
-        $this->authorize('restore', $user);
+//        $this->authorize('restore', $user);
 
         $user->restore();
 

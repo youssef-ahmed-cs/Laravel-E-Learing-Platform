@@ -5,12 +5,13 @@ namespace Tests\Feature;
 use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class CourseTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_basic()
+    public function test_basic(): void
     {
         $response = $this->get('/');
         $response->assertStatus(200);
@@ -19,7 +20,7 @@ class CourseTest extends TestCase
     public function test_can_add_new_course(): void
     {
         $courseData = Course::factory()->make()->toArray();
-        $response = $this->post(route('courses.store'), $courseData);
+        $response = $this->postJson(route('courses.store'), $courseData);
         $response->assertStatus(201);
     }
 
@@ -27,7 +28,7 @@ class CourseTest extends TestCase
     {
         $course = Course::factory()->create();
 
-        $response = $this->get(route('courses.show', $course->id));
+        $response = $this->getJson(route('courses.show', $course->id));
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -42,7 +43,7 @@ class CourseTest extends TestCase
     public function test_index_courses(): void
     {
         Course::factory()->count(15)->create();
-        $response = $this->get(route('courses.index'));
+        $response = $this->getJson(route('courses.index'));
         $response->assertStatus(200);
     }
 
@@ -54,7 +55,7 @@ class CourseTest extends TestCase
             'description' => 'Updated Course Description',
         ];
 
-        $response = $this->put(route('courses.update', $course->id), $updatedData);
+        $response = $this->putJson(route('courses.update', $course->id), $updatedData);
         $response->assertStatus(200);
         $response->assertJsonFragment($updatedData);
     }
@@ -63,16 +64,17 @@ class CourseTest extends TestCase
     {
         $course = Course::factory()->create();
 
-        $response = $this->delete(route('courses.destroy', $course->id));
+        $response = $this->deleteJson(route('courses.destroy', $course->id));
         $response->assertStatus(200);
     }
 
-    public function test_restore_course(): void
+    public function test_restore_user(): void
     {
         $course = Course::factory()->create();
         $course->delete();
 
-        $response = $this->post(route('courses.restore', $course->id));
+        $response = $this->getJson(route('courses.restore', $course->id));
         $response->assertStatus(200);
     }
+
 }
