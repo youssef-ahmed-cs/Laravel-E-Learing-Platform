@@ -1,89 +1,188 @@
-# Youssef Ahmed
-## Backend Laravel Developer
+# Piston API Integration
 
-<div align="center">
-  <p>
-    <img src="https://komarev.com/ghpvc/?username=youssef-ahmed-cs&label=Profile%20Views&color=0969da&style=flat-square" alt="Profile views" />
-    <img src="https://img.shields.io/github/followers/youssef-ahmed-cs?label=Followers&style=flat-square&color=0969da" alt="GitHub followers" />
-  </p>
-</div>
+## Overview
 
-## About Me
+This Laravel application integrates with the [Piston API](https://github.com/engineer-man/piston) for code execution and
+compilation. Piston is a high-performance code execution engine that supports multiple programming languages.
 
-I'm a Backend Developer specializing in Laravel and PHP development, based in Egypt. I focus on building robust, scalable web applications with clean architecture and modern development practices. My goal is to create high-quality software solutions while continuously expanding my skills in full-stack development.
+## What is Piston?
 
-- 🔭 Currently working on: **Laravel E-Learning Platform** and **Blog Applications**
-- 🌱 Learning: **Advanced Laravel Patterns & Vue.js Integration**
-- 👯 Open to collaborate on: **Laravel Open Source Projects**
-- 💬 Ask me about: **Laravel, PHP, API Development, Database Design**
-- 📫 Contact: [youssef.ahmed.fci@gmail.com](mailto:youssef.ahmed.fci@gmail.com)
+Piston is an open-source code execution system that allows you to run code in over 50 programming languages safely and
+efficiently. It's commonly used for:
 
-## Tech Stack
+- Online code editors
+- Programming tutorials and learning platforms
+- Code snippet testing
+- Interview platforms
+- Competitive programming judges
 
-<div align="center">
-  <p>
-    <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
-    <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel" />
-    <img src="https://img.shields.io/badge/Symfony-000000?style=for-the-badge&logo=symfony&logoColor=white" alt="Symfony" />
-    <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" alt="Vue.js" />
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
-    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
-    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
-    <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
-    <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-    <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
-    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
-    <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman" />
-  </p>
-</div>
+## Features
 
-## Featured Projects
+- Execute code in 50+ programming languages
+- Secure sandboxed execution environment
+- Support for multiple files and stdin input
+- Compile-time and runtime argument support
+- Language version management
 
-### 🎓 [Laravel E-Learning Platform](https://github.com/youssef-ahmed-cs/Laravel-E-Learing-Platform)
-Comprehensive e-learning platform built with Laravel featuring course management, student enrollment, and progress tracking.
+## API Endpoints
 
-### 📝 [Blog Application - Laravel](https://github.com/youssef-ahmed-cs/Blogs-app-using-laravel)
-Full-featured blog application with user authentication, post management, and commenting system.
+### Base URL
 
-### 📖 [Blogify - Advanced Blog Platform](https://github.com/youssef-ahmed-cs/Blogfiy-app-using-laravel)
-Advanced blogging platform with enhanced features for content creators and readers.
+```
+https://emkc.org/api/v2/piston
+```
 
-### 🔧 [Git Branches Tutorial](https://github.com/youssef-ahmed-cs/Git-Branches)
-Educational repository demonstrating Git branching strategies and best practices.
+### Available Endpoints
 
-## Connect With Me
+#### 1. List Runtimes
 
-<div align="center">
-  <a href="https://www.linkedin.com/in/youssef-ahmed-cs" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-  <a href="mailto:youssef.ahmed.fci@gmail.com" target="_blank">
-    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
-  </a>
-  <a href="https://wa.me/201277672245" target="_blank">
-    <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp" />
-  </a>
-</div>
+Get all available programming language runtimes.
 
-## GitHub Statistics
+```http
+GET /runtimes
+```
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=youssef-ahmed-cs&show_icons=true&theme=default&hide_border=true" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=youssef-ahmed-cs&layout=compact&theme=default&hide_border=true" alt="Top Languages" />
-</div>
+**Response Example:**
 
-## Professional Goals
+```json
+[
+    {
+        "language": "python",
+        "version": "3.10.0",
+        "aliases": [
+            "py",
+            "py3",
+            "python3"
+        ]
+    },
+    {
+        "language": "javascript",
+        "version": "18.15.0",
+        "aliases": [
+            "js",
+            "node"
+        ]
+    }
+]
+```
 
-- **Technical Excellence**: Master advanced Laravel features and performance optimization.
-- **Open Source**: Contribute to the Laravel ecosystem and PHP community projects.
-- **Knowledge Sharing**: Create educational content and tutorials for fellow developers.
-- **Collaboration**: Work with development teams on innovative and impactful projects.
+#### 2. Execute Code
 
-<div align="center">
-  <p><em>Passionate about creating quality software solutions and continuous learning.</em></p>
-  <p><strong>⭐ Thanks for visiting! Feel free to explore my repositories and connect! ⭐</strong></p>
-</div>
+Execute code in a specified language.
+
+```http
+POST /execute
+```
+
+**Request Body:**
+
+```json
+{
+    "language": "python",
+    "version": "3.10.0",
+    "files": [
+        {
+            "name": "main.py",
+            "content": "print('Hello, World!')"
+        }
+    ],
+    "stdin": "",
+    "args": [],
+    "compile_timeout": 10000,
+    "run_timeout": 3000,
+    "compile_memory_limit": -1,
+    "run_memory_limit": -1
+}
+```
+
+**Response Example:**
+
+```json
+{
+    "language": "python",
+    "version": "3.10.0",
+    "run": {
+        "stdout": "Hello, World!\n",
+        "stderr": "",
+        "code": 0,
+        "signal": null,
+        "output": "Hello, World!\n"
+    }
+}
+```
+
+## Integration Examples
+
+
+## Supported Languages
+
+Popular languages include:
+
+- **Python** (3.x)
+- **JavaScript** (Node.js)
+- **Java**
+- **C / C++**
+- **C#**
+- **PHP**
+- **Ruby**
+- **Go**
+- **Rust**
+- **TypeScript**
+- **Kotlin**
+- **Swift**
+- **R**
+- **Bash**
+- And 35+ more languages
+
+## Request Parameters
+
+| Parameter              | Type    | Required | Description                                              |
+|------------------------|---------|----------|----------------------------------------------------------|
+| `language`             | string  | Yes      | Programming language name                                |
+| `version`              | string  | Yes      | Language version                                         |
+| `files`                | array   | Yes      | Array of file objects with `name` and `content`          |
+| `stdin`                | string  | No       | Standard input for the program                           |
+| `args`                 | array   | No       | Command line arguments                                   |
+| `compile_timeout`      | integer | No       | Compilation timeout in milliseconds (default: 10000)     |
+| `run_timeout`          | integer | No       | Execution timeout in milliseconds (default: 3000)        |
+| `compile_memory_limit` | integer | No       | Memory limit for compilation in bytes (-1 for unlimited) |
+| `run_memory_limit`     | integer | No       | Memory limit for execution in bytes (-1 for unlimited)   |
+
+## Response Structure
+
+```json
+{
+    "language": "string",
+    "version": "string",
+    "compile": {
+        "stdout": "string",
+        "stderr": "string",
+        "code": "integer",
+        "signal": "string|null",
+        "output": "string"
+    },
+    "run": {
+        "stdout": "string",
+        "stderr": "string",
+        "code": "integer",
+        "signal": "string|null",
+        "output": "string"
+    }
+}
+```
+
+## Best Practices
+
+1. **Implement Rate Limiting**: Respect the API's rate limits to avoid being blocked
+2. **Set Timeouts**: Always set reasonable timeout values
+3. **Validate Input**: Sanitize user code before sending to the API
+4. **Cache Runtimes**: Cache the list of available runtimes to reduce API calls
+5. **Handle Errors Gracefully**: Provide meaningful error messages to users
+6. **Security**: Never execute untrusted code without proper sandboxing
+
+## Resources
+
+- [Piston GitHub Repository](https://github.com/engineer-man/piston)
+- [Piston API Documentation](https://github.com/engineer-man/piston#api)
+- [Public Piston Instance](https://emkc.org/api/v2/piston)
+

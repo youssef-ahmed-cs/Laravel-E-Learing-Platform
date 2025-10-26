@@ -236,9 +236,15 @@ Route::get('/my-endpoint', static function () {
     ], 200);
 })->name('my-endpoint');
 
-Route::post('code-editor', CodeEditorController::class);
-
-
+//Route::post('code-editor', CodeEditorController::class);
+//
+//
 //Route::post('/run-code', function (Request $request) {
 //
 //});
+Route::prefix('v1/piston')->middleware('throttle:60,1')->group(function () {
+    Route::controller(CodeEditorController::class)->group(function () {
+        Route::get('/runtimes', 'getRuntimes');
+        Route::post('/execute', 'executeCode');
+    });
+});
