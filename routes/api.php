@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\ImageGenController;
 // Route::prefix('google')->name('google.')->group(function () {
 //    Route::controller(SocialiteController::class)->group(function () {
 //        Route::get('/redirect', 'redirect')->name('redirect');
@@ -248,3 +248,4 @@ Route::prefix('v1/piston')->middleware('throttle:60,1')->group(function () {
         Route::post('/execute', 'executeCode');
     });
 });
+Route::post('/generate-image', [ImageGenController::class, 'generate']);
