@@ -77,6 +77,21 @@ class AppServiceProvider extends ServiceProvider
             $this->string('file_type');
         });
 
+        Response::macro('success', function ($data, $message = 'Operation successful', $status = 200) {
+            return Response::json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data,
+            ], $status);
+        });
+
+        Response::macro('error', function ($message = 'An error occurred', $status = 400) {
+            return Response::json([
+                'status' => 'error',
+                'message' => $message,
+            ], $status);
+        });
+
         Builder::macro('admins', static function () {
             return $this->where('role', 'admin');
         });

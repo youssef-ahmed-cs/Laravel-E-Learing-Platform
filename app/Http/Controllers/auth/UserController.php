@@ -24,12 +24,9 @@ class UserController extends Controller
 
     public function index(): JsonResponse
     {
-        $this->authorize('viewAny', User::class);
+//        $this->authorize('viewAny', User::class);
         $users = User::where('role', 'student')->paginate(10);
-
-        return response()->json([
-            'data' => new UserCollection($users),
-        ], 200);
+        return response()->success(new UserCollection($users), 'Users retrieved successfully.');
     }
 
     public function to_view()
@@ -57,11 +54,7 @@ class UserController extends Controller
         //        Mail::to($user->email)->send(new WelcomeEmailMail($user->name));
         SendWelcomeEmail::dispatch($user);
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => new UserResource($user),
-        ], 201);
-
+        return response()->success(new UserResource($user), 'User created successfully.', 201);
     }
 
     public function instructors(): UserCollection

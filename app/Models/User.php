@@ -22,6 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
 
+# Add Observers, Policies, and Factories Attributes to the User Model
 #[ObservedBy([UserObserver::class])]
 #[UsePolicy(UsePolicy::class)]
 #[UseFactory(UseFactory::class)]

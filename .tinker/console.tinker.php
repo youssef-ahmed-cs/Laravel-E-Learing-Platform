@@ -23,5 +23,4 @@ use App\Providers\MagicalMacroServiceProvider;
 //$user = User::factory()->create();
 //$user->name;
 
-$user = User::find(200);
-$user->isAdmin();
+$user = User::where('users.id', 1)->sole();
