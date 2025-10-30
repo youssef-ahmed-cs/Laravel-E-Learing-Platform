@@ -1,21 +1,26 @@
 <?php
 
-use Illuminate\Support\Number;
-use App\Mail\WelcomeEmail;
-# abbreviate a number (e.g., 1.5K, 2.3M)
-$number = Number::abbreviate(12000);
-$number = Number::abbreviate(1230000, precision: 3);
-$number = Number::abbreviate(987654321, precision: 2);
-$number = Number::abbreviate(1500, precision: 1);
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Enums\UserRols;
+use App\Providers\MagicalMacroServiceProvider;
+// Log all database queries for debugging
+//DB::listen(function ($query) {
+//    Log::info('Query Executed', [
+//        'sql' => $query->sql,
+//        'bindings' => $query->bindings,
+//        'time' => $query->time,
+//    ]);
+//});
 
-Number::forHumans(1000000); # returns "1 million"
-Number::format(1000000); # returns "1,000,000"
-Number::format(123456789, locale: 'en'); # 123,456,789
-Number::format(123456789, locale: 'ar'); # ١٢٣٬٤٥٦٬٧٨٩
+//$user = User::query()->select('id', 'name', 'role')
+//    ->where('id', 2)
+//    ->first();
+//DB::enableQueryLog();
+//$users = User::latest()->take(5)->get(['id', 'name', 'role']);
+//$queries = DB::getQueryLog();
+//$user = User::factory()->create();
+//$user->name;
 
-//Number::toFileSize(1024); // 1 KB
-Number::percentage(10, locale: 'ar', precision: 2);
-
-$someVar = "null";
-$value1 = $someVar ?? 'default';
-//$value2 = $someVar ?: 'default';
+$user = User::where('users.id', 1)->sole();

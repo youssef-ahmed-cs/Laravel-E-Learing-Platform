@@ -22,6 +22,7 @@
         "predis/predis": "^3.2",
         "sadiqsalau/laravel-otp": "^1.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-permission": "^6.22",
         "stripe/stripe-php": "^18.0",
         "symfony/psr-http-message-bridge": "^7.3",
         "tymon/jwt-auth": "^2.2",

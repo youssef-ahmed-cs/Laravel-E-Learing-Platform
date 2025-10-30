@@ -22,10 +22,10 @@ class UserObserver
         //        $user->email_verified_at = $user->email_verified_at ?? now();
         //        $user->phone = "+20{$user->phone}";
         //        $user->phone = Str::mask($user->phone, '*', 0, strlen($user->phone) - 2);
-        // Keep only a relative path in the database; generate full URL at the resource layer
-        if (empty($user->avatar)) {
-            $user->avatar = 'avatars/default.png'; // ensure this file exists on the public disk
-        }
+        // Keep only a relative path in the aauthdatabase; generate full URL at the resource layer
+//        if (empty($user->avatar)) {
+//            $user->avatar = 'avatars/default.png'; // ensure this file exists on the public disk
+//        }
     }
 
     public function updated(User $user): void

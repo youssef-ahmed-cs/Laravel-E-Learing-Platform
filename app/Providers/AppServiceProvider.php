@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         Lesson::observe(LessonObserver::class);
 
         Password::defaults(static function () {
-            return Password::min(8)->letters()->numbers()->mixedCase()->symbols();
+            return Password::min(8)->letters()->numbers()->mixedCase()->symbols()->max(16);
         });
 
         VerifyEmail::createUrlUsing(static function ($notifiable) {
@@ -55,6 +58,10 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+//        User::macro('isAdmin', function (): bool {
+//            return $this->role === 'admin';
+//        });
+
         // Add a macro to the Blueprint class for common fields used in multiple tables Don't repeat yourself (DRY principle)
         Blueprint::macro('commonFields', function () {
             $this->id();
@@ -64,9 +71,25 @@ class AppServiceProvider extends ServiceProvider
             $this->index(['created_by', 'status']);
         });
 
+
         Blueprint::macro('fileFields', function () {
             $this->string('file_path');
             $this->string('file_type');
+        });
+
+        Response::macro('success', function ($data, $message = 'Operation successful', $status = 200) {
+            return Response::json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data,
+            ], $status);
+        });
+
+        Response::macro('error', function ($message = 'An error occurred', $status = 400) {
+            return Response::json([
+                'status' => 'error',
+                'message' => $message,
+            ], $status);
         });
 
         Builder::macro('admins', static function () {
@@ -75,7 +98,7 @@ class AppServiceProvider extends ServiceProvider
 
         Http::macro('request', static function () {
             return Http::withHeaders([
-                'Authorization' => 'Bearer '.'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mzc0Nzk0LCJleHAiOjE3NTkzNzgzOTQsIm5iZiI6MTc1OTM3NDc5NCwianRpIjoiUFRXTTFFMlRyQXBNSUNrbSIsInN1YiI6IjM4OCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.EZT2b9DEj8ghXLEmCdMPx4sD3deawbE2BKfFf9_ojao',
+                'Authorization' => 'Bearer ' . 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3YxL3JlZ2lzdGVyIiwiaWF0IjoxNzU5Mzc0Nzk0LCJleHAiOjE3NTkzNzgzOTQsIm5iZiI6MTc1OTM3NDc5NCwianRpIjoiUFRXTTFFMlRyQXBNSUNrbSIsInN1YiI6IjM4OCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.EZT2b9DEj8ghXLEmCdMPx4sD3deawbE2BKfFf9_ojao',
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->baseUrl('localhost:8000/api/')->timeout(10);
